@@ -51,7 +51,7 @@
       <v-btn
         @click.prevent="submitHandler"
         color="primary"
-        :disabled="!isValid"
+        :disabled="!isValid || !agree"
       >{{'shared.signup' | localize}}</v-btn>
     </v-card-actions>
   </v-card>
