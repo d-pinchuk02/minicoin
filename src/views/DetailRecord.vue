@@ -5,7 +5,7 @@
         icon
         large
         color="primary"
-        :to="'/history/page/' + this.$route.params.page"
+        :to="'/history'"
       >
         <v-icon>mdi-arrow-left</v-icon>
       </v-btn>
@@ -70,9 +70,6 @@ export default {
     const id = this.$route.params.id
     const record = await this.$store.dispatch('fetchRecordById', id)
     const category = await this.$store.dispatch('fetchCategoryById', record.categoryId)
-
-    if(!this.$route.params.page)
-      this.$router.push(`/detail/${id}/page/1`)
 
     let typeText = record.type === 'income'
               ? localizeFilter('shared.income')

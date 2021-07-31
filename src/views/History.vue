@@ -17,16 +17,8 @@
       <HistoryTable
         class="mt-2"
         :records="items.reverse()"
-        :page="page"
-        :key="page"
       />
-
-      <v-pagination
-        class="text-center mt-2"
-        v-model="page"
-        :length="pageCount"
-        @input="pageChanged"
-      ></v-pagination>
+      <div class="my-16"></div>
     </section>
   </div>
 </template>
@@ -48,12 +40,8 @@ export default {
     loading: true,
     records: [],
     items: [],
-    page: 1,
-    pageCount: 1
   }),
   async mounted() {
-    this.page = +this.$route.params.page || 1;
-
     this.records = await this.$store.dispatch("fetchRecords");
     const categories = await this.$store.dispatch("fetchCategories");
 
@@ -128,12 +116,6 @@ export default {
         }
       );
     },
-    pageChanged() {
-      this.$router.push("/history/page/" + this.page);
-    },
-    pageCountChanged(count) {
-      this.pageCount = count;
-    }
   },
   components: {
     HistoryTable

@@ -2,14 +2,11 @@
   <div>
     <v-data-table
       v-model="selected"
-      hide-default-footer
       show-select
       item-key="id"
       :headers="headers"
       :items="items"
       :items-per-page="15"
-      :page.sync="page"
-      @page-count="$parent.pageCountChanged($event)"
     >
       <template v-slot:item.amount="{ item }">
         {{ item.amount | currency }}
@@ -29,7 +26,7 @@
         <v-btn
           icon
           color="primary"
-          :to="`/detail/${item.id}/page/${page}`"
+          :to="`/detail/${item.id}`"
           :title="localizeFilter('historytable.openRecord')"
         >
           <v-icon>
@@ -63,11 +60,6 @@ import localizeFilter from '@/filters/localize.filter'
 
 export default {
   props: {
-    page:
-    {
-      required: true,
-      type: Number
-    },
     records: {
       required: true,
       type: Array
@@ -87,7 +79,6 @@ export default {
       { text: localizeFilter('shared.date'), value: 'date' },
       { text: localizeFilter('historytable.actions'), value: 'actions' },
     ],
-    pageCount: 1
   }),
   computed: {
     items() {
