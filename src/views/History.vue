@@ -9,9 +9,14 @@
     </v-alert>
     <section v-else>
       <v-row>
-		<v-col col="12">
+		<v-col col="6">
 		  <h2>{{ "shared.outcomes" | localize }}</h2>
 		  <HistoryChart :categories="categories" :records="expensesRecords" />
+		</v-col>
+		<v-divider vertical></v-divider>
+		<v-col col="6">
+		  <h2>{{ "shared.incomes" | localize }}</h2>
+		  <HistoryChart :categories="categories" :records="incomeRecords" />
 		</v-col>
       </v-row>
       <v-row>
@@ -46,6 +51,7 @@ export default {
     categories: [],
     items: [],
     expensesRecords: [],
+    incomeRecords: [],
     
   }),
   async mounted() {
@@ -70,6 +76,7 @@ export default {
       }).reverse();
       
       this.expensesRecords = this.records.filter(r => r.type === "outcome" );
+      this.incomeRecords = this.records.filter(r => r.type === "income" );
     },
   },
   components: {
