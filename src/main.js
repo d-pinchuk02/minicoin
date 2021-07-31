@@ -39,17 +39,22 @@ const firebaseConfig = {
   measurementId: process.env.VUE_APP_FIRE_MEASUREMENT_ID
 };
 
-firebase.initializeApp(firebaseConfig);
-
-let app;
-
-firebase.auth().onAuthStateChanged(() => {
-  if (!app) {
-    app = new Vue({
-      router,
-      store,
-      vuetify,
-      render: h => h(App)
-    }).$mount("#app");
-  }
-});
+if (!process.env.VUE_APP_FIRE_API_KEY || !process.env.VUE_APP_FIRE_AUTH_DOMAIN || !process.env.VUE_APP_FIRE_DATABASE_URL || !process.env.VUE_APP_FIRE_PROJECT_ID || !process.env.VUE_APP_FIRE_STORAGE_BUCKET || !process.env.VUE_APP_FIRE_MESSAGING_SENDER_ID || !process.env.VUE_APP_FIRE_APP_ID || !process.env.VUE_APP_FIRE_MEASUREMENT_ID) {
+	document.body.innerHTML = "<h1>Firebase connection error</h1><h2>Failed to connect to Firebase server.</h2><h4>If you are a site administrator, check your environment variables for Firebase tokens.</h4> <br> <h2>Не удалось подключиться к серверу Firebase.</h2><h4>Если вы администратор сайта, проверьте переменные окружения на наличие токенов Firebase.</h4>";
+	document.body.style.fontFamily = "'Roboto', 'Open Sans', Helvetica, Arial, sans-serif";
+} else {
+  firebase.initializeApp(firebaseConfig);
+  
+  let app;
+  
+  firebase.auth().onAuthStateChanged((state) => {
+    if (!app) {
+      app = new Vue({
+        router,
+        store,
+        vuetify,
+        render: h => h(App)
+      }).$mount("#app");
+    }
+  });
+}
