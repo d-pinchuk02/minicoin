@@ -23,8 +23,8 @@
 </template>
 
 <script>
-import CategoryCreate from '@/components/CategoryCreate'
-import CategoryEdit from '@/components/CategoryEdit'
+import CategoryCreate from '@/components/CategoryCreate.vue'
+import CategoryEdit from '@/components/CategoryEdit.vue'
 
 export default {
   name: 'categories',

@@ -29,10 +29,10 @@ npm install
 
 ### Rename ```.env.example``` file to ```.env.local``` and fill up variables
 Get your free API key from [Exchangerate API](https://exchangerate-api.com).
-Put it in a ```VUE_APP_EXCHANGERATE_API_KEY``` variable.
+Put it in a ```VITE_EXCHANGERATE_API_KEY``` variable.
 
 Create a [Firebase](https://console.firebase.google.com) app for Web.
-Put your config data (shows after app creation) in the following ```VUE_APP_FIRE_``` variables.
+Put your config data (shows after app creation) in the following ```VITE_FIRE_``` variables.
 
 Enable [Auth](https://firebase.google.com/docs/auth/web/start) and [Realtime Database](https://firebase.google.com/docs/database/web/start) modules.
 
