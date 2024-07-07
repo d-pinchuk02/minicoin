@@ -12,9 +12,9 @@ import titlePlugin from "@/utils/title.plugin";
 import Loader from "@/components/app/Loader";
 import "./registerServiceWorker";
 
-import firebase from "@firebase/app";
-import "@firebase/auth";
-import "@firebase/database";
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/database";
 import vuetify from "./plugins/vuetify";
 
 Vue.config.productionTip = false;

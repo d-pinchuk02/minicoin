@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import firebase from '@firebase/app'
+import firebase from 'firebase/compat/app'
 
 Vue.use(VueRouter)
 
