@@ -1,5 +1,3 @@
-![Logo](public/favicon.png)
-
 # MiniCoin
 
 [![Vue.js V2](https://img.shields.io/badge/Vue.js-v2-%234FC08D%20?style=for-the-badge&logo=vue.js)](https://github.com/sveltejs/svelte)
@@ -9,6 +7,10 @@
 This is a simple personal finance manager made with Vue.js
 
 [Public demo available here](https://minicoin.now.sh/login?locale=en-US).
+
+<p align="center">
+  <img width="2912" height="1558" alt="Banner(1)" src="https://github.com/user-attachments/assets/e92be742-14a3-4337-9e32-a4df90123562" />
+</p>
 
 ## Installation
 
