@@ -9,7 +9,7 @@
 	],
 	"routes": [
 		{
-			"src": "/(js|css|img)/.*",
+			"src": "/(assets|img)/.*",
 			"headers": { "cache-control": "max-age=31536000, immutable" }
 		},
 		{ "handle": "filesystem" },
