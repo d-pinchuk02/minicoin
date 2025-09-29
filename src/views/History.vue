@@ -35,8 +35,8 @@
 
 <script>
 import localizeFilter from "@/filters/localize.filter";
-import HistoryTable from "@/components/HistoryTable";
-import HistoryChart from "@/components/HistoryChart";
+import HistoryTable from "@/components/HistoryTable.vue";
+import HistoryChart from "@/components/HistoryChart.vue";
 
 export default {
   name: "history",

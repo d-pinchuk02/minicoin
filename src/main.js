@@ -9,7 +9,7 @@ import currencyFilter from "@/filters/currency.filter";
 import localizeFilter from "@/filters/localize.filter";
 import messagePlugin from "@/utils/message.plugin";
 import titlePlugin from "@/utils/title.plugin";
-import Loader from "@/components/app/Loader";
+import Loader from "@/components/app/Loader.vue";
 import "./registerServiceWorker";
 
 import firebase from "firebase/compat/app";
@@ -29,17 +29,17 @@ Vue.filter("localize", localizeFilter);
 Vue.component("Loader", Loader);
 
 const firebaseConfig = {
-  apiKey: process.env.VUE_APP_FIRE_API_KEY,
-  authDomain: process.env.VUE_APP_FIRE_AUTH_DOMAIN,
-  databaseURL: process.env.VUE_APP_FIRE_DATABASE_URL,
-  projectId: process.env.VUE_APP_FIRE_PROJECT_ID,
-  storageBucket: process.env.VUE_APP_FIRE_STORAGE_BUCKET,
-  messagingSenderId: process.env.VUE_APP_FIRE_MESSAGING_SENDER_ID,
-  appId: process.env.VUE_APP_FIRE_APP_ID,
-  measurementId: process.env.VUE_APP_FIRE_MEASUREMENT_ID
+  apiKey: import.meta.env.VITE_FIRE_API_KEY,
+  authDomain: import.meta.env.VITE_FIRE_AUTH_DOMAIN,
+  databaseURL: import.meta.env.VITE_FIRE_DATABASE_URL,
+  projectId: import.meta.env.VITE_FIRE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIRE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIRE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_FIRE_APP_ID,
+  measurementId: import.meta.env.VITE_FIRE_MEASUREMENT_ID
 };
 
-if (!process.env.VUE_APP_FIRE_API_KEY || !process.env.VUE_APP_FIRE_AUTH_DOMAIN || !process.env.VUE_APP_FIRE_DATABASE_URL || !process.env.VUE_APP_FIRE_PROJECT_ID || !process.env.VUE_APP_FIRE_STORAGE_BUCKET || !process.env.VUE_APP_FIRE_MESSAGING_SENDER_ID || !process.env.VUE_APP_FIRE_APP_ID || !process.env.VUE_APP_FIRE_MEASUREMENT_ID) {
+if (!import.meta.env.VITE_FIRE_API_KEY || !import.meta.env.VITE_FIRE_AUTH_DOMAIN || !import.meta.env.VITE_FIRE_DATABASE_URL || !import.meta.env.VITE_FIRE_PROJECT_ID || !import.meta.env.VITE_FIRE_STORAGE_BUCKET || !import.meta.env.VITE_FIRE_MESSAGING_SENDER_ID || !import.meta.env.VITE_FIRE_APP_ID || !import.meta.env.VITE_FIRE_MEASUREMENT_ID) {
 	document.body.innerHTML = "<h1>Firebase connection error</h1><h2>Failed to connect to Firebase server.</h2><h4>If you are a site administrator, check your environment variables for Firebase tokens.</h4> <br> <h2>Не удалось подключиться к серверу Firebase.</h2><h4>Если вы администратор сайта, проверьте переменные окружения на наличие токенов Firebase.</h4>";
 	document.body.style.fontFamily = "'Roboto', 'Open Sans', Helvetica, Arial, sans-serif";
 } else {
