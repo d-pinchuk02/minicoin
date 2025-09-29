@@ -1,6 +1,6 @@
 # MiniCoin
 
-[![Vue.js V2](https://img.shields.io/badge/Vue.js-v2-%234FC08D%20?style=for-the-badge&logo=vue.js)](https://github.com/sveltejs/svelte)
+[![Vue.js V2](https://img.shields.io/badge/Vue.js-v2-%234FC08D%20?style=for-the-badge&logo=vue.js)](https://v2.vuejs.org)
 [![LICENSE](https://img.shields.io/badge/License-MIT-%23F05032%20?style=for-the-badge&logo=git)](LICENSE)
 [![Vercel Demo](https://img.shields.io/badge/Vercel-Demo-%23000000%20?style=for-the-badge&logo=vercel)](https://minicoin.now.sh/login?locale=en-US)
 
@@ -16,12 +16,12 @@ This is a simple personal finance manager made with Vue.js
 
 ### Clone the repo
 ``` bash
-git clone https://github.com/d-pinchuk02/minicoin-vue.git
+git clone https://github.com/d-pinchuk02/minicoin.git
 ```
 
 ### Go into app's directory
 ``` bash
-cd minicoin-vue
+cd minicoin
 ```
 
 ### Install app's dependencies
