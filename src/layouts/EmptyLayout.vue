@@ -1,6 +1,6 @@
 <template>
-  <v-app>
-    <v-content class="grey darken-1">
+  <v-app class="bg-gradient">
+    <v-content class="bg-overlay">
       <v-container fluid class="fill-height">
         <v-row align="center" justify="center">
           <v-col cols="12" lg="5" sm="12" md="6">
@@ -28,3 +28,13 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.bg-gradient {
+  background: linear-gradient(135deg, #FF8C00 0%, #FF6F00 100%);
+}
+
+.bg-overlay {
+  background-color: rgb(0 0 0 / 0.4);
+}
+</style>
