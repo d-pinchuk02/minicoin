@@ -10,7 +10,7 @@
     <section v-else>
       <v-row>
 		<v-col col="6">
-		  <h2>{{ "shared.outcomes" | localize }}</h2>
+		  <h2>{{ "shared.expenses" | localize }}</h2>
 		  <HistoryChart :categories="categories" :records="expensesRecords" />
 		</v-col>
 		<v-divider vertical></v-divider>
@@ -71,11 +71,11 @@ export default {
           typeText:
             record.type === "income"
               ? localizeFilter("shared.income")
-              : localizeFilter("shared.outcome")
+              : localizeFilter("shared.expense")
         };
       }).reverse();
       
-      this.expensesRecords = this.records.filter(r => r.type === "outcome" );
+      this.expensesRecords = this.records.filter(r => r.type === "expense" );
       this.incomeRecords = this.records.filter(r => r.type === "income" );
     },
   },

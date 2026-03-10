@@ -37,8 +37,8 @@
           ></v-radio>
           <v-radio
             color="red"
-            value="outcome"
-            :label="'shared.outcome' | localize"
+            value="expense"
+            :label="'shared.expense' | localize"
           ></v-radio>
         </v-radio-group>
 
@@ -87,7 +87,7 @@ export default {
     loading: true,
     isValid: false,
     category: null,
-    type: "outcome",
+    type: "expense",
     amount: 1,
     description: "",
     amountRules: [
@@ -149,7 +149,7 @@ export default {
           this.amount = 1;
           this.description = "";
           this.category = this.categories[0].id;
-          this.type = "outcome";
+          this.type = "expense";
 
           this.$refs.form.validate();
         } catch (e) {}

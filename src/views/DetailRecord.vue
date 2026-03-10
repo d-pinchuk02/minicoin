@@ -73,7 +73,7 @@ export default {
 
     let typeText = record.type === 'income'
               ? localizeFilter('shared.income')
-              : localizeFilter('shared.outcome')
+              : localizeFilter('shared.expense')
     let typeIcon = record.type === 'income'
               ? 'mdi-plus'
               : 'mdi-minus'
