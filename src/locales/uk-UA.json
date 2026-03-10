@@ -91,5 +91,8 @@
 	"sidebar.categories": "Категорії",
 	"sidebar.history": "Історія",
 	"sidebar.planning": "Планування",
-	"sidebar.record": "Новий запис"
+	"sidebar.record": "Новий запис",
+	"landing.title": "Відстежуй свої фінанси",
+	"landing.hero.title": "Твої гроші, твої правила",
+	"landing.hero.subtitle": "Досить гадати, куди ідуть гроші. MiniCoin робить відстеження витрат простим та дійсно корисним"
 }

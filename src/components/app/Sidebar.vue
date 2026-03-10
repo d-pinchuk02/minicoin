@@ -38,7 +38,7 @@ export default {
       { 
         title: localizeFilter('sidebar.bill'), 
         icon: 'mdi-currency-usd',
-        to: '/' 
+        to: '/dashboard' 
       },
       { 
         title: localizeFilter('sidebar.history'), 

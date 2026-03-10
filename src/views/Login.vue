@@ -108,7 +108,7 @@ export default {
       try {
         await this.$store.dispatch("login", formData);
         await this.$store.dispatch("fetchInfo");
-        this.$router.push("/");
+        this.$router.push("/dashboard");
       } catch (e) {}
     }
   },

@@ -91,5 +91,8 @@
 	"sidebar.categories": "Категории",
 	"sidebar.history": "История",
 	"sidebar.planning": "Планирование",
-	"sidebar.record": "Новая запись"
+	"sidebar.record": "Новая запись",
+	"landing.title": "Отслеживай свои финансы",
+	"landing.hero.title": "Твои деньги, твои правила",
+	"landing.hero.subtitle": "Хватит гадать, куда уходят деньги. MiniCoin делает отслеживание расходов простым и полезным"
 }

@@ -91,5 +91,8 @@
 	"sidebar.categories": "Categories",
 	"sidebar.history": "History",
 	"sidebar.planning": "Planning",
-	"sidebar.record": "New record"
+	"sidebar.record": "New record",
+	"landing.title": "Track Your Finances",
+	"landing.hero.title": "Your Money, Your Rules",
+	"landing.hero.subtitle": "Stop guessing about your spending. MiniCoin makes tracking expenses fun and actually useful"
 }

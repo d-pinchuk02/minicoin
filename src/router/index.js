@@ -6,6 +6,12 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path: '/',
+    name: 'landing',
+    meta: { layout: 'landing' },
+    component: () => import('../views/Landing.vue')
+  },
+  {
     path: '/login',
     name: 'login',
     meta: { layout: 'empty' },
@@ -18,8 +24,8 @@ const routes = [
     component: () => import('../views/Register.vue')
   },
   {
-    path: '/',
-    name: 'home',
+    path: '/dashboard',
+    name: 'dashboard',
     meta: { layout: 'main', auth: true },
     component: () => import('../views/Home.vue')
   },
@@ -71,7 +77,9 @@ router.beforeEach((to, from, next) => {
   const currentUser = firebase.auth().currentUser
   const requireAuth = to.matched.some(record => record.meta.auth)
 
-  if(requireAuth && !currentUser) {
+  if (!requireAuth && currentUser) {
+    next('/dashboard')
+  } else if(requireAuth && !currentUser) {
     next('/login?message=login')
   } else {
     next()
