@@ -2,7 +2,7 @@ import en_US from './en-US.json'
 import ru_RU from './ru-RU.json'
 import uk_UA from './uk-UA.json'
 
-const defaultLocale = 'ru-RU'
+const defaultLocale = 'en-US'
 const locales = {
   'en-US': {
     name: 'English',
