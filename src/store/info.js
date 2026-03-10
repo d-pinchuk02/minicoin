@@ -1,8 +1,11 @@
 import firebase from 'firebase/compat/app'
+import { defaultLocale } from '../locales'
 
 export default {
   state: {
-    info: {}
+    info: {
+      locale: defaultLocale,
+    },
   },
   mutations: {
     setInfo(state, info) {

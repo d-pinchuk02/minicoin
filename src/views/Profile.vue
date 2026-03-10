@@ -22,7 +22,7 @@
           name="locale"
           prepend-icon="mdi-translate"
           item-text="name"
-          item-value="val"
+          item-value="id"
           v-model="locale"
           required
         ></v-select>
@@ -42,6 +42,7 @@
 <script>
 import { mapGetters, mapActions } from 'vuex'
 import localizeFilter from "@/filters/localize.filter"
+import { localesArray } from '../locales'
 
 export default {
   name: 'profile',
@@ -54,20 +55,7 @@ export default {
     name: '',
     locale: '',
     isValid: false,
-    langs: [
-      {
-        name: "English",
-        val: "en-US"
-      },
-      {
-        name: "Русский",
-        val: "ru-RU"
-      },
-      {
-        name: "Українська",
-        val: "uk-UA"
-      }
-    ],
+    langs: localesArray,
     nameRules: [
       v => !!v || localizeFilter('shared.errors.enterName'),
       v => (v && v.length >= 2) || localizeFilter('shared.errors.minLength') + ': ' + 2
