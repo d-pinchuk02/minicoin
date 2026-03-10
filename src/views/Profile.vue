@@ -62,6 +62,10 @@ export default {
       {
         name: "Русский",
         val: "ru-RU"
+      },
+      {
+        name: "Українська",
+        val: "uk-UA"
       }
     ],
     nameRules: [
