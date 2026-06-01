@@ -8,7 +8,6 @@ import localizeFilter from "@/filters/localize.filter";
 import messagePlugin from "@/utils/message.plugin";
 import titlePlugin from "@/utils/title.plugin";
 import Loader from "@/components/app/Loader.vue";
-import "./registerServiceWorker";
 
 import firebase from "firebase/compat/app";
 import "firebase/compat/auth";

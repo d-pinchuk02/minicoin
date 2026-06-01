@@ -14,9 +14,6 @@ importers:
       firebase:
         specifier: ^9.23.0
         version: 9.23.0
-      register-service-worker:
-        specifier: ^1.7.2
-        version: 1.7.2
       vue:
         specifier: ^2.7.16
         version: 2.7.16
@@ -1457,9 +1454,6 @@ packages:
   readdirp@3.6.0:
     resolution: {integrity: sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==}
     engines: {node: '>=8.10.0'}
-
-  register-service-worker@1.7.2:
-    resolution: {integrity: sha512-CiD3ZSanZqcMPRhtfct5K9f7i3OLCcBBWsJjLh1gW9RO/nS94sVzY59iS+fgYBOBqaBpf4EzfqUF3j9IG+xo8A==}
 
   require-directory@2.1.1:
     resolution: {integrity: sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==}
@@ -3039,8 +3033,6 @@ snapshots:
   readdirp@3.6.0:
     dependencies:
       picomatch: 2.3.1
-
-  register-service-worker@1.7.2: {}
 
   require-directory@2.1.1: {}
 
