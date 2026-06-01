@@ -23,9 +23,6 @@ importers:
       vue-chartjs:
         specifier: ^3.5.1
         version: 3.5.1(chart.js@2.9.4)
-      vue-meta:
-        specifier: ^2.4.0
-        version: 2.4.0
       vue-router:
         specifier: ^3.6.5
         version: 3.6.5(vue@2.7.16)
@@ -1621,9 +1618,6 @@ packages:
     engines: {node: '>=6.9.0', npm: '>= 3.0.0'}
     peerDependencies:
       chart.js: '>= 2.5'
-
-  vue-meta@2.4.0:
-    resolution: {integrity: sha512-XEeZUmlVeODclAjCNpWDnjgw+t3WA6gdzs6ENoIAgwO1J1d5p1tezDhtteLUFwcaQaTtayRrsx7GL6oXp/m2Jw==}
 
   vue-router@3.6.5:
     resolution: {integrity: sha512-VYXZQLtjuvKxxcshuRAwjHnciqZVoXAjTjcqBTz4rKc8qih9g9pI3hbDjmqXaHdgL3v8pV6P8Z335XvHzESxLQ==}
@@ -3254,10 +3248,6 @@ snapshots:
     dependencies:
       '@types/chart.js': 2.9.41
       chart.js: 2.9.4
-
-  vue-meta@2.4.0:
-    dependencies:
-      deepmerge: 4.3.1
 
   vue-router@3.6.5(vue@2.7.16):
     dependencies:

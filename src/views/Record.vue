@@ -77,11 +77,6 @@ import localizeFilter from "@/filters/localize.filter";
 
 export default {
   name: "newrecord",
-  metaInfo() {
-    return {
-      title: this.$title("newrecord.title")
-    };
-  },
   data: () => ({
     categories: [],
     loading: true,

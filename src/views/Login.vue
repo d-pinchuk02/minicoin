@@ -61,11 +61,6 @@ import LocaleSelect from "../components/app/LocaleSelect.vue";
 
 export default {
   name: "login",
-  metaInfo() {
-    return {
-      title: this.$title("login.title")
-    };
-  },
   data: () => ({
     email: "",
     password: "",

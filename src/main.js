@@ -1,5 +1,4 @@
 import Vue from "vue";
-import VueMeta from "vue-meta";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
@@ -20,7 +19,6 @@ Vue.config.productionTip = false;
 
 Vue.use(messagePlugin);
 Vue.use(titlePlugin);
-Vue.use(VueMeta);
 Vue.filter("date", dateFilter);
 Vue.filter("currency", currencyFilter);
 Vue.filter("localize", localizeFilter);

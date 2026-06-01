@@ -46,11 +46,6 @@ import { localesArray } from '../locales'
 
 export default {
   name: 'profile',
-  metaInfo() {
-    return {
-      title: this.$title('profile.title')
-    }
-  },
   data: () => ({
     name: '',
     locale: '',

@@ -78,11 +78,6 @@ import LocaleSelect from "../components/app/LocaleSelect.vue"
 
 export default {
   name: 'register',
-  metaInfo() {
-    return {
-      title: this.$title('register.title')
-    }
-  },
   data: () => ({
     email: '',
     password: '',

@@ -40,11 +40,6 @@ import HistoryChart from "@/components/HistoryChart.vue";
 
 export default {
   name: "history",
-  metaInfo() {
-    return {
-      title: this.$title("history.title")
-    };
-  },
   data: () => ({
     loading: true,
     records: [],

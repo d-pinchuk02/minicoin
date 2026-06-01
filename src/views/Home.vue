@@ -26,11 +26,6 @@ import HomeCurrency from '@/components/HomeCurrency.vue'
 
 export default {
   name: "dashboard",
-  metaInfo() {
-    return {
-      title: this.$title('home.title')
-    }
-  },
   data: () => ({
     loading: true,
     currency: null

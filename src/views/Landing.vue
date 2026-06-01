@@ -51,11 +51,6 @@ import LocaleSelect from '@/components/app/LocaleSelect.vue'
 
 export default {
   name: 'landing',
-  metaInfo() {
-    return {
-      title: this.$title('landing.title')
-    }
-  },
   components: {
     LocaleSelect
   },
