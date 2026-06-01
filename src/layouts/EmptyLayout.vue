@@ -9,13 +9,19 @@
         </v-row>
       </v-container>
     </v-content>
+
+    <Snackbar />
   </v-app>
 </template>
 
 <script>
+import Snackbar from "@/components/app/Snackbar.vue";
 import localizeFilter from '@/filters/localize.filter'
 
 export default {
+  components: {
+    Snackbar,
+  },
   computed: {
     error() {
       return this.$store.getters.error

@@ -65,7 +65,7 @@ This project is licensed under the MIT license (see [LICENSE](LICENSE)).
 ## Credits
 Big thanks to the [Vue](https://vuejs.org) command for creating this awesome framework.
 
-Thanks to the [Vuetify](https://vuetifyjs.com), [Vuex](https://vuex.vuejs.org), [Vue Meta](https://vue-meta.nuxtjs.org), [Vue Router](https://router.vuejs.org), [Vue Toasted](https://shakee93.github.io/vue-toasted), [Vue Chart.js](https://vue-chartjs.org) and [Chart.js](https://chartjs.org) creators.
+Thanks to the [Vuetify](https://vuetifyjs.com), [Vuex](https://vuex.vuejs.org), [Vue Meta](https://vue-meta.nuxtjs.org), [Vue Router](https://router.vuejs.org), [Vue Chart.js](https://vue-chartjs.org) and [Chart.js](https://chartjs.org) creators.
 
 Also big thanks to the guys created [Firebase](https://firebase.google.com) - backend of this application.
 

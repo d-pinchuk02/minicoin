@@ -24,13 +24,3 @@ export default {
   }
 };
 </script>
-
-<style>
-.toasted {
-  font-family: "Roboto", sans-serif;
-}
-
-.toasted > .mdi::before {
-  font-size: 1.2em;
-}
-</style>

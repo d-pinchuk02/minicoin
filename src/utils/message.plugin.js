@@ -1,48 +1,46 @@
+import Vue from 'vue';
+
+const messageState = Vue.observable({
+  show: false,
+  text: '',
+  color: 'info',
+  icon: 'mdi-information',
+  timeout: 4000,
+});
+
+let timeoutId = null;
+
+function showMessage(content, color, icon) {
+  if (timeoutId) {
+    window.clearTimeout(timeoutId);
+    timeoutId = null;
+  }
+
+  messageState.text = content;
+  messageState.color = color;
+  messageState.icon = icon;
+  messageState.show = true;
+
+  timeoutId = window.setTimeout(() => {
+    messageState.show = false;
+    timeoutId = null;
+  }, messageState.timeout);
+}
+
 export default {
-  install(Vue, options) {
+  install(Vue) {
+    Vue.prototype.$message = messageState;
+
     Vue.prototype.$info = function(content) {
-      this.$toasted.info(content, {
-        theme: "toasted-primary",
-        position: "top-right",
-        icon: "information",
-        duration: 4000,
-        action: {
-          text: "OK",
-          onClick: (e, toastObject) => {
-            toastObject.goAway(0);
-          }
-        }
-      });
+      showMessage(content, 'info', 'mdi-information');
     };
 
     Vue.prototype.$success = function(content) {
-      this.$toasted.success(content, {
-        theme: "toasted-primary",
-        position: "top-right",
-        icon: "check",
-        duration: 4000,
-        action: {
-          text: "OK",
-          onClick: (e, toastObject) => {
-            toastObject.goAway(0);
-          }
-        }
-      });
+      showMessage(content, 'success', 'mdi-check-circle');
     };
 
     Vue.prototype.$error = function(content) {
-      this.$toasted.error(content, {
-        theme: "toasted-primary",
-        position: "top-right",
-        icon: "alert-circle",
-        duration: 4000,
-        action: {
-          text: "OK",
-          onClick: (e, toastObject) => {
-            toastObject.goAway(0);
-          }
-        }
-      });
+      showMessage(content, 'error', 'mdi-alert-circle');
     };
   }
 };

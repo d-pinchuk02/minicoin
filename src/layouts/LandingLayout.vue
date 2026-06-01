@@ -5,12 +5,19 @@
         <router-view />
       </v-content>
     </v-main>
+
+    <Snackbar />
   </v-app>
 </template>
 
 <script>
+import Snackbar from "@/components/app/Snackbar.vue";
+
 export default {
   name: 'landing-layout',
+  components: {
+    Snackbar,
+  },
   data: () => ({
     appTitle: import.meta.env.VITE_TITLE,
   })

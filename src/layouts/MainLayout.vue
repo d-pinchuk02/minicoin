@@ -14,12 +14,15 @@
     <v-btn fixed dark fab bottom right color="blue" to="record">
       <v-icon>mdi-plus</v-icon>
     </v-btn>
+
+    <Snackbar />
   </v-app>
 </template>
 
 <script>
 import Navbar from "@/components/app/Navbar.vue";
 import Sidebar from "@/components/app/Sidebar.vue";
+import Snackbar from "@/components/app/Snackbar.vue";
 import localizeFilter from "@/filters/localize.filter";
 
 export default {
@@ -37,7 +40,8 @@ export default {
   },
   components: {
     Navbar,
-    Sidebar
+    Sidebar,
+    Snackbar,
   },
   computed: {
     error() {

@@ -154,7 +154,7 @@ export default {
           this.$refs.form.validate();
         } catch (e) {}
       } else {
-        this.$info(
+        this.$error(
           `${localizeFilter("msg.insufficientMoney")} (${this.amount -
             this.info.bill})`
         );
