@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>{{'categories.title' | localize}}</h1>
+    <h1>{{ localizeFilter('categories.title') }}</h1>
 
     <v-divider class="mb-4"></v-divider>
 
@@ -16,13 +16,14 @@
           :key="categories.length + updateCount"
           @updated="updateCategories"
         />
-        <v-alert v-else type="info">{{'shared.noCategories' | localize}}</v-alert>
+        <v-alert v-else type="info">{{ localizeFilter('shared.noCategories') }}</v-alert>
       </v-col>
     </v-row>
   </div>
 </template>
 
 <script>
+import localizeFilter from '@/filters/localize.filter'
 import CategoryCreate from '@/components/CategoryCreate.vue'
 import CategoryEdit from '@/components/CategoryEdit.vue'
 
@@ -41,6 +42,7 @@ export default {
     CategoryCreate, CategoryEdit
   },
   methods: {
+    localizeFilter,
     addNewCategory(category) {
       this.categories.push(category)
     },

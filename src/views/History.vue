@@ -1,27 +1,27 @@
 <template>
   <div>
-    <h1>{{ "history.title" | localize }}</h1>
+    <h1>{{ localizeFilter('history.title') }}</h1>
     <v-divider class="mb-4"></v-divider>
     <Loader v-if="loading" />
     <v-alert v-else-if="!records.length" type="info">
-      {{ "shared.noRecords" | localize }}
-      <router-link class="white--text" to="/record">{{ "shared.addRecord" | localize }}</router-link>
+      {{ localizeFilter('shared.noRecords') }}
+      <router-link class="white--text" to="/record">{{ localizeFilter('shared.addRecord') }}</router-link>
     </v-alert>
     <section v-else>
       <v-row>
 		<v-col col="6">
-		  <h2>{{ "shared.expenses" | localize }}</h2>
+		  <h2>{{ localizeFilter('shared.expenses') }}</h2>
 		  <HistoryChart :categories="categories" :records="expensesRecords" />
 		</v-col>
 		<v-divider vertical></v-divider>
 		<v-col col="6">
-		  <h2>{{ "shared.incomes" | localize }}</h2>
+		  <h2>{{ localizeFilter('shared.incomes') }}</h2>
 		  <HistoryChart :categories="categories" :records="incomeRecords" />
 		</v-col>
       </v-row>
       <v-row>
         <v-col col="12">
-          <h2>{{ "shared.transactions" | localize }}</h2>
+          <h2>{{ localizeFilter('shared.transactions') }}</h2>
           <HistoryTable
             class="mt-2"
             :records="items"
@@ -57,6 +57,7 @@ export default {
     this.loading = false;
   },
   methods: {
+    localizeFilter,
     setup(categories) {
       this.items = this.records.map(record => {
         return {

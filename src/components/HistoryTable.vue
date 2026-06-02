@@ -9,7 +9,7 @@
       :items-per-page="15"
     >
       <template v-slot:item.amount="{ item }">
-        {{ item.amount | currency }}
+        {{ currencyFilter(item.amount) }}
       </template>
     
  	 <template v-slot:item.type="{ item }">
@@ -19,7 +19,7 @@
       </template>
     
       <template v-slot:item.date="{ item }">
-        {{ item.date | date('datetime') }}
+        {{ dateFilter(item.date, 'datetime') }}
       </template>
     
       <template v-slot:item.actions="{ item }">
@@ -56,6 +56,8 @@
 </template>
 
 <script>
+import currencyFilter from '@/filters/currency.filter'
+import dateFilter from '@/filters/date.filter'
 import localizeFilter from '@/filters/localize.filter'
 
 export default {
@@ -90,6 +92,8 @@ export default {
     }
   },
   methods: {
+    currencyFilter,
+    dateFilter,
     localizeFilter(key) {
       return localizeFilter(key)
     }

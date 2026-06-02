@@ -6,10 +6,10 @@
         <v-row align="center" justify="center" >
           <v-col cols="12" md="6" class="text-center text-md-left">
             <h1 class="display-2 font-weight-bold mb-4 white--text">
-              {{ 'landing.hero.title' | localize }}
+              {{ localizeFilter('landing.hero.title') }}
             </h1>
             <p class="headline mb-6 white--text opacity-8">
-              {{ 'landing.hero.subtitle' | localize }}
+              {{ localizeFilter('landing.hero.subtitle') }}
             </p>
             <div class="d-flex justify-center justify-md-start gap-3 flex-column flex-sm-row">
               <v-btn
@@ -19,7 +19,7 @@
                 to="/register"
               >
                 <v-icon left>mdi-account-plus</v-icon>
-                {{ 'shared.signup' | localize }}
+                {{ localizeFilter('shared.signup') }}
               </v-btn>
               <v-btn
                 large
@@ -27,7 +27,7 @@
                 to="/login"
               >
                 <v-icon left>mdi-login</v-icon>
-                {{ 'shared.signin' | localize }}
+                {{ localizeFilter('shared.signin') }}
               </v-btn>
               <locale-select activator-class="ml-md-auto" />
             </div>
@@ -47,6 +47,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import localizeFilter from '@/filters/localize.filter'
 import LocaleSelect from '@/components/app/LocaleSelect.vue'
 
 export default {
@@ -62,7 +63,10 @@ export default {
       let info = { ...this.info, locale: this.$route.query.locale }
       this.$store.commit("setInfo", info)
     }
-  }
+  },
+  methods: {
+    localizeFilter,
+  },
 }
 </script>
 

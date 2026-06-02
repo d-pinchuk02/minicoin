@@ -7,7 +7,7 @@
   >
     <v-app-bar-nav-icon @click.prevent="$emit('click')"></v-app-bar-nav-icon>
 
-    <span class="title font-weight-light">{{ date | date('datetime') }}</span>
+    <span class="title font-weight-light">{{ dateFilter(date, 'datetime') }}</span>
 
     <v-spacer/>
 
@@ -32,14 +32,14 @@
           <v-list-item-icon>
             <v-icon right>mdi-account-circle</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>{{ 'navbar.profile' | localize}}</v-list-item-title>
+          <v-list-item-title>{{ localizeFilter('navbar.profile') }}</v-list-item-title>
         </v-list-item>
 
         <v-list-item @click="logout">
           <v-list-item-icon>
             <v-icon right>mdi-logout</v-icon>
           </v-list-item-icon>
-          <v-list-item-title>{{ 'navbar.logout' | localize}}</v-list-item-title>
+          <v-list-item-title>{{ localizeFilter('navbar.logout') }}</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-menu>
@@ -47,6 +47,7 @@
 </template>
 
 <script>
+import dateFilter from '@/filters/date.filter'
 import localizeFilter from '@/filters/localize.filter'
 
 export default {
@@ -55,6 +56,8 @@ export default {
     interval: null,
   }),
   methods: {
+    dateFilter,
+    localizeFilter,
     async logout() {
       let locale = this.$store.getters.info.locale
       await this.$store.dispatch('logout')

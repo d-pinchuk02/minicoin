@@ -1,12 +1,12 @@
 <template>
   <v-card color="blue" dark>
-    <v-card-title>{{'homebill.title' | localize}}</v-card-title>
+    <v-card-title>{{ localizeFilter('homebill.title') }}</v-card-title>
     <v-card-text>
       <div
         v-for="cur of currencies"
         :key="cur"
       >
-        <h2>{{ getCurrency(cur) | currency(cur) }}</h2>
+        <h2>{{ currencyFilter(getCurrency(cur), cur) }}</h2>
         <v-divider class="mt-3 mb-3"></v-divider>
       </div>
     </v-card-text>
@@ -20,6 +20,9 @@
 </template>
 
 <script>
+import currencyFilter from '@/filters/currency.filter'
+import localizeFilter from '@/filters/localize.filter'
+
 export default {
   props: ['rates'],
   data: () => ({
@@ -31,6 +34,8 @@ export default {
     }
   },
   methods: {
+    currencyFilter,
+    localizeFilter,
     getCurrency(currency) {
       return Math.floor(this.base * this.rates[currency])
     }

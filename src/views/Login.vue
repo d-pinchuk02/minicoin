@@ -11,7 +11,7 @@
     <v-card-text>
       <v-form v-model="isValid" @submit.prevent="submitHandler">
         <v-text-field
-          :label="'shared.email' | localize"
+          :label="localizeFilter('shared.email')"
           :rules="emailRules"
           color="orange"
           name="email"
@@ -22,7 +22,7 @@
         ></v-text-field>
 
         <v-text-field
-          :label="'shared.password' | localize"
+          :label="localizeFilter('shared.password')"
           :rules="passwordRules"
           color="orange"
           name="password"
@@ -40,7 +40,7 @@
         outlined
       >
         <v-icon left>mdi-account-plus</v-icon>
-        {{ "shared.signup" | localize }}...
+        {{ localizeFilter('shared.signup') }}...
       </v-btn>
       <v-spacer></v-spacer>
       <v-btn
@@ -49,7 +49,7 @@
         :disabled="!isValid"
       >
         <v-icon left>mdi-login</v-icon>
-        {{ "shared.signin" | localize }}
+        {{ localizeFilter('shared.signin') }}
       </v-btn>
     </v-card-actions>
   </v-card>
@@ -89,6 +89,7 @@ export default {
     }
   },
   methods: {
+    localizeFilter,
     async submitHandler() {
       if (!this.isValid) {
         console.log("invalid");

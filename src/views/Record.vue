@@ -1,14 +1,14 @@
 <template>
   <div>
-    <h1>{{ "newrecord.title" | localize }}</h1>
+    <h1>{{ localizeFilter('newrecord.title') }}</h1>
 
     <v-divider class="mb-4"></v-divider>
 
     <Loader v-if="loading" />
     <v-alert v-else-if="!categories.length" type="info">
-      {{ "shared.noCategories" | localize }}
+      {{ localizeFilter('shared.noCategories') }}
       <router-link class="white--text" to="/categories">{{
-        "shared.addCategory" | localize
+        localizeFilter('shared.addCategory')
       }}</router-link>
     </v-alert>
 
@@ -16,7 +16,7 @@
       <v-form v-model="isValid" ref="form" @submit.prevent="submitHandler">
         <v-select
           :items="categories"
-          :label="'shared.selectCategory' | localize"
+          :label="localizeFilter('shared.selectCategory')"
           name="category"
           prepend-icon="mdi-shape"
           item-text="title"
@@ -27,23 +27,23 @@
 
         <v-label for="type">
           <v-icon>mdi-plus-minus-variant</v-icon>
-          {{ "newrecord.type" | localize }}
+          {{ localizeFilter('newrecord.type') }}
         </v-label>
         <v-radio-group class="ml-8" name="type" v-model="type" column required>
           <v-radio
             color="green"
             value="income"
-            :label="'shared.income' | localize"
+            :label="localizeFilter('shared.income')"
           ></v-radio>
           <v-radio
             color="red"
             value="expense"
-            :label="'shared.expense' | localize"
+            :label="localizeFilter('shared.expense')"
           ></v-radio>
         </v-radio-group>
 
         <v-text-field
-          :label="'shared.amount' | localize"
+          :label="localizeFilter('shared.amount')"
           :rules="amountRules"
           name="amount"
           prepend-icon="mdi-cash-multiple"
@@ -53,7 +53,7 @@
         ></v-text-field>
 
         <v-text-field
-          :label="'shared.description' | localize"
+          :label="localizeFilter('shared.description')"
           :rules="descriptionRules"
           name="description"
           prepend-icon="mdi-text"
@@ -64,7 +64,7 @@
 
         <v-btn color="success" type="submit" :disabled="!isValid">
           <v-icon left>mdi-plus</v-icon>
-          {{ "shared.create" | localize }}
+          {{ localizeFilter('shared.create') }}
         </v-btn>
       </v-form>
     </v-col>
@@ -115,6 +115,7 @@ export default {
     }
   },
   methods: {
+    localizeFilter,
     async submitHandler() {
       this.$refs.form.validate();
 

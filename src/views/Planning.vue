@@ -1,20 +1,20 @@
 <template>
   <div>
     <h1>
-      {{'planning.title' | localize}}
-      ({{info.bill | currency('UAH')}})
+      {{ localizeFilter('planning.title') }}
+      ({{ currencyFilter(info.bill, 'UAH')}})
     </h1>
 
     <v-divider class="mb-4"></v-divider>
 
     <Loader v-if="loading" />
     <v-alert v-else-if="!categories.length" type="info">
-      {{'shared.noCategories' | localize}} <router-link class="white--text" to="/categories">{{'shared.addCategory' | localize}}</router-link>
+      {{ localizeFilter('shared.noCategories') }} <router-link class="white--text" to="/categories">{{ localizeFilter('shared.addCategory') }}</router-link>
     </v-alert>
     <v-col v-else cols="12" v-for="cat of categories" :key="cat">
       <p>
         <strong>{{cat.title}}:</strong>
-        {{cat.spent | currency}} {{'shared.of' | localize}} {{cat.limit | currency}}
+        {{ currencyFilter(cat.spent) }} {{ localizeFilter('shared.of') }} {{ currencyFilter(cat.limit) }}
       </p>
       <v-tooltip top>
         <template v-slot:activator="{ on, attrs }">
@@ -84,6 +84,10 @@ export default {
 
     this.loading = false
 
-  }
+  },
+  methods: {
+    currencyFilter,
+    localizeFilter,
+  },
 }
 </script>

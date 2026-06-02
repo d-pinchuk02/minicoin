@@ -1,13 +1,13 @@
 <template>
   <div>
-    <h1>{{'profile.title' | localize}}</h1>
+    <h1>{{ localizeFilter('profile.title') }}</h1>
 
     <v-divider class="mb-4"></v-divider>
 
     <v-col cols="12" xs="12" sm="6">
       <v-form v-model="isValid" @submit.prevent="submitHandler">
         <v-text-field
-          :label="'profile.name' | localize"
+          :label="localizeFilter('profile.name')"
           :rules="nameRules"
           name="name"
           prepend-icon="mdi-format-letter-case"
@@ -18,7 +18,7 @@
         
         <v-select
           :items="langs"
-          :label="'shared.selectLang' | localize"
+          :label="localizeFilter('shared.selectLang')"
           name="locale"
           prepend-icon="mdi-translate"
           item-text="name"
@@ -32,7 +32,7 @@
           type="submit"
         >
           <v-icon left>mdi-pencil</v-icon>
-          {{'shared.update' | localize}}
+          {{ localizeFilter('shared.update') }}
         </v-btn>
       </v-form>
     </v-col>
@@ -64,6 +64,7 @@ export default {
     ...mapGetters(['info'])
   },
   methods: {
+    localizeFilter,
     ...mapActions(['updateInfo']),
     async submitHandler() {
       if(!this.isValid) {

@@ -1,13 +1,13 @@
 <template>
   <div>
-    <h2>{{ "categoryedit.title" | localize }}</h2>
+    <h2>{{ localizeFilter('categoryedit.title') }}</h2>
 
     <v-divider class="mb-4"></v-divider>
 
     <v-form v-model="isValid" ref="form" @submit.prevent="submitHandler">
       <v-select
         :items="categories"
-        :label="'shared.selectCategory' | localize"
+        :label="localizeFilter('shared.selectCategory')"
         name="category"
         prepend-icon="mdi-shape"
         item-text="title"
@@ -17,7 +17,7 @@
       ></v-select>
 
       <v-text-field
-        :label="'categoryedit.name' | localize"
+        :label="localizeFilter('categoryedit.name')"
         :rules="titleRules"
         name="title"
         prepend-icon="mdi-format-letter-case"
@@ -27,7 +27,7 @@
       ></v-text-field>
 
       <v-text-field
-        :label="'shared.limit' | localize"
+        :label="localizeFilter('shared.limit')"
         :rules="limitRules"
         name="limit"
         prepend-icon="mdi-cash-multiple"
@@ -38,7 +38,7 @@
 
       <v-btn color="success" type="submit" :disabled="!isValid">
         <v-icon left>mdi-pencil</v-icon>
-        {{ "shared.update" | localize }}
+        {{ localizeFilter('shared.update') }}
       </v-btn>
     </v-form>
   </div>
@@ -76,6 +76,7 @@ export default {
     this.limit = limit;
   },
   methods: {
+    localizeFilter,
     async submitHandler() {
       this.$refs.form.validate();
 

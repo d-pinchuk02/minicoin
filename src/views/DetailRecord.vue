@@ -9,7 +9,7 @@
       >
         <v-icon>mdi-arrow-left</v-icon>
       </v-btn>
-      {{'detailrecord.title' | localize}}
+      {{ localizeFilter('detailrecord.title') }}
     </h1>
     <v-divider class="mb-4"></v-divider>
 
@@ -19,7 +19,7 @@
         outlined
       >
         <v-card-title>
-          {{record.amount | currency}}
+          {{ currencyFilter(record.amount) }}
           <v-chip
             class="ml-4"
             :color="record.typeColor"
@@ -30,7 +30,7 @@
             {{record.typeText}}
           </v-chip>
         </v-card-title>
-        <v-card-subtitle>{{record.date | date('datetime')}}</v-card-subtitle>
+        <v-card-subtitle>{{ dateFilter(record.date, 'datetime')}}</v-card-subtitle>
         <v-card-text>
           <v-chip
             color="primary"
@@ -47,12 +47,14 @@
       </v-card>
     </v-col>
     <v-alert v-else type="error">
-      {{'detailrecord.noRecord' | localize}}
+      {{ localizeFilter('detailrecord.noRecord') }}
     </v-alert>
   </div>
 </template>
 
 <script>
+import currencyFilter from '@/filters/currency.filter'
+import dateFilter from '@/filters/date.filter'
 import localizeFilter from '@/filters/localize.filter'
 
 export default {
@@ -87,9 +89,9 @@ export default {
     this.loading = false
   },
   methods: {
-    localizeFilter(key) {
-      return localizeFilter(key)
-    }
+    currencyFilter,
+    dateFilter,
+    localizeFilter,
   }
 }
 </script>

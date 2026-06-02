@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>{{'home.title' | localize}}</h1>
+    <h1>{{ localizeFilter('home.title') }}</h1>
 
     <v-divider class="mb-4"></v-divider>
 
@@ -21,6 +21,7 @@
 </template>
 
 <script>
+import localizeFilter from '@/filters/localize.filter'
 import HomeBill from '@/components/HomeBill.vue'
 import HomeCurrency from '@/components/HomeCurrency.vue'
 
@@ -35,6 +36,7 @@ export default {
     this.loading = false
   },
   methods: {
+    localizeFilter,
     async refresh() {
       this.loading = true
       this.currency = await this.$store.dispatch('fetchCurrency')
