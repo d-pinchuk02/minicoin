@@ -2,9 +2,6 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
-import dateFilter from "@/filters/date.filter";
-import currencyFilter from "@/filters/currency.filter";
-import localizeFilter from "@/filters/localize.filter";
 import messagePlugin from "@/utils/message.plugin";
 import titlePlugin from "@/utils/title.plugin";
 import Loader from "@/components/app/Loader.vue";
@@ -18,9 +15,6 @@ Vue.config.productionTip = false;
 
 Vue.use(messagePlugin);
 Vue.use(titlePlugin);
-Vue.filter("date", dateFilter);
-Vue.filter("currency", currencyFilter);
-Vue.filter("localize", localizeFilter);
 Vue.component("Loader", Loader);
 
 const firebaseConfig = {
