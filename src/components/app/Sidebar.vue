@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer color="grey-lighten-4" v-model="model">
+  <v-navigation-drawer v-model="model">
     <v-list density="compact" nav>
       <v-list-item
         v-for="item in links"

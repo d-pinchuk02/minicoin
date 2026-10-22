@@ -2,11 +2,7 @@
   <v-card class="elevation-3">
     <v-toolbar flat>
       <v-toolbar-title>{{ title('login.title') }}</v-toolbar-title>
-      <locale-select
-        activator-class="ml-auto"
-        activator-outlined
-        :activator-large="false"
-      />
+      <locale-select activator-class="ml-auto" :activator-large="false" />
     </v-toolbar>
     <v-card-text>
       <v-form ref="form" v-model="isValid" @submit.prevent="submitHandler">

@@ -4,12 +4,7 @@
       <v-btn
         :size="activatorLarge ? 'large' : 'small'"
         :class="activatorClass"
-        :color="
-          activatorColor ||
-          (activatorOutlined ? 'grey-darken-3' : 'grey-lighten-4')
-        "
-        :theme="activatorDark ? 'dark' : undefined"
-        :variant="activatorOutlined ? 'outlined' : 'elevated'"
+        variant="outlined"
         v-bind="props"
       >
         <v-icon start>mdi-translate</v-icon>
@@ -45,14 +40,6 @@ defineProps({
   activatorColor: {
     type: String,
     default: undefined,
-  },
-  activatorDark: {
-    type: Boolean,
-    default: false,
-  },
-  activatorOutlined: {
-    type: Boolean,
-    default: false,
   },
   activatorLarge: {
     type: Boolean,
