@@ -2,7 +2,7 @@
   <div>
     <h1>
       <v-btn icon size="large" color="primary" :to="'/history'">
-        <v-icon>mdi-arrow-left</v-icon>
+        <v-icon :icon="mdiArrowLeft" />
       </v-btn>
       {{ localizeFilter('history.recordTitle') }}
     </h1>
@@ -20,7 +20,7 @@
               label
               variant="flat"
             >
-              <v-icon start>{{ record.typeIcon }}</v-icon>
+              <v-icon :icon="record.typeIcon" start />
               {{ record.typeText }}
             </v-chip>
           </v-card-title>
@@ -29,7 +29,7 @@
           }}</v-card-subtitle>
           <v-card-text>
             <v-chip color="primary" variant="flat" label class="text-white">
-              <v-icon start>mdi-shape</v-icon>
+              <v-icon :icon="mdiShape" start />
               {{ record.categoryName }}
             </v-chip>
             <br />
@@ -48,6 +48,7 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
+import { mdiArrowLeft, mdiPlus, mdiMinus, mdiShape } from '@mdi/js'
 import { useRecordStore } from '@/store/record'
 import { useCategoryStore } from '@/store/category'
 import currencyFilter from '@/filters/currency.filter'
@@ -72,7 +73,7 @@ onMounted(async () => {
     ...fetchedRecord,
     categoryName: category.title,
     typeText: localizeFilter(isIncome ? 'shared.income' : 'shared.expense'),
-    typeIcon: isIncome ? 'mdi-plus' : 'mdi-minus',
+    typeIcon: isIncome ? mdiPlus : mdiMinus,
     typeColor: isIncome ? 'green' : 'red',
   }
   loading.value = false

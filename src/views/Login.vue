@@ -11,7 +11,7 @@
           :rules="emailRules"
           color="orange"
           name="email"
-          prepend-icon="mdi-at"
+          :prepend-icon="mdiAt"
           type="email"
           v-model.trim="email"
           required
@@ -22,7 +22,7 @@
           :rules="passwordRules"
           color="orange"
           name="password"
-          prepend-icon="mdi-lock"
+          :prepend-icon="mdiLock"
           type="password"
           v-model.trim="password"
           required
@@ -31,12 +31,12 @@
     </v-card-text>
     <v-card-actions class="pa-4">
       <v-btn color="orange" to="register" variant="outlined">
-        <v-icon start>mdi-account-plus</v-icon>
+        <v-icon :icon="mdiAccountPlus" start />
         {{ localizeFilter('shared.signup') }}...
       </v-btn>
       <v-spacer></v-spacer>
       <v-btn @click.prevent="submitHandler" color="orange" :disabled="!isValid">
-        <v-icon start>mdi-login</v-icon>
+        <v-icon :icon="mdiLogin" start />
         {{ localizeFilter('shared.signin') }}
       </v-btn>
     </v-card-actions>
@@ -46,6 +46,7 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { mdiAt, mdiLock, mdiAccountPlus, mdiLogin } from '@mdi/js'
 import { useAuthStore } from '@/store/auth'
 import { useInfoStore } from '@/store/info'
 import localizeFilter from '@/filters/localize.filter'

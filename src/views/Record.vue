@@ -19,7 +19,7 @@
             :items="categories"
             :label="localizeFilter('shared.selectCategory')"
             name="category"
-            prepend-icon="mdi-shape"
+            :prepend-icon="mdiShape"
             item-title="title"
             item-value="id"
             v-model="category"
@@ -27,7 +27,7 @@
           ></v-select>
 
           <v-label for="type">
-            <v-icon>mdi-plus-minus-variant</v-icon>
+            <v-icon :icon="mdiPlusMinusVariant" />
             {{ localizeFilter('newRecord.type') }}
           </v-label>
           <v-radio-group class="ml-8" name="type" v-model="type" required>
@@ -47,7 +47,7 @@
             :label="localizeFilter('shared.amount')"
             :rules="amountRules"
             name="amount"
-            prepend-icon="mdi-cash-multiple"
+            :prepend-icon="mdiCashMultiple"
             type="number"
             v-model.number="amount"
             required
@@ -57,14 +57,14 @@
             :label="localizeFilter('shared.description')"
             :rules="descriptionRules"
             name="description"
-            prepend-icon="mdi-text"
+            :prepend-icon="mdiText"
             type="name"
             v-model.trim="description"
             required
           ></v-text-field>
 
           <v-btn color="success" type="submit" :disabled="!isValid">
-            <v-icon start>mdi-plus</v-icon>
+            <v-icon :icon="mdiPlus" start />
             {{ localizeFilter('shared.create') }}
           </v-btn>
         </v-form>
@@ -75,6 +75,13 @@
 
 <script setup>
 import { computed, nextTick, onMounted, ref } from 'vue'
+import {
+  mdiShape,
+  mdiPlusMinusVariant,
+  mdiCashMultiple,
+  mdiText,
+  mdiPlus,
+} from '@mdi/js'
 import { useCategoryStore } from '@/store/category'
 import { useRecordStore } from '@/store/record'
 import { useInfoStore } from '@/store/info'

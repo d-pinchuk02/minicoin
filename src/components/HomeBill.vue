@@ -10,7 +10,7 @@
     <v-card-actions>
       <v-spacer></v-spacer>
       <v-btn icon @click="emit('refresh')" aria-label="Refresh balance">
-        <v-icon>mdi-refresh</v-icon>
+        <v-icon :icon="mdiRefresh" />
       </v-btn>
     </v-card-actions>
   </v-card>
@@ -18,6 +18,7 @@
 
 <script setup>
 import { computed } from 'vue'
+import { mdiRefresh } from '@mdi/js'
 import { useInfoStore } from '@/store/info'
 import currencyFilter from '@/filters/currency.filter'
 import localizeFilter from '@/filters/localize.filter'

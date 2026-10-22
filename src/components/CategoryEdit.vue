@@ -9,7 +9,7 @@
         :items="categories"
         :label="localizeFilter('shared.selectCategory')"
         name="category"
-        prepend-icon="mdi-shape"
+        :prepend-icon="mdiShape"
         item-title="title"
         item-value="id"
         v-model="current"
@@ -20,7 +20,7 @@
         :label="localizeFilter('categories.edit.name')"
         :rules="titleRules"
         name="title"
-        prepend-icon="mdi-format-letter-case"
+        :prepend-icon="mdiFormatLetterCase"
         type="text"
         v-model.trim="title"
         required
@@ -30,14 +30,14 @@
         :label="localizeFilter('shared.limit')"
         :rules="limitRules"
         name="limit"
-        prepend-icon="mdi-cash-multiple"
+        :prepend-icon="mdiCashMultiple"
         type="number"
         v-model="limit"
         required
       ></v-text-field>
 
       <v-btn color="success" type="submit" :disabled="!isValid">
-        <v-icon start>mdi-pencil</v-icon>
+        <v-icon :icon="mdiPencil" start />
         {{ localizeFilter('shared.update') }}
       </v-btn>
     </v-form>
@@ -46,6 +46,12 @@
 
 <script setup>
 import { ref, watch } from 'vue'
+import {
+  mdiShape,
+  mdiFormatLetterCase,
+  mdiCashMultiple,
+  mdiPencil,
+} from '@mdi/js'
 import { useCategoryStore } from '@/store/category'
 import localizeFilter from '@/filters/localize.filter'
 import { useMessage } from '@/composables/useMessage'

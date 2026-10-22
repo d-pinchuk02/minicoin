@@ -29,25 +29,18 @@
           :to="`/detail/${item.id}`"
           :title="localizeFilter('history.table.openRecord')"
         >
-          <v-icon> mdi-open-in-new </v-icon>
+          <v-icon :icon="mdiOpenInNew" />
         </v-btn>
-        <!--<v-btn
-          icon
-          :title="localizeFilter('history.table.editRecord')"
-        >
-          <v-icon>
-            mdi-pencil
-          </v-icon>
+        <!-- <v-btn icon :title="localizeFilter('history.table.editRecord')">
+          <v-icon :icon="mdiPencil" />
         </v-btn>
         <v-btn
           icon
           color="red"
           :title="localizeFilter('history.table.deleteRecord')"
         >
-          <v-icon>
-            mdi-delete
-          </v-icon>
-        </v-btn>-->
+          <v-icon :icon="mdiDelete" />
+        </v-btn> -->
       </template>
     </v-data-table>
   </div>
@@ -55,6 +48,7 @@
 
 <script setup>
 import { computed, ref } from 'vue'
+import { mdiOpenInNew } from '@mdi/js'
 import currencyFilter from '@/filters/currency.filter'
 import dateFilter from '@/filters/date.filter'
 import localizeFilter from '@/filters/localize.filter'

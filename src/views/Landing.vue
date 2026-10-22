@@ -20,11 +20,11 @@
                 color="white"
                 to="/register"
               >
-                <v-icon start>mdi-account-plus</v-icon>
+                <v-icon :icon="mdiAccountPlus" start />
                 {{ localizeFilter('shared.signup') }}
               </v-btn>
               <v-btn size="large" color="grey-darken-4" to="/login">
-                <v-icon start>mdi-login</v-icon>
+                <v-icon :icon="mdiLogin" start />
                 {{ localizeFilter('shared.signin') }}
               </v-btn>
               <locale-select activator-class="ml-md-auto" />
@@ -32,9 +32,12 @@
           </v-col>
           <v-col cols="12" md="6">
             <div class="text-center">
-              <v-icon size="300" color="white" class="opacity-8">
-                mdi-wallet
-              </v-icon>
+              <v-icon
+                :icon="mdiWallet"
+                size="300"
+                color="white"
+                class="opacity-8"
+              />
             </div>
           </v-col>
         </v-row>
@@ -46,6 +49,7 @@
 <script setup>
 import { onMounted } from 'vue'
 import { useRoute } from 'vue-router'
+import { mdiAccountPlus, mdiLogin, mdiWallet } from '@mdi/js'
 import { useInfoStore } from '@/store/info'
 import localizeFilter from '@/filters/localize.filter'
 import LocaleSelect from '@/components/app/LocaleSelect.vue'

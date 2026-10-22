@@ -9,7 +9,7 @@
         :label="localizeFilter('categories.create.name')"
         :rules="titleRules"
         name="title"
-        prepend-icon="mdi-format-letter-case"
+        :prepend-icon="mdiFormatLetterCase"
         type="text"
         v-model.trim="title"
         required
@@ -19,14 +19,14 @@
         :label="localizeFilter('shared.limit')"
         :rules="limitRules"
         name="limit"
-        prepend-icon="mdi-cash-multiple"
+        :prepend-icon="mdiCashMultiple"
         type="number"
         v-model="limit"
         required
       ></v-text-field>
 
       <v-btn color="success" type="submit" :disabled="!isValid">
-        <v-icon start>mdi-plus</v-icon>
+        <v-icon :icon="mdiPlus" start />
         {{ localizeFilter('shared.create') }}
       </v-btn>
     </v-form>
@@ -35,6 +35,7 @@
 
 <script setup>
 import { ref } from 'vue'
+import { mdiFormatLetterCase, mdiCashMultiple, mdiPlus } from '@mdi/js'
 import { useCategoryStore } from '@/store/category'
 import localizeFilter from '@/filters/localize.filter'
 import { useMessage } from '@/composables/useMessage'

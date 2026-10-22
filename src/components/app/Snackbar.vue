@@ -5,7 +5,7 @@
     :color="message.color"
     location="top right"
   >
-    <v-icon start v-if="message.icon">{{ message.icon }}</v-icon>
+    <v-icon :icon="message.icon" start v-if="message.icon" />
     {{ message.text }}
 
     <template v-slot:actions>

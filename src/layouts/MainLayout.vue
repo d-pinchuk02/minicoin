@@ -19,7 +19,7 @@
       to="/record"
       aria-label="New record"
     >
-      <v-icon>mdi-plus</v-icon>
+      <v-icon :icon="mdiPlus" />
     </v-btn>
 
     <Snackbar />
@@ -28,6 +28,7 @@
 
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue'
+import { mdiPlus } from '@mdi/js'
 import { useInfoStore } from '@/store/info'
 import { useAppStore } from '@/store'
 import Navbar from '@/components/app/Navbar.vue'

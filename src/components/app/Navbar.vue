@@ -11,14 +11,14 @@
         <v-btn size="large" variant="text" v-bind="props">
           <span class="mr-2" v-show="!smAndDown">{{ name }}</span>
           <v-avatar size="32">
-            <v-icon size="large">mdi-account-circle</v-icon>
+            <v-icon :icon="mdiAccountCircle" size="large" />
           </v-avatar>
         </v-btn>
       </template>
       <v-list>
         <v-list-item @click="toProfile">
           <template #prepend>
-            <v-icon end>mdi-account-circle</v-icon>
+            <v-icon :icon="mdiAccountCircle" end />
           </template>
           <v-list-item-title>{{
             localizeFilter('navbar.profile')
@@ -27,7 +27,7 @@
 
         <v-list-item @click="logout">
           <template #prepend>
-            <v-icon end>mdi-logout</v-icon>
+            <v-icon :icon="mdiLogout" end />
           </template>
           <v-list-item-title>{{
             localizeFilter('navbar.logout')
@@ -41,6 +41,7 @@
 <script setup>
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { mdiAccountCircle, mdiLogout } from '@mdi/js'
 import { useAuthStore } from '@/store/auth'
 import { useInfoStore } from '@/store/info'
 import { useDisplay } from 'vuetify'

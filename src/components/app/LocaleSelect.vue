@@ -7,7 +7,7 @@
         variant="outlined"
         v-bind="props"
       >
-        <v-icon start>mdi-translate</v-icon>
+        <v-icon :icon="mdiTranslate" start />
         {{ languages.find((lang) => lang.id === info.locale)?.name }}
       </v-btn>
     </template>
@@ -25,6 +25,7 @@
 
 <script setup>
 import { computed } from 'vue'
+import { mdiTranslate } from '@mdi/js'
 import { useInfoStore } from '@/store/info'
 import { localesArray } from '@/locales'
 

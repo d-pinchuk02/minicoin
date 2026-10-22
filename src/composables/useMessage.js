@@ -1,10 +1,11 @@
 import { reactive } from 'vue'
+import { mdiInformation, mdiCheckCircle, mdiAlertCircle } from '@mdi/js'
 
 const messageState = reactive({
   show: false,
   text: '',
   color: 'info',
-  icon: 'mdi-information',
+  icon: mdiInformation,
   timeout: 4000,
 })
 
@@ -30,8 +31,8 @@ function showMessage(content, color, icon) {
 export function useMessage() {
   return {
     message: messageState,
-    info: (content) => showMessage(content, 'info', 'mdi-information'),
-    success: (content) => showMessage(content, 'success', 'mdi-check-circle'),
-    error: (content) => showMessage(content, 'error', 'mdi-alert-circle'),
+    info: (content) => showMessage(content, 'info', mdiInformation),
+    success: (content) => showMessage(content, 'success', mdiCheckCircle),
+    error: (content) => showMessage(content, 'error', mdiAlertCircle),
   }
 }

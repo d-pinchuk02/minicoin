@@ -22,13 +22,14 @@
     <v-card-actions>
       <v-spacer></v-spacer>
       <v-btn icon @click="emit('refresh')" aria-label="Refresh exchange rates">
-        <v-icon>mdi-refresh</v-icon>
+        <v-icon :icon="mdiRefresh" />
       </v-btn>
     </v-card-actions>
   </v-card>
 </template>
 
 <script setup>
+import { mdiRefresh } from '@mdi/js'
 import dateFilter from '@/filters/date.filter'
 import localizeFilter from '@/filters/localize.filter'
 

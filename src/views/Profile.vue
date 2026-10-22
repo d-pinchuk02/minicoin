@@ -11,7 +11,7 @@
             :label="localizeFilter('profile.name')"
             :rules="nameRules"
             name="name"
-            prepend-icon="mdi-format-letter-case"
+            :prepend-icon="mdiFormatLetterCase"
             type="name"
             v-model.trim="name"
             required
@@ -21,7 +21,7 @@
             :items="langs"
             :label="localizeFilter('shared.selectLang')"
             name="locale"
-            prepend-icon="mdi-translate"
+            :prepend-icon="mdiTranslate"
             item-title="name"
             item-value="id"
             v-model="locale"
@@ -29,7 +29,7 @@
           ></v-select>
 
           <v-btn color="success" type="submit">
-            <v-icon start>mdi-pencil</v-icon>
+            <v-icon :icon="mdiPencil" start />
             {{ localizeFilter('shared.update') }}
           </v-btn>
         </v-form>
@@ -40,6 +40,7 @@
 
 <script setup>
 import { ref } from 'vue'
+import { mdiFormatLetterCase, mdiTranslate, mdiPencil } from '@mdi/js'
 import { useInfoStore } from '@/store/info'
 import localizeFilter from '@/filters/localize.filter'
 import { localesArray } from '@/locales'
