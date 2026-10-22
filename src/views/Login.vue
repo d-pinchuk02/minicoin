@@ -1,7 +1,7 @@
 <template>
   <v-card class="elevation-3">
     <v-toolbar flat>
-      <v-toolbar-title>{{ this.$title('login.title') }}</v-toolbar-title>
+      <v-toolbar-title>{{ title('login.title') }}</v-toolbar-title>
       <locale-select
         activator-class="ml-auto"
         activator-outlined
@@ -47,63 +47,56 @@
   </v-card>
 </template>
 
-<script>
+<script setup>
+import { onMounted, ref } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 import localizeFilter from '@/filters/localize.filter'
-import LocaleSelect from '../components/app/LocaleSelect.vue'
+import LocaleSelect from '@/components/app/LocaleSelect.vue'
+import title from '@/utils/title'
+import { useMessage } from '@/composables/useMessage'
 
-export default {
-  name: 'login',
-  data: () => ({
-    email: '',
-    password: '',
-    isValid: false,
-    emailRules: [
-      (v) => !!v || localizeFilter('shared.errors.enterEmail'),
-      (v) =>
-        /^\S+@\S+\.\S+$/.test(v) ||
-        localizeFilter('shared.errors.enterCorrectEmail'),
-    ],
-    passwordRules: [
-      (v) => !!v || localizeFilter('shared.errors.enterPassword'),
-      (v) =>
-        (v && v.length >= 8) ||
-        localizeFilter('shared.errors.minLength') + ': ' + 8,
-    ],
-  }),
-  mounted() {
-    if (this.$route.query.locale) {
-      let info = { locale: this.$route.query.locale }
-      this.$store.commit('setInfo', info)
-    }
+const route = useRoute()
+const router = useRouter()
+const store = useStore()
+const { info: showInfo } = useMessage()
+const form = ref(null)
+const email = ref('')
+const password = ref('')
+const isValid = ref(false)
+const emailRules = [
+  (v) => !!v || localizeFilter('shared.errors.enterEmail'),
+  (v) =>
+    /^\S+@\S+\.\S+$/.test(v) ||
+    localizeFilter('shared.errors.enterCorrectEmail'),
+]
 
-    if (this.$route.query.message) {
-      this.$info(localizeFilter('msg.' + this.$route.query.message))
-    }
-  },
-  methods: {
-    localizeFilter,
-    async submitHandler() {
-      const { valid } = await this.$refs.form.validate()
-      if (!valid) return
-      if (!this.isValid) {
-        console.log('invalid')
-        return
-      }
+const passwordRules = [
+  (v) => !!v || localizeFilter('shared.errors.enterPassword'),
+  (v) =>
+    (v && v.length >= 8) ||
+    localizeFilter('shared.errors.minLength') + ': ' + 8,
+]
 
-      const formData = {
-        email: this.email,
-        password: this.password,
-      }
+onMounted(() => {
+  if (route.query.locale) {
+    store.commit('setInfo', { locale: route.query.locale })
+  }
+  if (route.query.message) {
+    showInfo(localizeFilter('msg.' + route.query.message))
+  }
+})
 
-      try {
-        await this.$store.dispatch('login', formData)
-        await this.$store.dispatch('fetchInfo')
-        this.$router.push('/dashboard')
-      } catch (e) {}
-    },
-  },
-  components: {
-    LocaleSelect,
-  },
+async function submitHandler() {
+  const { valid } = await form.value.validate()
+  if (!valid) return
+  try {
+    await store.dispatch('login', {
+      email: email.value,
+      password: password.value,
+    })
+    await store.dispatch('fetchInfo')
+    router.push('/dashboard')
+  } catch {}
 }
 </script>

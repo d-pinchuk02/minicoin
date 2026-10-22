@@ -1,9 +1,5 @@
 <template>
-  <v-navigation-drawer
-    color="grey-lighten-4"
-    :model-value="modelValue"
-    @update:model-value="$emit('update:modelValue', $event)"
-  >
+  <v-navigation-drawer color="grey-lighten-4" v-model="model">
     <v-list density="compact" nav>
       <v-list-item
         v-for="item in links"
@@ -24,40 +20,36 @@
   </v-navigation-drawer>
 </template>
 
-<script>
+<script setup>
+import { computed } from 'vue'
 import localizeFilter from '@/filters/localize.filter'
 
-export default {
-  props: ['modelValue'],
-  emits: ['update:modelValue'],
-  data: () => ({
-    links: [
-      {
-        title: localizeFilter('sidebar.bill'),
-        icon: 'mdi-currency-usd',
-        to: '/dashboard',
-      },
-      {
-        title: localizeFilter('sidebar.history'),
-        icon: 'mdi-history',
-        to: '/history',
-      },
-      {
-        title: localizeFilter('sidebar.planning'),
-        icon: 'mdi-trending-up',
-        to: '/planning',
-      },
-      {
-        title: localizeFilter('sidebar.record'),
-        icon: 'mdi-plus',
-        to: '/record',
-      },
-      {
-        title: localizeFilter('sidebar.categories'),
-        icon: 'mdi-shape',
-        to: '/categories',
-      },
-    ],
-  }),
-}
+const model = defineModel({ default: null })
+const links = computed(() => [
+  {
+    title: localizeFilter('sidebar.bill'),
+    icon: 'mdi-currency-usd',
+    to: '/dashboard',
+  },
+  {
+    title: localizeFilter('sidebar.history'),
+    icon: 'mdi-history',
+    to: '/history',
+  },
+  {
+    title: localizeFilter('sidebar.planning'),
+    icon: 'mdi-trending-up',
+    to: '/planning',
+  },
+  {
+    title: localizeFilter('sidebar.record'),
+    icon: 'mdi-plus',
+    to: '/record',
+  },
+  {
+    title: localizeFilter('sidebar.categories'),
+    icon: 'mdi-shape',
+    to: '/categories',
+  },
+])
 </script>

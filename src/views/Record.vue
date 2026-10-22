@@ -73,95 +73,78 @@
   </div>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
+<script setup>
+import { computed, nextTick, onMounted, ref } from 'vue'
+import { useStore } from 'vuex'
 import localizeFilter from '@/filters/localize.filter'
+import Loader from '@/components/app/Loader.vue'
+import { useMessage } from '@/composables/useMessage'
 
-export default {
-  name: 'newrecord',
-  data: () => ({
-    categories: [],
-    loading: true,
-    isValid: false,
-    category: null,
-    type: 'expense',
-    amount: 1,
-    description: '',
-    amountRules: [
-      (v) =>
-        (v && +v >= 1) || localizeFilter('shared.errors.minValue') + ': ' + 1,
-    ],
-    descriptionRules: [
-      (v) => !!v || localizeFilter('newrecord.error.enterDescription'),
-      (v) =>
-        (v && v.length >= 2) ||
-        localizeFilter('shared.errors.minLength') + ': ' + 2,
-    ],
-  }),
-  async mounted() {
-    this.categories = await this.$store.dispatch('fetchCategories')
-    this.loading = false
+const store = useStore()
+const { success, error } = useMessage()
+const form = ref(null)
+const categories = ref([])
+const loading = ref(true)
+const isValid = ref(false)
+const category = ref(null)
+const type = ref('expense')
+const amount = ref(1)
+const description = ref('')
+const info = computed(() => store.getters.info)
+const canCreateRecord = computed(
+  () => type.value === 'income' || info.value.bill >= amount.value,
+)
+const amountRules = [
+  (v) => (v && +v >= 1) || localizeFilter('shared.errors.minValue') + ': ' + 1,
+]
 
-    if (this.categories.length) {
-      this.category = this.categories[0].id
-      await this.$nextTick()
-      await this.$refs.form.validate()
-    }
-  },
-  computed: {
-    ...mapGetters(['info']),
-    canCreateRecord() {
-      if (this.type === 'income') {
-        return true
-      }
+const descriptionRules = [
+  (v) => !!v || localizeFilter('newrecord.error.enterDescription'),
+  (v) =>
+    (v && v.length >= 2) ||
+    localizeFilter('shared.errors.minLength') + ': ' + 2,
+]
 
-      return this.info.bill >= this.amount
-    },
-  },
-  methods: {
-    localizeFilter,
-    async submitHandler() {
-      const { valid } = await this.$refs.form.validate()
+onMounted(async () => {
+  categories.value = await store.dispatch('fetchCategories')
+  loading.value = false
+  if (categories.value.length) {
+    category.value = categories.value[0].id
+    await nextTick()
+    await form.value.validate()
+  }
+})
 
-      if (!valid) {
-        return
-      }
-
-      if (this.canCreateRecord) {
-        try {
-          await this.$store.dispatch('createRecord', {
-            categoryId: this.category,
-            amount: this.amount,
-            description: this.description,
-            type: this.type,
-            date: new Date().toJSON(),
-          })
-
-          const bill =
-            this.type === 'income'
-              ? +this.info.bill + +this.amount
-              : +this.info.bill - +this.amount
-
-          await this.$store.dispatch('updateInfo', { bill })
-          this.$success(localizeFilter('msg.recordCreated'))
-          this.$refs.form.reset()
-
-          this.amount = 1
-          this.description = ''
-          this.category = this.categories[0].id
-          this.type = 'expense'
-
-          await this.$nextTick()
-          await this.$refs.form.validate()
-        } catch (e) {}
-      } else {
-        this.$error(
-          `${localizeFilter('msg.insufficientMoney')} (${
-            this.amount - this.info.bill
-          })`,
-        )
-      }
-    },
-  },
+async function submitHandler() {
+  const { valid } = await form.value.validate()
+  if (!valid) return
+  if (!canCreateRecord.value) {
+    error(
+      `${localizeFilter('msg.insufficientMoney')} (${amount.value - info.value.bill})`,
+    )
+    return
+  }
+  try {
+    await store.dispatch('createRecord', {
+      categoryId: category.value,
+      amount: amount.value,
+      description: description.value,
+      type: type.value,
+      date: new Date().toJSON(),
+    })
+    const bill =
+      type.value === 'income'
+        ? +info.value.bill + +amount.value
+        : +info.value.bill - +amount.value
+    await store.dispatch('updateInfo', { bill })
+    success(localizeFilter('msg.recordCreated'))
+    form.value.reset()
+    amount.value = 1
+    description.value = ''
+    category.value = categories.value[0].id
+    type.value = 'expense'
+    await nextTick()
+    await form.value.validate()
+  } catch {}
 }
 </script>

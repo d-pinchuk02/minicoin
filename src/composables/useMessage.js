@@ -27,20 +27,11 @@ function showMessage(content, color, icon) {
   }, messageState.timeout)
 }
 
-export default {
-  install(app) {
-    app.config.globalProperties.$message = messageState
-
-    app.config.globalProperties.$info = function (content) {
-      showMessage(content, 'info', 'mdi-information')
-    }
-
-    app.config.globalProperties.$success = function (content) {
-      showMessage(content, 'success', 'mdi-check-circle')
-    }
-
-    app.config.globalProperties.$error = function (content) {
-      showMessage(content, 'error', 'mdi-alert-circle')
-    }
-  },
+export function useMessage() {
+  return {
+    message: messageState,
+    info: (content) => showMessage(content, 'info', 'mdi-information'),
+    success: (content) => showMessage(content, 'success', 'mdi-check-circle'),
+    error: (content) => showMessage(content, 'error', 'mdi-alert-circle'),
+  }
 }

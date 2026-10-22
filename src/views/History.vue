@@ -31,53 +31,43 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { computed, onMounted, ref } from 'vue'
+import { useStore } from 'vuex'
 import localizeFilter from '@/filters/localize.filter'
 import HistoryTable from '@/components/HistoryTable.vue'
 import HistoryChart from '@/components/HistoryChart.vue'
+import Loader from '@/components/app/Loader.vue'
 
-export default {
-  name: 'history',
-  data: () => ({
-    loading: true,
-    records: [],
-    categories: [],
-    items: [],
-    expensesRecords: [],
-    incomeRecords: [],
-  }),
-  async mounted() {
-    this.records = await this.$store.dispatch('fetchRecords')
-    this.categories = await this.$store.dispatch('fetchCategories')
+const store = useStore()
+const loading = ref(true)
+const records = ref([])
+const categories = ref([])
 
-    this.setup(this.categories)
-    this.loading = false
-  },
-  methods: {
-    localizeFilter,
-    setup(categories) {
-      this.items = this.records
-        .map((record) => {
-          return {
-            ...record,
-            categoryName: categories.find((c) => c.id === record.categoryId)
-              .title,
-            typeClass: record.type === 'income' ? 'green' : 'red',
-            typeText:
-              record.type === 'income'
-                ? localizeFilter('shared.income')
-                : localizeFilter('shared.expense'),
-          }
-        })
-        .reverse()
+const items = computed(() =>
+  records.value
+    .map((record) => ({
+      ...record,
+      categoryName: categories.value.find((c) => c.id === record.categoryId)
+        .title,
+      typeClass: record.type === 'income' ? 'green' : 'red',
+      typeText:
+        record.type === 'income'
+          ? localizeFilter('shared.income')
+          : localizeFilter('shared.expense'),
+    }))
+    .reverse(),
+)
+const expensesRecords = computed(() =>
+  records.value.filter((r) => r.type === 'expense'),
+)
+const incomeRecords = computed(() =>
+  records.value.filter((r) => r.type === 'income'),
+)
 
-      this.expensesRecords = this.records.filter((r) => r.type === 'expense')
-      this.incomeRecords = this.records.filter((r) => r.type === 'income')
-    },
-  },
-  components: {
-    HistoryTable,
-    HistoryChart,
-  },
-}
+onMounted(async () => {
+  records.value = await store.dispatch('fetchRecords')
+  categories.value = await store.dispatch('fetchCategories')
+  loading.value = false
+})
 </script>

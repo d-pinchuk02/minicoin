@@ -16,13 +16,8 @@
   </v-snackbar>
 </template>
 
-<script>
-export default {
-  name: 'app-snackbar',
-  computed: {
-    message() {
-      return this.$message
-    },
-  },
-}
+<script setup>
+import { useMessage } from '@/composables/useMessage'
+
+const { message } = useMessage()
 </script>

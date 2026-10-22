@@ -2,9 +2,6 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import messagePlugin from '@/utils/message.plugin'
-import titlePlugin from '@/utils/title.plugin'
-import Loader from '@/components/app/Loader.vue'
 
 import firebase from 'firebase/compat/app'
 import 'firebase/compat/auth'
@@ -47,9 +44,6 @@ if (
       app.use(store)
       app.use(router)
       app.use(vuetify)
-      app.use(messagePlugin)
-      app.use(titlePlugin)
-      app.component('Loader', Loader)
       router.isReady().then(() => app.mount('#app'))
     }
   })

@@ -43,29 +43,24 @@
   </div>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
+<script setup>
+import { onMounted } from 'vue'
+import { useRoute } from 'vue-router'
+import { useStore } from 'vuex'
 import localizeFilter from '@/filters/localize.filter'
 import LocaleSelect from '@/components/app/LocaleSelect.vue'
 
-export default {
-  name: 'landing',
-  components: {
-    LocaleSelect,
-  },
-  computed: {
-    ...mapGetters(['info']),
-  },
-  mounted() {
-    if (this.$route.query.locale) {
-      let info = { ...this.info, locale: this.$route.query.locale }
-      this.$store.commit('setInfo', info)
-    }
-  },
-  methods: {
-    localizeFilter,
-  },
-}
+const route = useRoute()
+const store = useStore()
+
+onMounted(() => {
+  if (route.query.locale) {
+    store.commit('setInfo', {
+      ...store.getters.info,
+      locale: route.query.locale,
+    })
+  }
+})
 </script>
 
 <style scoped>

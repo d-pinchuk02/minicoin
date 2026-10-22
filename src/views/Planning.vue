@@ -36,58 +36,40 @@
   </div>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
+<script setup>
+import { computed, onMounted, ref } from 'vue'
+import { useStore } from 'vuex'
 import currencyFilter from '@/filters/currency.filter'
 import localizeFilter from '@/filters/localize.filter'
+import Loader from '@/components/app/Loader.vue'
 
-export default {
-  name: 'planning',
-  data: () => ({
-    loading: true,
-    categories: [],
-  }),
-  computed: {
-    ...mapGetters(['info']),
-  },
-  async mounted() {
-    const records = await this.$store.dispatch('fetchRecords')
-    const categories = await this.$store.dispatch('fetchCategories')
+const store = useStore()
+const loading = ref(true)
+const categories = ref([])
+const info = computed(() => store.getters.info)
 
-    this.categories = categories.map((cat) => {
-      const spent = records
-        .filter((r) => r.categoryId === cat.id)
-        .filter((r) => r.type === 'expense')
-        .reduce((total, record) => {
-          return (total += +record.amount)
-        }, 0)
+onMounted(async () => {
+  const records = await store.dispatch('fetchRecords')
+  const fetchedCategories = await store.dispatch('fetchCategories')
 
-      const percent = (100 * spent) / cat.limit
-      const progressPercent = percent > 100 ? 100 : percent
-      const progressColor =
-        percent < 60 ? 'green' : percent < 100 ? 'yellow' : 'red'
+  categories.value = fetchedCategories.map((cat) => {
+    const spent = records
+      .filter((r) => r.categoryId === cat.id)
+      .filter((r) => r.type === 'expense')
+      .reduce((total, record) => total + +record.amount, 0)
+    const percent = (100 * spent) / cat.limit
+    const progressPercent = percent > 100 ? 100 : percent
+    const progressColor =
+      percent < 60 ? 'green' : percent < 100 ? 'yellow' : 'red'
+    const tooltipValue = cat.limit - spent
+    const tooltip = `${
+      tooltipValue < 0
+        ? localizeFilter('planning.excess')
+        : localizeFilter('planning.left')
+    } ${currencyFilter(Math.abs(tooltipValue))}`
 
-      const tooltipValue = cat.limit - spent
-      const tooltip = `${
-        tooltipValue < 0
-          ? localizeFilter('planning.excess')
-          : localizeFilter('planning.left')
-      } ${currencyFilter(Math.abs(tooltipValue))}`
-
-      return {
-        ...cat,
-        progressPercent,
-        progressColor,
-        spent,
-        tooltip,
-      }
-    })
-
-    this.loading = false
-  },
-  methods: {
-    currencyFilter,
-    localizeFilter,
-  },
-}
+    return { ...cat, progressPercent, progressColor, spent, tooltip }
+  })
+  loading.value = false
+})
 </script>

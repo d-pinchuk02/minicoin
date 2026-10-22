@@ -53,47 +53,26 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { computed, ref } from 'vue'
 import currencyFilter from '@/filters/currency.filter'
 import dateFilter from '@/filters/date.filter'
 import localizeFilter from '@/filters/localize.filter'
 
-export default {
-  props: {
-    records: {
-      required: true,
-      type: Array,
-    },
-  },
-  data: () => ({
-    selected: [],
-    headers: [
-      {
-        title: '#',
-        align: 'start',
-        key: 'index',
-      },
-      { title: localizeFilter('shared.amount'), key: 'amount' },
-      { title: localizeFilter('shared.type'), key: 'type' },
-      { title: localizeFilter('shared.category'), key: 'categoryName' },
-      { title: localizeFilter('shared.date'), key: 'date' },
-      { title: localizeFilter('historytable.actions'), key: 'actions' },
-    ],
-  }),
-  computed: {
-    items() {
-      return this.records.map((items, index) => ({
-        ...items,
-        index: index + 1,
-      }))
-    },
-  },
-  methods: {
-    currencyFilter,
-    dateFilter,
-    localizeFilter(key) {
-      return localizeFilter(key)
-    },
-  },
-}
+const props = defineProps({ records: { required: true, type: Array } })
+const selected = ref([])
+const headers = computed(() => [
+  { title: '#', align: 'start', key: 'index' },
+  { title: localizeFilter('shared.amount'), key: 'amount' },
+  { title: localizeFilter('shared.type'), key: 'type' },
+  { title: localizeFilter('shared.category'), key: 'categoryName' },
+  { title: localizeFilter('shared.date'), key: 'date' },
+  { title: localizeFilter('historytable.actions'), key: 'actions' },
+])
+const items = computed(() =>
+  props.records.map((item, index) => ({
+    ...item,
+    index: index + 1,
+  })),
+)
 </script>

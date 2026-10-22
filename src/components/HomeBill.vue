@@ -9,36 +9,28 @@
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn icon @click="$emit('refresh')" aria-label="Refresh balance">
+      <v-btn icon @click="emit('refresh')" aria-label="Refresh balance">
         <v-icon>mdi-refresh</v-icon>
       </v-btn>
     </v-card-actions>
   </v-card>
 </template>
 
-<script>
+<script setup>
+import { computed } from 'vue'
+import { useStore } from 'vuex'
 import currencyFilter from '@/filters/currency.filter'
 import localizeFilter from '@/filters/localize.filter'
 
-export default {
-  props: ['rates'],
-  emits: ['refresh'],
-  data: () => ({
-    currencies: ['UAH', 'USD', 'EUR'],
-  }),
-  computed: {
-    base() {
-      return (
-        this.$store.getters.info.bill / (this.rates['UAH'] / this.rates['EUR'])
-      )
-    },
-  },
-  methods: {
-    currencyFilter,
-    localizeFilter,
-    getCurrency(currency) {
-      return Math.floor(this.base * this.rates[currency])
-    },
-  },
+const props = defineProps(['rates'])
+const emit = defineEmits(['refresh'])
+const store = useStore()
+const currencies = ['UAH', 'USD', 'EUR']
+const base = computed(
+  () => store.getters.info.bill / (props.rates.UAH / props.rates.EUR),
+)
+
+function getCurrency(currency) {
+  return Math.floor(base.value * props.rates[currency])
 }
 </script>

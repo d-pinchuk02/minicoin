@@ -38,49 +38,33 @@
   </div>
 </template>
 
-<script>
-import { mapGetters, mapActions } from 'vuex'
+<script setup>
+import { ref } from 'vue'
+import { useStore } from 'vuex'
 import localizeFilter from '@/filters/localize.filter'
-import { localesArray } from '../locales'
+import { localesArray } from '@/locales'
 
-export default {
-  name: 'profile',
-  data: () => ({
-    name: '',
-    locale: '',
-    isValid: false,
-    langs: localesArray,
-    nameRules: [
-      (v) => !!v || localizeFilter('shared.errors.enterName'),
-      (v) =>
-        (v && v.length >= 2) ||
-        localizeFilter('shared.errors.minLength') + ': ' + 2,
-    ],
-  }),
-  mounted() {
-    this.name = this.info.name
-    this.locale = this.info.locale
-  },
-  computed: {
-    ...mapGetters(['info']),
-  },
-  methods: {
-    localizeFilter,
-    ...mapActions(['updateInfo']),
-    async submitHandler() {
-      const { valid } = await this.$refs.form.validate()
-      if (!valid) return
-      if (!this.isValid) {
-        return
-      }
+const store = useStore()
+const form = ref(null)
+const name = ref(store.getters.info.name)
+const locale = ref(store.getters.info.locale)
+const isValid = ref(false)
+const langs = localesArray
+const nameRules = [
+  (v) => !!v || localizeFilter('shared.errors.enterName'),
+  (v) =>
+    (v && v.length >= 2) ||
+    localizeFilter('shared.errors.minLength') + ': ' + 2,
+]
 
-      try {
-        await this.updateInfo({
-          name: this.name,
-          locale: this.locale,
-        })
-      } catch (e) {}
-    },
-  },
+async function submitHandler() {
+  const { valid } = await form.value.validate()
+  if (!valid) return
+  try {
+    await store.dispatch('updateInfo', {
+      name: name.value,
+      locale: locale.value,
+    })
+  } catch {}
 }
 </script>

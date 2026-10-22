@@ -45,46 +45,35 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { onMounted, ref } from 'vue'
+import { useRoute } from 'vue-router'
+import { useStore } from 'vuex'
 import currencyFilter from '@/filters/currency.filter'
 import dateFilter from '@/filters/date.filter'
 import localizeFilter from '@/filters/localize.filter'
+import Loader from '@/components/app/Loader.vue'
 
-export default {
-  name: 'detailrecord',
-  data: () => ({
-    record: null,
-    loading: true,
-  }),
-  async mounted() {
-    const id = this.$route.params.id
-    const record = await this.$store.dispatch('fetchRecordById', id)
-    const category = await this.$store.dispatch(
-      'fetchCategoryById',
-      record.categoryId,
-    )
+const route = useRoute()
+const store = useStore()
+const record = ref(null)
+const loading = ref(true)
 
-    let typeText =
-      record.type === 'income'
-        ? localizeFilter('shared.income')
-        : localizeFilter('shared.expense')
-    let typeIcon = record.type === 'income' ? 'mdi-plus' : 'mdi-minus'
-    let typeColor = record.type === 'income' ? 'green' : 'red'
+onMounted(async () => {
+  const fetchedRecord = await store.dispatch('fetchRecordById', route.params.id)
+  const category = await store.dispatch(
+    'fetchCategoryById',
+    fetchedRecord.categoryId,
+  )
+  const isIncome = fetchedRecord.type === 'income'
 
-    this.record = {
-      ...record,
-      categoryName: category.title,
-      typeText,
-      typeIcon,
-      typeColor,
-    }
-
-    this.loading = false
-  },
-  methods: {
-    currencyFilter,
-    dateFilter,
-    localizeFilter,
-  },
-}
+  record.value = {
+    ...fetchedRecord,
+    categoryName: category.title,
+    typeText: localizeFilter(isIncome ? 'shared.income' : 'shared.expense'),
+    typeIcon: isIncome ? 'mdi-plus' : 'mdi-minus',
+    typeColor: isIncome ? 'green' : 'red',
+  }
+  loading.value = false
+})
 </script>

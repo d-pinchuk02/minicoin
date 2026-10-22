@@ -9,12 +9,6 @@
   </v-overlay>
 </template>
 
-<script>
+<script setup>
 import localizeFilter from '@/filters/localize.filter'
-
-export default {
-  methods: {
-    localizeFilter,
-  },
-}
 </script>

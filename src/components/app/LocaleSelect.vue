@@ -28,52 +28,46 @@
   </v-menu>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
-import { localesArray } from '../../locales'
+<script setup>
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+import { localesArray } from '@/locales'
 
-export default {
-  name: 'LocaleSelect',
-  props: {
-    menuClass: {
-      type: String,
-      default: '',
-    },
-    activatorClass: {
-      type: String,
-      default: '',
-    },
-    activatorColor: {
-      type: String,
-      default: undefined,
-    },
-    activatorDark: {
-      type: Boolean,
-      default: false,
-    },
-    activatorOutlined: {
-      type: Boolean,
-      default: false,
-    },
-    activatorLarge: {
-      type: Boolean,
-      default: true,
-    },
-    listClass: {
-      type: String,
-      default: '',
-    },
+defineProps({
+  menuClass: {
+    type: String,
+    default: '',
   },
-  data: () => ({
-    languages: localesArray,
-  }),
-  computed: {
-    ...mapGetters(['info']),
+  activatorClass: {
+    type: String,
+    default: '',
   },
-  methods: {
-    setLanguage(code) {
-      this.$store.commit('setInfo', { ...this.info, locale: code })
-    },
+  activatorColor: {
+    type: String,
+    default: undefined,
   },
+  activatorDark: {
+    type: Boolean,
+    default: false,
+  },
+  activatorOutlined: {
+    type: Boolean,
+    default: false,
+  },
+  activatorLarge: {
+    type: Boolean,
+    default: true,
+  },
+  listClass: {
+    type: String,
+    default: '',
+  },
+})
+const store = useStore()
+const languages = localesArray
+const info = computed(() => store.getters.info)
+
+function setLanguage(code) {
+  store.commit('setInfo', { ...info.value, locale: code })
 }
 </script>

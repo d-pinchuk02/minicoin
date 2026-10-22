@@ -1,6 +1,6 @@
 <template>
   <v-app-bar color="orange" class="pl-2">
-    <v-app-bar-nav-icon @click.prevent="$emit('click')"></v-app-bar-nav-icon>
+    <v-app-bar-nav-icon @click.prevent="emit('click')"></v-app-bar-nav-icon>
 
     <span class="title font-weight-light">{{
       dateFilter(date, 'datetime')
@@ -11,11 +11,7 @@
     <v-menu location="bottom">
       <template v-slot:activator="{ props }">
         <v-btn size="large" variant="text" v-bind="props">
-          <span
-            class="mr-2"
-            v-show="!$vuetify.display.xs && !$vuetify.display.sm"
-            >{{ name }}</span
-          >
+          <span class="mr-2" v-show="!smAndDown">{{ name }}</span>
           <v-avatar size="32">
             <v-icon size="large">mdi-account-circle</v-icon>
           </v-avatar>
@@ -44,46 +40,36 @@
   </v-app-bar>
 </template>
 
-<script>
+<script setup>
+import { computed, onMounted, onUnmounted, ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
+import { useDisplay } from 'vuetify'
 import dateFilter from '@/filters/date.filter'
 import localizeFilter from '@/filters/localize.filter'
 
-export default {
-  emits: ['click'],
-  data: () => ({
-    date: new Date(),
-    interval: null,
-  }),
-  methods: {
-    dateFilter,
-    localizeFilter,
-    async logout() {
-      let locale = this.$store.getters.info.locale
-      await this.$store.dispatch('logout')
-      this.$router.push({
-        name: 'login',
-        query: {
-          message: 'logout',
-          locale: locale,
-        },
-      })
-    },
-    toProfile() {
-      this.$router.push('/profile')
-    },
-  },
-  computed: {
-    name() {
-      return this.$store.getters.info.name
-    },
-  },
-  mounted() {
-    this.interval = setInterval(() => {
-      this.date = new Date()
-    }, 1000)
-  },
-  beforeUnmount() {
-    clearInterval(this.interval)
-  },
+const emit = defineEmits(['click'])
+const router = useRouter()
+const store = useStore()
+const { smAndDown } = useDisplay()
+const date = ref(new Date())
+const name = computed(() => store.getters.info.name)
+let interval
+
+onMounted(() => {
+  interval = setInterval(() => {
+    date.value = new Date()
+  }, 1000)
+})
+onUnmounted(() => clearInterval(interval))
+
+async function logout() {
+  const locale = store.getters.info.locale
+  await store.dispatch('logout')
+  router.push({ name: 'login', query: { message: 'logout', locale } })
+}
+
+function toProfile() {
+  router.push('/profile')
 }
 </script>

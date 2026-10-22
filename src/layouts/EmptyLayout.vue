@@ -14,28 +14,26 @@
   </v-app>
 </template>
 
-<script>
+<script setup>
+import { watch } from 'vue'
+import { useStore } from 'vuex'
 import Snackbar from '@/components/app/Snackbar.vue'
 import localizeFilter from '@/filters/localize.filter'
+import { useMessage } from '@/composables/useMessage'
 
-export default {
-  components: {
-    Snackbar,
+const store = useStore()
+const { error: showError } = useMessage()
+
+watch(
+  () => store.getters.error,
+  (fbError) => {
+    if (!fbError) return
+    showError(
+      localizeFilter('msg.' + fbError.code) ||
+        localizeFilter('msg.unknownError'),
+    )
   },
-  computed: {
-    error() {
-      return this.$store.getters.error
-    },
-  },
-  watch: {
-    error(fbError) {
-      this.$error(
-        localizeFilter('msg.' + fbError.code) ||
-          localizeFilter('msg.unknownError'),
-      )
-    },
-  },
-}
+)
 </script>
 
 <style scoped>

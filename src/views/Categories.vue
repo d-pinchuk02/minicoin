@@ -24,37 +24,32 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { onMounted, ref } from 'vue'
+import { useStore } from 'vuex'
 import localizeFilter from '@/filters/localize.filter'
 import CategoryCreate from '@/components/CategoryCreate.vue'
 import CategoryEdit from '@/components/CategoryEdit.vue'
+import Loader from '@/components/app/Loader.vue'
 
-export default {
-  name: 'categories',
-  data: () => ({
-    categories: [],
-    loading: true,
-    updateCount: 0,
-  }),
-  async mounted() {
-    this.categories = await this.$store.dispatch('fetchCategories')
-    this.loading = false
-  },
-  components: {
-    CategoryCreate,
-    CategoryEdit,
-  },
-  methods: {
-    localizeFilter,
-    addNewCategory(category) {
-      this.categories.push(category)
-    },
-    updateCategories(category) {
-      const idx = this.categories.findIndex((c) => c.id === category.id)
-      this.categories[idx].title = category.title
-      this.categories[idx].limit = category.limit
-      this.updateCount++
-    },
-  },
+const store = useStore()
+const categories = ref([])
+const loading = ref(true)
+const updateCount = ref(0)
+
+onMounted(async () => {
+  categories.value = await store.dispatch('fetchCategories')
+  loading.value = false
+})
+
+function addNewCategory(category) {
+  categories.value.push(category)
+}
+
+function updateCategories(category) {
+  const idx = categories.value.findIndex((c) => c.id === category.id)
+  categories.value[idx].title = category.title
+  categories.value[idx].limit = category.limit
+  updateCount.value++
 }
 </script>

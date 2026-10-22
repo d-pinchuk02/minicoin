@@ -24,32 +24,23 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { onMounted, ref } from 'vue'
+import { useStore } from 'vuex'
 import localizeFilter from '@/filters/localize.filter'
 import HomeBill from '@/components/HomeBill.vue'
 import HomeCurrency from '@/components/HomeCurrency.vue'
+import Loader from '@/components/app/Loader.vue'
 
-export default {
-  name: 'dashboard',
-  data: () => ({
-    loading: true,
-    currency: null,
-  }),
-  async mounted() {
-    this.currency = await this.$store.dispatch('fetchCurrency')
-    this.loading = false
-  },
-  methods: {
-    localizeFilter,
-    async refresh() {
-      this.loading = true
-      this.currency = await this.$store.dispatch('fetchCurrency')
-      this.loading = false
-    },
-  },
-  components: {
-    HomeBill,
-    HomeCurrency,
-  },
+const store = useStore()
+const loading = ref(true)
+const currency = ref(null)
+
+async function refresh() {
+  loading.value = true
+  currency.value = await store.dispatch('fetchCurrency')
+  loading.value = false
 }
+
+onMounted(refresh)
 </script>

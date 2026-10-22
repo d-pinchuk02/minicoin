@@ -21,28 +21,20 @@
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn icon @click="$emit('refresh')" aria-label="Refresh exchange rates">
+      <v-btn icon @click="emit('refresh')" aria-label="Refresh exchange rates">
         <v-icon>mdi-refresh</v-icon>
       </v-btn>
     </v-card-actions>
   </v-card>
 </template>
 
-<script>
+<script setup>
 import dateFilter from '@/filters/date.filter'
 import localizeFilter from '@/filters/localize.filter'
 
-export default {
-  props: ['rates', 'date'],
-  emits: ['refresh'],
-  data: () => ({
-    currencies: ['UAH', 'USD', 'EUR'],
-  }),
-  methods: {
-    dateFilter,
-    localizeFilter,
-  },
-}
+defineProps(['rates', 'date'])
+const emit = defineEmits(['refresh'])
+const currencies = ['UAH', 'USD', 'EUR']
 </script>
 
 <style scoped>

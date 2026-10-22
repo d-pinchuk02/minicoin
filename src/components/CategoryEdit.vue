@@ -44,61 +44,51 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref, watch } from 'vue'
+import { useStore } from 'vuex'
 import localizeFilter from '@/filters/localize.filter'
+import { useMessage } from '@/composables/useMessage'
 
-export default {
-  props: {
-    categories: {
-      type: Array,
-      required: true,
-    },
-  },
-  data: () => ({
-    isValid: false,
-    title: '',
-    limit: 1,
-    current: null,
-    titleRules: [(v) => !!v || localizeFilter('categoryedit.error.enterTitle')],
-    limitRules: [
-      (v) =>
-        (v && +v >= 1) || localizeFilter('shared.errors.minValue') + ': ' + 1,
-    ],
-  }),
-  watch: {
-    current(catId) {
-      const category = this.categories.find((c) => c.id === catId)
-      if (!category) return
-      const { title, limit } = category
-      this.title = title
-      this.limit = limit
-    },
-  },
-  created() {
-    const { id, title, limit } = this.categories[0]
-    ;((this.current = id), (this.title = title))
-    this.limit = limit
-  },
-  methods: {
-    localizeFilter,
-    async submitHandler() {
-      const { valid } = await this.$refs.form.validate()
+const props = defineProps({ categories: { type: Array, required: true } })
+const emit = defineEmits(['updated'])
+const store = useStore()
+const { success } = useMessage()
+const form = ref(null)
+const isValid = ref(false)
+const title = ref('')
+const limit = ref(1)
+const current = ref(props.categories[0]?.id)
+const titleRules = [
+  (v) => !!v || localizeFilter('categoryedit.error.enterTitle'),
+]
+const limitRules = [
+  (v) => (v && +v >= 1) || localizeFilter('shared.errors.minValue') + ': ' + 1,
+]
 
-      if (!valid) {
-        return
-      }
-
-      try {
-        const categoryData = {
-          id: this.current,
-          title: this.title,
-          limit: this.limit,
-        }
-        await this.$store.dispatch('updateCategory', categoryData)
-        this.$success(localizeFilter('msg.categoryUpdated'))
-        this.$emit('updated', categoryData)
-      } catch (e) {}
-    },
+watch(
+  current,
+  (catId) => {
+    const category = props.categories.find((c) => c.id === catId)
+    if (!category) return
+    title.value = category.title
+    limit.value = category.limit
   },
+  { immediate: true },
+)
+
+async function submitHandler() {
+  const { valid } = await form.value.validate()
+  if (!valid) return
+  try {
+    const categoryData = {
+      id: current.value,
+      title: title.value,
+      limit: limit.value,
+    }
+    await store.dispatch('updateCategory', categoryData)
+    success(localizeFilter('msg.categoryUpdated'))
+    emit('updated', categoryData)
+  } catch {}
 }
 </script>

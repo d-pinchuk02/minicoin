@@ -33,47 +33,43 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { ref } from 'vue'
+import { useStore } from 'vuex'
 import localizeFilter from '@/filters/localize.filter'
+import { useMessage } from '@/composables/useMessage'
 
-export default {
-  data: () => ({
-    title: '',
-    limit: 1,
-    isValid: false,
-    titleRules: [
-      (v) => !!v || localizeFilter('categorycreate.error.enterTitle'),
-      (v) =>
-        (v && v.length >= 2) ||
-        localizeFilter('shared.errors.minLength') + ': ' + 2,
-    ],
-    limitRules: [
-      (v) =>
-        (v && +v >= 1) || localizeFilter('shared.errors.minValue') + ': ' + 1,
-    ],
-  }),
-  methods: {
-    localizeFilter,
-    async submitHandler() {
-      const { valid } = await this.$refs.form.validate()
+const emit = defineEmits(['created'])
+const store = useStore()
+const { success } = useMessage()
+const form = ref(null)
+const title = ref('')
+const limit = ref(1)
+const isValid = ref(false)
+const titleRules = [
+  (v) => !!v || localizeFilter('categorycreate.error.enterTitle'),
+  (v) =>
+    (v && v.length >= 2) ||
+    localizeFilter('shared.errors.minLength') + ': ' + 2,
+]
 
-      if (!valid) {
-        return
-      }
+const limitRules = [
+  (v) => (v && +v >= 1) || localizeFilter('shared.errors.minValue') + ': ' + 1,
+]
 
-      try {
-        const category = await this.$store.dispatch('createCategory', {
-          title: this.title,
-          limit: this.limit,
-        })
-        this.$refs.form.reset()
-        this.title = ''
-        this.limit = 1
-        this.$success(localizeFilter('msg.categoryCreated'))
-
-        this.$emit('created', category)
-      } catch (e) {}
-    },
-  },
+async function submitHandler() {
+  const { valid } = await form.value.validate()
+  if (!valid) return
+  try {
+    const category = await store.dispatch('createCategory', {
+      title: title.value,
+      limit: limit.value,
+    })
+    form.value.reset()
+    title.value = ''
+    limit.value = 1
+    success(localizeFilter('msg.categoryCreated'))
+    emit('created', category)
+  } catch {}
 }
 </script>

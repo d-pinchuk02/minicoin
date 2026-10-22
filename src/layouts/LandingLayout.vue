@@ -10,18 +10,8 @@
   </v-app>
 </template>
 
-<script>
+<script setup>
 import Snackbar from '@/components/app/Snackbar.vue'
-
-export default {
-  name: 'landing-layout',
-  components: {
-    Snackbar,
-  },
-  data: () => ({
-    appTitle: import.meta.env.VITE_TITLE,
-  }),
-}
 </script>
 
 <style scoped>
