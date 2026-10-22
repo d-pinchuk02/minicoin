@@ -1,44 +1,48 @@
 <template>
-  <v-card color="deep-orange" dark>
-    <v-card-title>{{'homecurrency.title' | localize}}</v-card-title>
+  <v-card color="deep-orange" class="text-white">
+    <v-card-title>{{ localizeFilter('homecurrency.title') }}</v-card-title>
     <v-card-text>
-      <v-simple-table dark class="deep-orange">
+      <v-table class="bg-deep-orange text-white">
         <thead>
           <tr>
-            <th>{{'homecurrency.currency' | localize}}</th>
-            <th>{{'homecurrency.rate' | localize}}</th>
-            <th>{{'shared.date' | localize}}</th>
+            <th>{{ localizeFilter('homecurrency.currency') }}</th>
+            <th>{{ localizeFilter('homecurrency.rate') }}</th>
+            <th>{{ localizeFilter('shared.date') }}</th>
           </tr>
         </thead>
         <tbody>
-            <tr v-for="cur of currencies" :key="cur">
-              <td>{{cur}}</td>
-              <td>{{rates[cur].toFixed(2)}}</td>
-              <td>{{ date * 1000 | date('date') }}</td>
-            </tr>
+          <tr v-for="cur of currencies" :key="cur">
+            <td>{{ cur }}</td>
+            <td>{{ rates[cur].toFixed(2) }}</td>
+            <td>{{ dateFilter(date * 1000, 'date') }}</td>
+          </tr>
         </tbody>
-      </v-simple-table>
+      </v-table>
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn icon @click.prevent="$parent.refresh">
+      <v-btn icon @click="emit('refresh')" aria-label="Refresh exchange rates">
         <v-icon>mdi-refresh</v-icon>
       </v-btn>
     </v-card-actions>
   </v-card>
 </template>
 
-<script>
-export default {
-  props: ['rates', 'date'],
-  data: () => ({
-    currencies: ['UAH', 'USD', 'EUR']
-  })
-}
+<script setup>
+import dateFilter from '@/filters/date.filter'
+import localizeFilter from '@/filters/localize.filter'
+
+defineProps(['rates', 'date'])
+const emit = defineEmits(['refresh'])
+const currencies = ['UAH', 'USD', 'EUR']
 </script>
 
 <style scoped>
-.theme--dark.v-data-table tbody tr:hover:not(.v-data-table__expanded__content):not(.v-data-table__empty-wrapper) {
+.theme--dark.v-data-table
+  tbody
+  tr:hover:not(.v-data-table__expanded__content):not(
+    .v-data-table__empty-wrapper
+  ) {
   background: inherit;
 }
 </style>

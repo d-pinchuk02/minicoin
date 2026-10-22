@@ -1,36 +1,22 @@
 <template>
-  <div id="app">
-    <component :is="layout">
-      <router-view />
-    </component>
-  </div>
+  <component :is="layout" />
 </template>
 
-<script>
-import EmptyLayout from "@/layouts/EmptyLayout.vue";
-import MainLayout from "@/layouts/MainLayout.vue";
-import LandingLayout from "@/layouts/LandingLayout.vue";
+<script setup>
+import { computed, watchEffect } from 'vue'
+import { useRoute } from 'vue-router'
+import EmptyLayout from '@/layouts/EmptyLayout.vue'
+import MainLayout from '@/layouts/MainLayout.vue'
+import LandingLayout from '@/layouts/LandingLayout.vue'
+import title from '@/utils/title'
 
-export default {
-  computed: {
-    layout() {
-      return (this.$route.meta.layout || "empty") + "-layout";
-    }
-  },
-  components: {
-    EmptyLayout,
-    MainLayout,
-    LandingLayout,
-  }
-};
+const route = useRoute()
+const layouts = { empty: EmptyLayout, main: MainLayout, landing: LandingLayout }
+const layout = computed(() => layouts[route.meta.layout || 'empty'])
+
+watchEffect(() => {
+  document.title = route.meta.titleKey
+    ? title(route.meta.titleKey)
+    : import.meta.env.VITE_TITLE
+})
 </script>
-
-<style>
-.toasted {
-  font-family: "Roboto", sans-serif;
-}
-
-.toasted > .mdi::before {
-  font-size: 1.2em;
-}
-</style>

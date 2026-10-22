@@ -1,39 +1,36 @@
 <template>
-  <v-card color="blue" dark>
-    <v-card-title>{{'homebill.title' | localize}}</v-card-title>
+  <v-card color="blue" class="text-white">
+    <v-card-title>{{ localizeFilter('homebill.title') }}</v-card-title>
     <v-card-text>
-      <div
-        v-for="cur of currencies"
-        :key="cur"
-      >
-        <h2>{{ getCurrency(cur) | currency(cur) }}</h2>
+      <div v-for="cur of currencies" :key="cur">
+        <h2>{{ currencyFilter(getCurrency(cur), cur) }}</h2>
         <v-divider class="mt-3 mb-3"></v-divider>
       </div>
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn icon @click.prevent="$parent.refresh">
+      <v-btn icon @click="emit('refresh')" aria-label="Refresh balance">
         <v-icon>mdi-refresh</v-icon>
       </v-btn>
     </v-card-actions>
   </v-card>
 </template>
 
-<script>
-export default {
-  props: ['rates'],
-  data: () => ({
-    currencies: ['UAH', 'USD', 'EUR']
-  }),
-  computed: {
-    base() {
-      return this.$store.getters.info.bill / (this.rates['UAH'] / this.rates['EUR'])
-    }
-  },
-  methods: {
-    getCurrency(currency) {
-      return Math.floor(this.base * this.rates[currency])
-    }
-  }
+<script setup>
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+import currencyFilter from '@/filters/currency.filter'
+import localizeFilter from '@/filters/localize.filter'
+
+const props = defineProps(['rates'])
+const emit = defineEmits(['refresh'])
+const store = useStore()
+const currencies = ['UAH', 'USD', 'EUR']
+const base = computed(
+  () => store.getters.info.bill / (props.rates.UAH / props.rates.EUR),
+)
+
+function getCurrency(currency) {
+  return Math.floor(base.value * props.rates[currency])
 }
 </script>

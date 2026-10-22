@@ -1,14 +1,6 @@
 <template>
-  <v-navigation-drawer
-      app
-      clipped
-      color="grey lighten-4"
-      :value="value"
-    >
-    <v-list
-        dense
-        nav
-    >
+  <v-navigation-drawer color="grey-lighten-4" v-model="model">
+    <v-list density="compact" nav>
       <v-list-item
         v-for="item in links"
         :key="item.title"
@@ -16,51 +8,48 @@
         router
         exact
       >
-        <v-list-item-icon>
-          <v-icon right>{{ item.icon }}</v-icon>
-        </v-list-item-icon>
+        <template #prepend>
+          <v-icon end>{{ item.icon }}</v-icon>
+        </template>
 
-        <v-list-item-content>
+        <div>
           <v-list-item-title>{{ item.title }}</v-list-item-title>
-        </v-list-item-content>
+        </div>
       </v-list-item>
     </v-list>
   </v-navigation-drawer>
 </template>
 
-<script>
+<script setup>
+import { computed } from 'vue'
 import localizeFilter from '@/filters/localize.filter'
 
-export default {
-  props: ['value'],
-  data: () => ({
-    links: [
-      { 
-        title: localizeFilter('sidebar.bill'), 
-        icon: 'mdi-currency-usd',
-        to: '/dashboard' 
-      },
-      { 
-        title: localizeFilter('sidebar.history'), 
-        icon: 'mdi-history',
-        to: '/history'
-      },
-      { 
-        title: localizeFilter('sidebar.planning'), 
-        icon: 'mdi-trending-up',
-        to: '/planning'
-      },
-      { 
-        title: localizeFilter('sidebar.record'), 
-        icon: 'mdi-plus',
-        to: '/record'
-      },
-      { 
-        title: localizeFilter('sidebar.categories'), 
-        icon: 'mdi-shape',
-        to: '/categories'
-      }
-    ]
-  })
-}
+const model = defineModel({ default: null })
+const links = computed(() => [
+  {
+    title: localizeFilter('sidebar.bill'),
+    icon: 'mdi-currency-usd',
+    to: '/dashboard',
+  },
+  {
+    title: localizeFilter('sidebar.history'),
+    icon: 'mdi-history',
+    to: '/history',
+  },
+  {
+    title: localizeFilter('sidebar.planning'),
+    icon: 'mdi-trending-up',
+    to: '/planning',
+  },
+  {
+    title: localizeFilter('sidebar.record'),
+    icon: 'mdi-plus',
+    to: '/record',
+  },
+  {
+    title: localizeFilter('sidebar.categories'),
+    icon: 'mdi-shape',
+    to: '/categories',
+  },
+])
 </script>

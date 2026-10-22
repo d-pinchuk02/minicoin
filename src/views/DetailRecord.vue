@@ -1,100 +1,79 @@
 <template>
   <div>
     <h1>
-      <v-btn
-        icon
-        large
-        color="primary"
-        :to="'/history'"
-      >
+      <v-btn icon size="large" color="primary" :to="'/history'">
         <v-icon>mdi-arrow-left</v-icon>
       </v-btn>
-      {{'detailrecord.title' | localize}}
+      {{ localizeFilter('detailrecord.title') }}
     </h1>
     <v-divider class="mb-4"></v-divider>
 
     <Loader v-if="loading" />
-    <v-col v-else-if="record" cols="12" xs="12" sm="6" md="6">
-      <v-card
-        outlined
-      >
-        <v-card-title>
-          {{record.amount | currency}}
-          <v-chip
-            class="ml-4"
-            :color="record.typeColor"
-            label
-            text-color="white"
-          >
-            <v-icon left>{{record.typeIcon}}</v-icon>
-            {{record.typeText}}
-          </v-chip>
-        </v-card-title>
-        <v-card-subtitle>{{record.date | date('datetime')}}</v-card-subtitle>
-        <v-card-text>
-          <v-chip
-            color="primary"
-            label
-            text-color="white"
-          >
-            <v-icon left>mdi-shape</v-icon>
-            {{record.categoryName}}
-          </v-chip>
-          <br/>
-          <br/>
-          {{record.description}}
-        </v-card-text>
-      </v-card>
-    </v-col>
+    <v-row v-else-if="record">
+      <v-col cols="12" sm="6">
+        <v-card variant="outlined">
+          <v-card-title>
+            {{ currencyFilter(record.amount) }}
+            <v-chip
+              class="ml-4 text-white"
+              :color="record.typeColor"
+              label
+              variant="flat"
+            >
+              <v-icon start>{{ record.typeIcon }}</v-icon>
+              {{ record.typeText }}
+            </v-chip>
+          </v-card-title>
+          <v-card-subtitle>{{
+            dateFilter(record.date, 'datetime')
+          }}</v-card-subtitle>
+          <v-card-text>
+            <v-chip color="primary" variant="flat" label class="text-white">
+              <v-icon start>mdi-shape</v-icon>
+              {{ record.categoryName }}
+            </v-chip>
+            <br />
+            <br />
+            {{ record.description }}
+          </v-card-text>
+        </v-card>
+      </v-col>
+    </v-row>
     <v-alert v-else type="error">
-      {{'detailrecord.noRecord' | localize}}
+      {{ localizeFilter('detailrecord.noRecord') }}
     </v-alert>
   </div>
 </template>
 
-<script>
+<script setup>
+import { onMounted, ref } from 'vue'
+import { useRoute } from 'vue-router'
+import { useStore } from 'vuex'
+import currencyFilter from '@/filters/currency.filter'
+import dateFilter from '@/filters/date.filter'
 import localizeFilter from '@/filters/localize.filter'
+import Loader from '@/components/app/Loader.vue'
 
-export default {
-  name: 'detailrecord',
-  metaInfo() {
-    return {
-      title: this.$title('detailrecord.title')
-    }
-  },
-  data: () => ({
-    record: null, 
-    loading: true
-  }),
-  async mounted() {
-    const id = this.$route.params.id
-    const record = await this.$store.dispatch('fetchRecordById', id)
-    const category = await this.$store.dispatch('fetchCategoryById', record.categoryId)
+const route = useRoute()
+const store = useStore()
+const record = ref(null)
+const loading = ref(true)
 
-    let typeText = record.type === 'income'
-              ? localizeFilter('shared.income')
-              : localizeFilter('shared.expense')
-    let typeIcon = record.type === 'income'
-              ? 'mdi-plus'
-              : 'mdi-minus'
-    let typeColor = record.type === 'income'
-              ? 'green'
-              : 'red'
+onMounted(async () => {
+  const fetchedRecord = await store.dispatch('fetchRecordById', route.params.id)
+  const category = await store.dispatch(
+    'fetchCategoryById',
+    fetchedRecord.categoryId,
+  )
+  const isIncome = fetchedRecord.type === 'income'
 
-    this.record = {
-      ...record,
-      categoryName: category.title,
-      typeText,
-      typeIcon,
-      typeColor
-    }
-
-    this.loading = false
-  },
-  methods: {
-    localizeFilter(key) {
-      return localizeFilter(key)
-    }
+  record.value = {
+    ...fetchedRecord,
+    categoryName: category.title,
+    typeText: localizeFilter(isIncome ? 'shared.income' : 'shared.expense'),
+    typeIcon: isIncome ? 'mdi-plus' : 'mdi-minus',
+    typeColor: isIncome ? 'green' : 'red',
   }
-}
+  loading.value = false
+})
 </script>

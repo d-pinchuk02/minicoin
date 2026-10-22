@@ -1,7 +1,7 @@
 <template>
   <v-card class="elevation-3">
     <v-toolbar flat>
-      <v-toolbar-title>{{ this.$title('register.title') }}</v-toolbar-title>
+      <v-toolbar-title>{{ title('register.title') }}</v-toolbar-title>
       <locale-select
         activator-class="ml-auto"
         activator-outlined
@@ -9,9 +9,9 @@
       />
     </v-toolbar>
     <v-card-text>
-      <v-form v-model="isValid" @submit.prevent="submitHandler">
+      <v-form ref="form" v-model="isValid" @submit.prevent="submitHandler">
         <v-text-field
-          :label="'shared.email' | localize"
+          :label="localizeFilter('shared.email')"
           :rules="emailRules"
           color="orange"
           name="email"
@@ -22,7 +22,7 @@
         ></v-text-field>
 
         <v-text-field
-          :label="'shared.password' | localize"
+          :label="localizeFilter('shared.password')"
           :rules="passwordRules"
           color="orange"
           name="password"
@@ -33,7 +33,7 @@
         ></v-text-field>
 
         <v-text-field
-          :label="'shared.name' | localize"
+          :label="localizeFilter('shared.name')"
           :rules="nameRules"
           color="orange"
           name="name"
@@ -44,20 +44,16 @@
         ></v-text-field>
 
         <v-checkbox
-          :label="'register.agree' | localize"
+          :label="localizeFilter('register.agree')"
           color="orange"
           v-model="agree"
         ></v-checkbox>
       </v-form>
     </v-card-text>
     <v-card-actions class="pa-4">
-      <v-btn
-        color="orange"
-        to="login"
-        outlined
-      >
-        <v-icon left>mdi-login</v-icon>
-        {{'shared.signin' | localize}}...
+      <v-btn color="orange" to="login" variant="outlined">
+        <v-icon start>mdi-login</v-icon>
+        {{ localizeFilter('shared.signin') }}...
       </v-btn>
       <v-spacer></v-spacer>
       <v-btn
@@ -65,64 +61,60 @@
         color="orange"
         :disabled="!isValid || !agree"
       >
-        <v-icon left>mdi-account-plus</v-icon>
-        {{'shared.signup' | localize}}
+        <v-icon start>mdi-account-plus</v-icon>
+        {{ localizeFilter('shared.signup') }}
       </v-btn>
     </v-card-actions>
   </v-card>
 </template>
 
-<script>
+<script setup>
+import { ref } from 'vue'
+import { useRouter } from 'vue-router'
+import { useStore } from 'vuex'
 import localizeFilter from '@/filters/localize.filter'
-import LocaleSelect from "../components/app/LocaleSelect.vue"
+import LocaleSelect from '@/components/app/LocaleSelect.vue'
+import title from '@/utils/title'
 
-export default {
-  name: 'register',
-  metaInfo() {
-    return {
-      title: this.$title('register.title')
-    }
-  },
-  data: () => ({
-    email: '',
-    password: '',
-    name: '',
-    agree: false,
-    isValid: false,
-    emailRules: [ 
-      v => !!v || localizeFilter('shared.errors.enterEmail'),
-      v => /^\S+@\S+\.\S+$/.test(v) || localizeFilter('shared.errors.enterCorrectEmail')
-    ],
-    passwordRules: [ 
-      v => !!v || localizeFilter('shared.errors.enterPassword'),
-      v => (v && v.length >= 8) || localizeFilter('shared.errors.minLength') + ': ' + 8
-    ],
-    nameRules: [
-      v => !!v || localizeFilter('shared.errors.enterName'),
-      v => (v && v.length >= 2) || localizeFilter('shared.errors.minLength') + ': ' + 2
-    ]
-  }),
-  methods: {
-    async submitHandler() {
-      if(!this.isValid || !this.agree) {
-        console.log('invalid')
-        return
-      }
+const router = useRouter()
+const store = useStore()
+const form = ref(null)
+const email = ref('')
+const password = ref('')
+const name = ref('')
+const agree = ref(false)
+const isValid = ref(false)
+const emailRules = [
+  (v) => !!v || localizeFilter('shared.errors.enterEmail'),
+  (v) =>
+    /^\S+@\S+\.\S+$/.test(v) ||
+    localizeFilter('shared.errors.enterCorrectEmail'),
+]
 
-      const formData = {
-        email: this.email,
-        password: this.password,
-        name: this.name
-      }
+const passwordRules = [
+  (v) => !!v || localizeFilter('shared.errors.enterPassword'),
+  (v) =>
+    (v && v.length >= 8) ||
+    localizeFilter('shared.errors.minLength') + ': ' + 8,
+]
 
-      try {
-        await this.$store.dispatch('register', formData)
-        this.$router.push('/dashboard')
-      } catch (e) {}
-    }
-  },
-  components: {
-    LocaleSelect,
-  }
+const nameRules = [
+  (v) => !!v || localizeFilter('shared.errors.enterName'),
+  (v) =>
+    (v && v.length >= 2) ||
+    localizeFilter('shared.errors.minLength') + ': ' + 2,
+]
+
+async function submitHandler() {
+  const { valid } = await form.value.validate()
+  if (!valid || !agree.value) return
+  try {
+    await store.dispatch('register', {
+      email: email.value,
+      password: password.value,
+      name: name.value,
+    })
+    router.push('/dashboard')
+  } catch {}
 }
 </script>

@@ -4,7 +4,7 @@ import { defaultLocale } from '../locales'
 export default function dateFilter(value, format = 'date') {
   const options = {}
 
-  if(format.includes('date')) {
+  if (format.includes('date')) {
     options.day = '2-digit'
     options.month = 'long'
     options.year = 'numeric'
@@ -17,5 +17,5 @@ export default function dateFilter(value, format = 'date') {
   }
 
   const locale = store.getters.info.locale || defaultLocale
-  return new Intl.DateTimeFormat(locale, options).format(new Date(value)) 
+  return new Intl.DateTimeFormat(locale, options).format(new Date(value))
 }

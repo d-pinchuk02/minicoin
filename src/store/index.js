@@ -1,15 +1,12 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import { createStore } from 'vuex'
 import auth from './auth'
 import info from './info'
 import category from './category'
 import record from './record'
 
-Vue.use(Vuex)
-
-export default new Vuex.Store({
+export default createStore({
   state: {
-    error: null
+    error: null,
   },
   mutations: {
     setError(state, error) {
@@ -17,19 +14,24 @@ export default new Vuex.Store({
     },
     clearError(state) {
       state.error = null
-    }
+    },
   },
   getters: {
-    error: s => s.error
+    error: (s) => s.error,
   },
   actions: {
     async fetchCurrency() {
       const key = import.meta.env.VITE_EXCHANGERATE_API_KEY
-      const res = await fetch(`https://v6.exchangerate-api.com/v6/${key}/latest/EUR`)
+      const res = await fetch(
+        `https://v6.exchangerate-api.com/v6/${key}/latest/EUR`,
+      )
       return await res.json()
-    }
+    },
   },
   modules: {
-    auth, info, category, record
-  }
+    auth,
+    info,
+    category,
+    record,
+  },
 })

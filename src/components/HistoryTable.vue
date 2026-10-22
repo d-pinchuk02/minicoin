@@ -3,25 +3,25 @@
     <v-data-table
       v-model="selected"
       show-select
-      item-key="id"
+      item-value="id"
       :headers="headers"
       :items="items"
       :items-per-page="15"
     >
       <template v-slot:item.amount="{ item }">
-        {{ item.amount | currency }}
+        {{ currencyFilter(item.amount) }}
       </template>
-    
- 	 <template v-slot:item.type="{ item }">
-        <v-chip :color="item.typeClass" text-color="white">
+
+      <template v-slot:item.type="{ item }">
+        <v-chip :color="item.typeClass" class="text-white" variant="flat">
           {{ item.typeText }}
         </v-chip>
       </template>
-    
+
       <template v-slot:item.date="{ item }">
-        {{ item.date | date('datetime') }}
+        {{ dateFilter(item.date, 'datetime') }}
       </template>
-    
+
       <template v-slot:item.actions="{ item }">
         <v-btn
           icon
@@ -29,9 +29,7 @@
           :to="`/detail/${item.id}`"
           :title="localizeFilter('historytable.openRecord')"
         >
-          <v-icon>
-            mdi-open-in-new
-          </v-icon>
+          <v-icon> mdi-open-in-new </v-icon>
         </v-btn>
         <!--<v-btn
           icon
@@ -55,44 +53,26 @@
   </div>
 </template>
 
-<script>
+<script setup>
+import { computed, ref } from 'vue'
+import currencyFilter from '@/filters/currency.filter'
+import dateFilter from '@/filters/date.filter'
 import localizeFilter from '@/filters/localize.filter'
 
-export default {
-  props: {
-    records: {
-      required: true,
-      type: Array
-    },
-  },
-  data: () => ({
-    selected: [],
-    headers: [
-      {
-        text: '#',
-        align: 'start',
-        value: 'index'
-      },
-      { text: localizeFilter('shared.amount'), value: 'amount' },
-      { text: localizeFilter('shared.type'), value: 'type' },
-      { text: localizeFilter('shared.category'), value: 'categoryName' },	
-      { text: localizeFilter('shared.date'), value: 'date' },
-      { text: localizeFilter('historytable.actions'), value: 'actions' },
-    ],
-  }),
-  computed: {
-    items() {
-      return this.records.map(
-        (items, index) => ({
-          ...items,
-          index: index + 1
-        }))
-    }
-  },
-  methods: {
-    localizeFilter(key) {
-      return localizeFilter(key)
-    }
-  }
-}
+const props = defineProps({ records: { required: true, type: Array } })
+const selected = ref([])
+const headers = computed(() => [
+  { title: '#', align: 'start', key: 'index' },
+  { title: localizeFilter('shared.amount'), key: 'amount' },
+  { title: localizeFilter('shared.type'), key: 'type' },
+  { title: localizeFilter('shared.category'), key: 'categoryName' },
+  { title: localizeFilter('shared.date'), key: 'date' },
+  { title: localizeFilter('historytable.actions'), key: 'actions' },
+])
+const items = computed(() =>
+  props.records.map((item, index) => ({
+    ...item,
+    index: index + 1,
+  })),
+)
 </script>

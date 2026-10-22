@@ -1,18 +1,19 @@
 <template>
-  <v-menu offset-y :class="menuClass">
-    <template v-slot:activator="{ on, attrs }">
+  <v-menu location="bottom" :class="menuClass">
+    <template v-slot:activator="{ props }">
       <v-btn
-        :large="activatorLarge"
+        :size="activatorLarge ? 'large' : 'small'"
         :class="activatorClass"
-        :color="activatorColor"
-        :dark="activatorDark"
-        :outlined="activatorOutlined"
-        :small="!activatorLarge"
-        v-bind="attrs"
-        v-on="on"
+        :color="
+          activatorColor ||
+          (activatorOutlined ? 'grey-darken-3' : 'grey-lighten-4')
+        "
+        :theme="activatorDark ? 'dark' : undefined"
+        :variant="activatorOutlined ? 'outlined' : 'elevated'"
+        v-bind="props"
       >
-        <v-icon left>mdi-translate</v-icon>
-        {{ languages.find(lang => lang.id === info.locale)?.name }}
+        <v-icon start>mdi-translate</v-icon>
+        {{ languages.find((lang) => lang.id === info.locale)?.name }}
       </v-btn>
     </template>
     <v-list :class="listClass">
@@ -27,52 +28,46 @@
   </v-menu>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
-import { localesArray } from '../../locales'
+<script setup>
+import { computed } from 'vue'
+import { useStore } from 'vuex'
+import { localesArray } from '@/locales'
 
-export default {
-  name: 'LocaleSelect',
-  props: {
-    menuClass: {
-      type: String,
-      default: ''
-    },
-    activatorClass: {
-      type: String,
-      default: ''
-    },
-    activatorColor: {
-      type: String,
-      default: 'light'
-    },
-    activatorDark: {
-      type: Boolean,
-      default: false
-    },
-    activatorOutlined: {
-      type: Boolean,
-      default: false
-    },
-    activatorLarge: {
-      type: Boolean,
-      default: true
-    },
-    listClass: {
-      type: String,
-      default: ''
-    }
+defineProps({
+  menuClass: {
+    type: String,
+    default: '',
   },
-  data: () => ({
-    languages: localesArray,
-  }),
-  computed: {
-    ...mapGetters(['info']),
+  activatorClass: {
+    type: String,
+    default: '',
   },
-  methods: {
-    setLanguage(code) {
-      this.$store.commit("setInfo", { ...this.info, locale: code })
-    }
-  }
+  activatorColor: {
+    type: String,
+    default: undefined,
+  },
+  activatorDark: {
+    type: Boolean,
+    default: false,
+  },
+  activatorOutlined: {
+    type: Boolean,
+    default: false,
+  },
+  activatorLarge: {
+    type: Boolean,
+    default: true,
+  },
+  listClass: {
+    type: String,
+    default: '',
+  },
+})
+const store = useStore()
+const languages = localesArray
+const info = computed(() => store.getters.info)
+
+function setLanguage(code) {
+  store.commit('setInfo', { ...info.value, locale: code })
 }
 </script>

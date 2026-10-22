@@ -1,23 +1,23 @@
 <template>
   <div>
-    <h2>{{ "categoryedit.title" | localize }}</h2>
+    <h2>{{ localizeFilter('categoryedit.title') }}</h2>
 
     <v-divider class="mb-4"></v-divider>
 
     <v-form v-model="isValid" ref="form" @submit.prevent="submitHandler">
       <v-select
         :items="categories"
-        :label="'shared.selectCategory' | localize"
+        :label="localizeFilter('shared.selectCategory')"
         name="category"
         prepend-icon="mdi-shape"
-        item-text="title"
+        item-title="title"
         item-value="id"
         v-model="current"
         required
       ></v-select>
 
       <v-text-field
-        :label="'categoryedit.name' | localize"
+        :label="localizeFilter('categoryedit.name')"
         :rules="titleRules"
         name="title"
         prepend-icon="mdi-format-letter-case"
@@ -27,7 +27,7 @@
       ></v-text-field>
 
       <v-text-field
-        :label="'shared.limit' | localize"
+        :label="localizeFilter('shared.limit')"
         :rules="limitRules"
         name="limit"
         prepend-icon="mdi-cash-multiple"
@@ -37,63 +37,58 @@
       ></v-text-field>
 
       <v-btn color="success" type="submit" :disabled="!isValid">
-        <v-icon left>mdi-pencil</v-icon>
-        {{ "shared.update" | localize }}
+        <v-icon start>mdi-pencil</v-icon>
+        {{ localizeFilter('shared.update') }}
       </v-btn>
     </v-form>
   </div>
 </template>
 
-<script>
-import localizeFilter from "@/filters/localize.filter";
+<script setup>
+import { ref, watch } from 'vue'
+import { useStore } from 'vuex'
+import localizeFilter from '@/filters/localize.filter'
+import { useMessage } from '@/composables/useMessage'
 
-export default {
-  props: {
-    categories: {
-      type: Array,
-      required: true
-    }
-  },
-  data: () => ({
-    title: "",
-    limit: 1,
-    current: null,
-    titleRules: [v => !!v || localizeFilter("categoryedit.error.enterTitle")],
-    limitRules: [
-      v => (v && +v >= 1) || localizeFilter("shared.errors.minValue") + ": " + 1
-    ]
-  }),
-  watch: {
-    current(catId) {
-      const { title, limit } = this.categories.find(c => c.id === catId);
-      this.title = title;
-      this.limit = limit;
-    }
-  },
-  created() {
-    const { id, title, limit } = this.categories[0];
-    (this.current = id), (this.title = title);
-    this.limit = limit;
-  },
-  methods: {
-    async submitHandler() {
-      this.$refs.form.validate();
+const props = defineProps({ categories: { type: Array, required: true } })
+const emit = defineEmits(['updated'])
+const store = useStore()
+const { success } = useMessage()
+const form = ref(null)
+const isValid = ref(false)
+const title = ref('')
+const limit = ref(1)
+const current = ref(props.categories[0]?.id)
+const titleRules = [
+  (v) => !!v || localizeFilter('categoryedit.error.enterTitle'),
+]
+const limitRules = [
+  (v) => (v && +v >= 1) || localizeFilter('shared.errors.minValue') + ': ' + 1,
+]
 
-      if (!this.isValid) {
-        return;
-      }
+watch(
+  current,
+  (catId) => {
+    const category = props.categories.find((c) => c.id === catId)
+    if (!category) return
+    title.value = category.title
+    limit.value = category.limit
+  },
+  { immediate: true },
+)
 
-      try {
-        const categoryData = {
-          id: this.current,
-          title: this.title,
-          limit: this.limit
-        };
-        await this.$store.dispatch("updateCategory", categoryData);
-        this.$success(localizeFilter("msg.categoryUpdated"));
-        this.$emit("updated", categoryData);
-      } catch (e) {}
+async function submitHandler() {
+  const { valid } = await form.value.validate()
+  if (!valid) return
+  try {
+    const categoryData = {
+      id: current.value,
+      title: title.value,
+      limit: limit.value,
     }
-  }
-};
+    await store.dispatch('updateCategory', categoryData)
+    success(localizeFilter('msg.categoryUpdated'))
+    emit('updated', categoryData)
+  } catch {}
+}
 </script>

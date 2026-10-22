@@ -1,0 +1,19 @@
+# Explicitly approved dependency versions; retain the age policy otherwise.
+minimumReleaseAgeExclude:
+  - '@firebase/app-compat@0.5.20'
+  - '@firebase/app@0.16.4'
+  - '@firebase/auth-compat@0.6.13'
+  - '@firebase/auth@1.13.8'
+  - '@firebase/firestore-compat@0.4.16'
+  - '@firebase/firestore@4.19.0'
+  - 'chart.js@4.6.1'
+  - 'firebase@13.1.0'
+  - 'sass@1.106.1'
+  - 'vite@8.3.5'
+  - 'vuetify@4.3.0'
+
+allowBuilds:
+  '@firebase/util': true
+  '@parcel/watcher': true
+  esbuild: true
+  protobufjs: true

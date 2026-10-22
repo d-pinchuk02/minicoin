@@ -1,59 +1,62 @@
 <template>
-  <v-app id="app">
+  <v-app>
     <Navbar @click="sidebarOpen = !sidebarOpen" />
-    <Sidebar :value="sidebarOpen" :key="locale" />
+    <Sidebar v-model="sidebarOpen" :key="locale" />
     <Loader v-if="loading" />
     <v-main v-else>
-      <v-content class="pa-0">
+      <div class="pa-0">
         <v-container fluid class="pa-4">
           <router-view />
         </v-container>
-      </v-content>
+      </div>
     </v-main>
 
-    <v-btn fixed dark fab bottom right color="blue" to="record">
+    <v-btn
+      position="fixed"
+      icon
+      class="record-fab"
+      color="blue"
+      to="/record"
+      aria-label="New record"
+    >
       <v-icon>mdi-plus</v-icon>
     </v-btn>
+
+    <Snackbar />
   </v-app>
 </template>
 
-<script>
-import Navbar from "@/components/app/Navbar.vue";
-import Sidebar from "@/components/app/Sidebar.vue";
-import localizeFilter from "@/filters/localize.filter";
+<script setup>
+import { computed, onMounted, ref, watch } from 'vue'
+import { useStore } from 'vuex'
+import Navbar from '@/components/app/Navbar.vue'
+import Sidebar from '@/components/app/Sidebar.vue'
+import Snackbar from '@/components/app/Snackbar.vue'
+import Loader from '@/components/app/Loader.vue'
+import localizeFilter from '@/filters/localize.filter'
+import { useMessage } from '@/composables/useMessage'
 
-export default {
-  name: "main-layout",
-  data: () => ({
-    sidebarOpen: true,
-    loading: true
-  }),
-  async mounted() {
-    if (!Object.keys(this.$store.getters.info).length) {
-      await this.$store.dispatch("fetchInfo");
-    }
+const store = useStore()
+const { error: showError } = useMessage()
+const sidebarOpen = ref(null)
+const loading = ref(true)
+const locale = computed(() => store.getters.info.locale)
 
-    this.loading = false;
-  },
-  components: {
-    Navbar,
-    Sidebar
-  },
-  computed: {
-    error() {
-      return this.$store.getters.error;
-    },
-    locale() {
-      return this.$store.getters.info.locale;
-    }
-  },
-  watch: {
-    error(fbError) {
-      this.$error(
-        localizeFilter("msg." + fbError.code) ||
-          localizeFilter("msg.unknownError")
-      );
-    }
+onMounted(async () => {
+  if (!store.getters.info.name) {
+    await store.dispatch('fetchInfo')
   }
-};
+  loading.value = false
+})
+
+watch(
+  () => store.getters.error,
+  (fbError) => {
+    if (!fbError) return
+    showError(
+      localizeFilter('msg.' + fbError.code) ||
+        localizeFilter('msg.unknownError'),
+    )
+  },
+)
 </script>

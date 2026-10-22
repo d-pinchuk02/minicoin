@@ -1,94 +1,75 @@
 <template>
   <div>
     <h1>
-      {{'planning.title' | localize}}
-      ({{info.bill | currency('UAH')}})
+      {{ localizeFilter('planning.title') }}
+      ({{ currencyFilter(info.bill, 'UAH') }})
     </h1>
 
     <v-divider class="mb-4"></v-divider>
 
     <Loader v-if="loading" />
     <v-alert v-else-if="!categories.length" type="info">
-      {{'shared.noCategories' | localize}} <router-link class="white--text" to="/categories">{{'shared.addCategory' | localize}}</router-link>
+      {{ localizeFilter('shared.noCategories') }}
+      <router-link class="text-white" to="/categories">{{
+        localizeFilter('shared.addCategory')
+      }}</router-link>
     </v-alert>
-    <v-col v-else cols="12" v-for="cat of categories" :key="cat">
+    <v-col v-else cols="12" v-for="cat of categories" :key="cat.id">
       <p>
-        <strong>{{cat.title}}:</strong>
-        {{cat.spent | currency}} {{'shared.of' | localize}} {{cat.limit | currency}}
+        <strong>{{ cat.title }}:</strong>
+        {{ currencyFilter(cat.spent) }} {{ localizeFilter('shared.of') }}
+        {{ currencyFilter(cat.limit) }}
       </p>
-      <v-tooltip top>
-        <template v-slot:activator="{ on, attrs }">
+      <v-tooltip location="top">
+        <template v-slot:activator="{ props }">
           <v-progress-linear
-            rounded="true"
+            rounded
             height="8"
-            v-bind="attrs"
-            v-on="on"
+            v-bind="props"
             :color="cat.progressColor"
-            :value="cat.progressPercent"
+            :model-value="cat.progressPercent"
           ></v-progress-linear>
         </template>
-        <span>{{cat.tooltip}}</span>
+        <span>{{ cat.tooltip }}</span>
       </v-tooltip>
     </v-col>
   </div>
 </template>
 
-<script>
-import {mapGetters} from 'vuex'
+<script setup>
+import { computed, onMounted, ref } from 'vue'
+import { useStore } from 'vuex'
 import currencyFilter from '@/filters/currency.filter'
 import localizeFilter from '@/filters/localize.filter'
+import Loader from '@/components/app/Loader.vue'
 
-export default {
-  name: 'planning',
-  metaInfo() {
-    return {
-      title: this.$title('planning.title')
-    }
-  },
-  data: () => ({
-    loading: true,
-    categories: []
-  }),
-  computed: {
-    ...mapGetters(['info'])
-  },
-  async mounted() {
-    const records = await this.$store.dispatch('fetchRecords')
-    const categories = await this.$store.dispatch('fetchCategories')
+const store = useStore()
+const loading = ref(true)
+const categories = ref([])
+const info = computed(() => store.getters.info)
 
-    this.categories = categories.map(cat => {
-      const spent = records
-        .filter(r => r.categoryId === cat.id)
-        .filter(r => r.type === 'expense')
-        .reduce((total, record) => {
-          return total += +record.amount
-        }, 0)
+onMounted(async () => {
+  const records = await store.dispatch('fetchRecords')
+  const fetchedCategories = await store.dispatch('fetchCategories')
 
-      const percent = 100 * spent / cat.limit
-      const progressPercent = percent > 100 ? 100 : percent
-      const progressColor = percent < 60
-        ? 'green'
-        : percent < 100
-          ? 'yellow'
-          : 'red'
-
-      const tooltipValue = cat.limit - spent
-      const tooltip = `${tooltipValue < 0
+  categories.value = fetchedCategories.map((cat) => {
+    const spent = records
+      .filter((r) => r.categoryId === cat.id)
+      .filter((r) => r.type === 'expense')
+      .reduce((total, record) => total + +record.amount, 0)
+    const percent = (100 * spent) / cat.limit
+    const progressPercent = percent > 100 ? 100 : percent
+    const progressColor =
+      percent < 60 ? 'green' : percent < 100 ? 'yellow' : 'red'
+    const tooltipValue = cat.limit - spent
+    const tooltip = `${
+      tooltipValue < 0
         ? localizeFilter('planning.excess')
         : localizeFilter('planning.left')
-      } ${currencyFilter(Math.abs(tooltipValue))}`
+    } ${currencyFilter(Math.abs(tooltipValue))}`
 
-      return {
-        ...cat,
-        progressPercent,
-        progressColor,
-        spent,
-        tooltip
-      }
-    })
-
-    this.loading = false
-
-  }
-}
+    return { ...cat, progressPercent, progressColor, spent, tooltip }
+  })
+  loading.value = false
+})
 </script>

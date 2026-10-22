@@ -1,20 +1,17 @@
 <template>
   <v-app>
     <v-main>
-      <v-content class="pa-0">
+      <div class="pa-0">
         <router-view />
-      </v-content>
+      </div>
     </v-main>
+
+    <Snackbar />
   </v-app>
 </template>
 
-<script>
-export default {
-  name: 'landing-layout',
-  data: () => ({
-    appTitle: import.meta.env.VITE_TITLE,
-  })
-}
+<script setup>
+import Snackbar from '@/components/app/Snackbar.vue'
 </script>
 
 <style scoped>
