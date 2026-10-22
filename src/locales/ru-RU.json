@@ -1,98 +1,142 @@
 {
-  "categories.title": "Категории",
-  "categorycreate.error.enterTitle": "Введите название категории",
-  "categorycreate.error.minValue": "Минимальное значение",
-  "categorycreate.name": "Название",
-  "categorycreate.title": "Создать",
-  "categoryedit.error.enterTitle": "Введите название категории",
-  "categoryedit.error.minValue": "Минимальное значение",
-  "categoryedit.name": "Название",
-  "categoryedit.title": "Редактировать",
-  "detailrecord.history": "История",
-  "detailrecord.noRecord": "Запись не найдена",
-  "detailrecord.title": "Запись",
-  "history.chartTitle": "Расходы по категориям",
-  "history.title": "История записей",
-  "historytable.actions": "Действия",
-  "historytable.openRecord": "Посмотреть запись",
-  "historytable.editRecord": "Редактировать запись",
-  "historytable.deleteRecord": "Удалить запись",
-  "home.title": "Счет",
-  "homebill.title": "Счет в валюте",
-  "homecurrency.currency": "Валюта",
-  "homecurrency.rate": "Курс",
-  "homecurrency.title": "Курс валют",
-  "login.noAccount": "Нет аккаунта?",
-  "login.password": "Пароль",
-  "login.title": "Вход",
-  "msg.auth/email-already-in-use": "Такой email уже используется",
-  "msg.auth/too-many-requests": "Слишком много запросов",
-  "msg.auth/user-disabled": "Пользователь заблокирован",
-  "msg.auth/user-not-found": "Пользователь не найден",
-  "msg.auth/wrong-password": "Неверный email или пароль",
-  "msg.categoryCreated": "Категория успешно создана",
-  "msg.categoryUpdated": "Категория успешно обновлена",
-  "msg.insufficientMoney": "Недостаточно средств на счете",
-  "msg.login": "Для начала войдите в систему",
-  "msg.logout": "Вы вышли из системы",
-  "msg.recordCreated": "Запись успешно создана",
-  "msg.unknownError": "Что-то пошло не так...",
-  "msg.welcome": "Добро пожаловать!",
-  "navbar.logout": "Выйти",
-  "navbar.profile": "Профиль",
-  "newrecord.error.enterDescription": "Введите описание",
-  "newrecord.title": "Новая запись",
-  "newrecord.type": "Тип",
-  "planning.excess": "Превышение на",
-  "planning.left": "Осталось",
-  "planning.title": "Планирование",
-  "profile.error.enterName": "Введите имя",
-  "profile.name": "Имя",
-  "profile.title": "Профиль",
-  "register.agree": "Я согласен на передачу и обработку моих данных",
-  "register.hasAccount": "Уже есть аккаунт?",
-  "register.title": "Регистрация",
-  "shared.addCategory": "Добавить новую категорию",
-  "shared.addRecord": "Добавить новую запись",
-  "shared.amount": "Сумма",
-  "shared.category": "Категория",
-  "shared.create": "Создать",
-  "shared.date": "Дата",
-  "shared.description": "Описание",
-  "shared.email": "Email",
-  "shared.error": "Ошибка",
-  "shared.errors.enterCorrectEmail": "Введите корректный email",
-  "shared.errors.enterEmail": "Введите email",
-  "shared.errors.enterName": "Введите имя",
-  "shared.errors.enterPassword": "Введите пароль",
-  "shared.errors.minLength": "Минимальная длина",
-  "shared.errors.minValue": "Минимальное значение",
-  "shared.income": "Доход",
-  "shared.incomes": "Доходы",
-  "shared.limit": "Лимит",
-  "shared.loading": "Загрузка...",
-  "shared.name": "Имя",
-  "shared.noCategories": "Категорий пока нет.",
-  "shared.noRecords": "Записей пока нет.",
-  "shared.of": "из",
-  "shared.expense": "Расход",
-  "shared.expenses": "Расходы",
-  "shared.paginate.next": "Вперед",
-  "shared.paginate.prev": "Назад",
-  "shared.password": "Пароль",
-  "shared.selectCategory": "Выберите категорию",
-  "shared.selectLang": "Выберите язык",
-  "shared.signin": "Войти",
-  "shared.signup": "Зарегистрироваться",
-  "shared.transactions": "Операции",
-  "shared.type": "Тип",
-  "shared.update": "Обновить",
-  "sidebar.bill": "Счет",
-  "sidebar.categories": "Категории",
-  "sidebar.history": "История",
-  "sidebar.planning": "Планирование",
-  "sidebar.record": "Новая запись",
-  "landing.title": "Отслеживай свои финансы",
-  "landing.hero.title": "Твои деньги, твои правила",
-  "landing.hero.subtitle": "Хватит гадать, куда уходят деньги. MiniCoin делает отслеживание расходов простым и полезным"
+  "categories": {
+    "title": "Категории",
+    "create": {
+      "error": {
+        "enterTitle": "Введите название категории",
+        "minValue": "Минимальное значение"
+      },
+      "name": "Название",
+      "title": "Создать"
+    },
+    "edit": {
+      "error": {
+        "enterTitle": "Введите название категории",
+        "minValue": "Минимальное значение"
+      },
+      "name": "Название",
+      "title": "Редактировать"
+    }
+  },
+  "history": {
+    "noRecord": "Запись не найдена",
+    "recordTitle": "Запись",
+    "chartTitle": "Расходы по категориям",
+    "title": "История записей",
+    "table": {
+      "actions": "Действия",
+      "openRecord": "Посмотреть запись",
+      "editRecord": "Редактировать запись",
+      "deleteRecord": "Удалить запись"
+    }
+  },
+  "home": {
+    "title": "Счет",
+    "billTitle": "Счет в валюте",
+    "currency": {
+      "currency": "Валюта",
+      "rate": "Курс",
+      "title": "Курс валют"
+    }
+  },
+  "login": {
+    "noAccount": "Нет аккаунта?",
+    "password": "Пароль",
+    "title": "Вход"
+  },
+  "msg": {
+    "auth/email-already-in-use": "Такой email уже используется",
+    "auth/too-many-requests": "Слишком много запросов",
+    "auth/user-disabled": "Пользователь заблокирован",
+    "auth/user-not-found": "Пользователь не найден",
+    "auth/wrong-password": "Неверный email или пароль",
+    "categoryCreated": "Категория успешно создана",
+    "categoryUpdated": "Категория успешно обновлена",
+    "insufficientMoney": "Недостаточно средств на счете",
+    "login": "Для начала войдите в систему",
+    "logout": "Вы вышли из системы",
+    "recordCreated": "Запись успешно создана",
+    "unknownError": "Что-то пошло не так...",
+    "welcome": "Добро пожаловать!"
+  },
+  "navbar": {
+    "logout": "Выйти",
+    "profile": "Профиль"
+  },
+  "newRecord": {
+    "error": {
+      "enterDescription": "Введите описание"
+    },
+    "title": "Новая запись",
+    "type": "Тип"
+  },
+  "planning": {
+    "excess": "Превышение на",
+    "left": "Осталось",
+    "title": "Планирование"
+  },
+  "profile": {
+    "error": {
+      "enterName": "Введите имя"
+    },
+    "name": "Имя",
+    "title": "Профиль"
+  },
+  "register": {
+    "agree": "Я согласен на передачу и обработку моих данных",
+    "hasAccount": "Уже есть аккаунт?",
+    "title": "Регистрация"
+  },
+  "shared": {
+    "addCategory": "Добавить новую категорию",
+    "addRecord": "Добавить новую запись",
+    "amount": "Сумма",
+    "category": "Категория",
+    "create": "Создать",
+    "date": "Дата",
+    "description": "Описание",
+    "email": "Email",
+    "error": {
+      "enterCorrectEmail": "Введите корректный email",
+      "enterEmail": "Введите email",
+      "enterName": "Введите имя",
+      "enterPassword": "Введите пароль",
+      "minLength": "Минимальная длина",
+      "minValue": "Минимальное значение"
+    },
+    "income": "Доход",
+    "incomes": "Доходы",
+    "limit": "Лимит",
+    "loading": "Загрузка...",
+    "name": "Имя",
+    "noCategories": "Категорий пока нет.",
+    "noRecords": "Записей пока нет.",
+    "of": "из",
+    "expense": "Расход",
+    "expenses": "Расходы",
+    "paginate.next": "Вперед",
+    "paginate.prev": "Назад",
+    "password": "Пароль",
+    "selectCategory": "Выберите категорию",
+    "selectLang": "Выберите язык",
+    "signin": "Войти",
+    "signup": "Зарегистрироваться",
+    "transactions": "Операции",
+    "type": "Тип",
+    "update": "Обновить"
+  },
+  "sidebar": {
+    "bill": "Счет",
+    "categories": "Категории",
+    "history": "История",
+    "planning": "Планирование",
+    "record": "Новая запись"
+  },
+  "landing": {
+    "title": "Отслеживай свои финансы",
+    "hero": {
+      "title": "Твои деньги, твои правила",
+      "subtitle": "Хватит гадать, куда уходят деньги. MiniCoin делает отслеживание расходов простым и полезным"
+    }
+  }
 }

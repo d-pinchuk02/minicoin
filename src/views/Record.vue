@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>{{ localizeFilter('newrecord.title') }}</h1>
+    <h1>{{ localizeFilter('newRecord.title') }}</h1>
 
     <v-divider class="mb-4"></v-divider>
 
@@ -28,7 +28,7 @@
 
           <v-label for="type">
             <v-icon>mdi-plus-minus-variant</v-icon>
-            {{ localizeFilter('newrecord.type') }}
+            {{ localizeFilter('newRecord.type') }}
           </v-label>
           <v-radio-group class="ml-8" name="type" v-model="type" required>
             <v-radio
@@ -99,14 +99,13 @@ const canCreateRecord = computed(
   () => type.value === 'income' || info.value.bill >= amount.value,
 )
 const amountRules = [
-  (v) => (v && +v >= 1) || localizeFilter('shared.errors.minValue') + ': ' + 1,
+  (v) => (v && +v >= 1) || localizeFilter('shared.error.minValue') + ': ' + 1,
 ]
 
 const descriptionRules = [
-  (v) => !!v || localizeFilter('newrecord.error.enterDescription'),
+  (v) => !!v || localizeFilter('newRecord.error.enterDescription'),
   (v) =>
-    (v && v.length >= 2) ||
-    localizeFilter('shared.errors.minLength') + ': ' + 2,
+    (v && v.length >= 2) || localizeFilter('shared.error.minLength') + ': ' + 2,
 ]
 
 onMounted(async () => {

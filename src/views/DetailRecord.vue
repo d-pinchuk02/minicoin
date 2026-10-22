@@ -4,7 +4,7 @@
       <v-btn icon size="large" color="primary" :to="'/history'">
         <v-icon>mdi-arrow-left</v-icon>
       </v-btn>
-      {{ localizeFilter('detailrecord.title') }}
+      {{ localizeFilter('history.recordTitle') }}
     </h1>
     <v-divider class="mb-4"></v-divider>
 
@@ -40,7 +40,7 @@
       </v-col>
     </v-row>
     <v-alert v-else type="error">
-      {{ localizeFilter('detailrecord.noRecord') }}
+      {{ localizeFilter('history.noRecord') }}
     </v-alert>
   </div>
 </template>

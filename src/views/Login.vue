@@ -67,17 +67,16 @@ const email = ref('')
 const password = ref('')
 const isValid = ref(false)
 const emailRules = [
-  (v) => !!v || localizeFilter('shared.errors.enterEmail'),
+  (v) => !!v || localizeFilter('shared.error.enterEmail'),
   (v) =>
     /^\S+@\S+\.\S+$/.test(v) ||
-    localizeFilter('shared.errors.enterCorrectEmail'),
+    localizeFilter('shared.error.enterCorrectEmail'),
 ]
 
 const passwordRules = [
-  (v) => !!v || localizeFilter('shared.errors.enterPassword'),
+  (v) => !!v || localizeFilter('shared.error.enterPassword'),
   (v) =>
-    (v && v.length >= 8) ||
-    localizeFilter('shared.errors.minLength') + ': ' + 8,
+    (v && v.length >= 8) || localizeFilter('shared.error.minLength') + ': ' + 8,
 ]
 
 onMounted(() => {

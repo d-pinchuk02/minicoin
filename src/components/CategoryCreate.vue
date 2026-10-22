@@ -1,12 +1,12 @@
 <template>
   <div>
-    <h2>{{ localizeFilter('categorycreate.title') }}</h2>
+    <h2>{{ localizeFilter('categories.create.title') }}</h2>
 
     <v-divider class="mb-4"></v-divider>
 
     <v-form v-model="isValid" ref="form" @submit.prevent="submitHandler">
       <v-text-field
-        :label="localizeFilter('categorycreate.name')"
+        :label="localizeFilter('categories.create.name')"
         :rules="titleRules"
         name="title"
         prepend-icon="mdi-format-letter-case"
@@ -47,14 +47,13 @@ const title = ref('')
 const limit = ref(1)
 const isValid = ref(false)
 const titleRules = [
-  (v) => !!v || localizeFilter('categorycreate.error.enterTitle'),
+  (v) => !!v || localizeFilter('categories.create.error.enterTitle'),
   (v) =>
-    (v && v.length >= 2) ||
-    localizeFilter('shared.errors.minLength') + ': ' + 2,
+    (v && v.length >= 2) || localizeFilter('shared.error.minLength') + ': ' + 2,
 ]
 
 const limitRules = [
-  (v) => (v && +v >= 1) || localizeFilter('shared.errors.minValue') + ': ' + 1,
+  (v) => (v && +v >= 1) || localizeFilter('shared.error.minValue') + ': ' + 1,
 ]
 
 async function submitHandler() {

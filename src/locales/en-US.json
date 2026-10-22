@@ -1,98 +1,142 @@
 {
-  "categories.title": "Categories",
-  "categorycreate.error.enterTitle": "Enter a category name",
-  "categorycreate.error.minValue": "Minimum value",
-  "categorycreate.name": "Title",
-  "categorycreate.title": "Create",
-  "categoryedit.error.enterTitle": "Enter a category name",
-  "categoryedit.error.minValue": "Minimum value",
-  "categoryedit.name": "Title",
-  "categoryedit.title": "Edit",
-  "detailrecord.history": "History",
-  "detailrecord.noRecord": "Record not found",
-  "detailrecord.title": "Record",
-  "history.chartTitle": "Expenses by Category",
-  "history.title": "History",
-  "historytable.actions": "Actions",
-  "historytable.openRecord": "View Record",
-  "historytable.editRecord": "Edit Record",
-  "historytable.deleteRecord": "Delete Record",
-  "home.title": "Bill",
-  "homebill.title": "Currency Account",
-  "homecurrency.currency": "Currency",
-  "homecurrency.rate": "Rate",
-  "homecurrency.title": "Exchange Rates",
-  "login.noAccount": "No account?",
-  "login.password": "Password",
-  "login.title": "Login",
-  "msg.auth/email-already-in-use": "This email is already in use",
-  "msg.auth/too-many-requests": "Too many requests",
-  "msg.auth/user-disabled": "User banned",
-  "msg.auth/user-not-found": "User is not found",
-  "msg.auth/wrong-password": "Invalid email or password",
-  "msg.categoryCreated": "Category created successfully",
-  "msg.categoryUpdated": "Category updated successfully",
-  "msg.insufficientMoney": "Insufficient funds in account",
-  "msg.login": "Log in to get started",
-  "msg.logout": "You are logged out",
-  "msg.recordCreated": "Record created successfully",
-  "msg.unknownError": "Something went wrong...",
-  "msg.welcome": "Welcome!",
-  "navbar.logout": "Logout",
-  "navbar.profile": "Profile",
-  "newrecord.error.enterDescription": "Enter a description",
-  "newrecord.title": "New record",
-  "newrecord.type": "Type",
-  "planning.excess": "Excess on",
-  "planning.left": "Left",
-  "planning.title": "Planning",
-  "profile.error.enterName": "Enter name",
-  "profile.name": "Name",
-  "profile.title": "Profile",
-  "register.agree": "I agree to the transfer and processing of my data",
-  "register.hasAccount": "Already have an account?",
-  "register.title": "Sign up",
-  "shared.addCategory": "Add new category",
-  "shared.addRecord": "Add new record",
-  "shared.amount": "Amount",
-  "shared.category": "Category",
-  "shared.create": "Create",
-  "shared.date": "Date",
-  "shared.description": "Description",
-  "shared.email": "Email",
-  "shared.error": "Error",
-  "shared.errors.enterCorrectEmail": "Please enter a valid email",
-  "shared.errors.enterEmail": "Enter email",
-  "shared.errors.enterName": "Enter your name",
-  "shared.errors.enterPassword": "Enter password",
-  "shared.errors.minLength": "Minimum length",
-  "shared.errors.minValue": "Minimum value",
-  "shared.income": "Income",
-  "shared.incomes": "Income",
-  "shared.limit": "Limit",
-  "shared.loading": "Loading...",
-  "shared.name": "Name",
-  "shared.noCategories": "There are no categories yet.",
-  "shared.noRecords": "No records yet.",
-  "shared.of": "of",
-  "shared.expense": "Expense",
-  "shared.expenses": "Expense",
-  "shared.paginate.next": "Next",
-  "shared.paginate.prev": "Prev",
-  "shared.password": "Password",
-  "shared.selectCategory": "Select a category",
-  "shared.selectLang": "Choose language",
-  "shared.signin": "Log in",
-  "shared.signup": "Register",
-  "shared.transactions": "Transactions",
-  "shared.type": "Type",
-  "shared.update": "Update",
-  "sidebar.bill": "Bill",
-  "sidebar.categories": "Categories",
-  "sidebar.history": "History",
-  "sidebar.planning": "Planning",
-  "sidebar.record": "New record",
-  "landing.title": "Track Your Finances",
-  "landing.hero.title": "Your Money, Your Rules",
-  "landing.hero.subtitle": "Stop guessing about your spending. MiniCoin makes tracking expenses fun and actually useful"
+  "categories": {
+    "title": "Categories",
+    "create": {
+      "error": {
+        "enterTitle": "Enter a category name",
+        "minValue": "Minimum value"
+      },
+      "name": "Title",
+      "title": "Create"
+    },
+    "edit": {
+      "error": {
+        "enterTitle": "Enter a category name",
+        "minValue": "Minimum value"
+      },
+      "name": "Title",
+      "title": "Edit"
+    }
+  },
+  "history": {
+    "noRecord": "Record not found",
+    "recordTitle": "Record",
+    "chartTitle": "Expenses by Category",
+    "title": "History",
+    "table": {
+      "actions": "Actions",
+      "openRecord": "View Record",
+      "editRecord": "Edit Record",
+      "deleteRecord": "Delete Record"
+    }
+  },
+  "home": {
+    "title": "Bill",
+    "billTitle": "Currency Account",
+    "currency": {
+      "currency": "Currency",
+      "rate": "Rate",
+      "title": "Exchange Rates"
+    }
+  },
+  "login": {
+    "noAccount": "No account?",
+    "password": "Password",
+    "title": "Login"
+  },
+  "msg": {
+    "auth/email-already-in-use": "This email is already in use",
+    "auth/too-many-requests": "Too many requests",
+    "auth/user-disabled": "User banned",
+    "auth/user-not-found": "User is not found",
+    "auth/wrong-password": "Invalid email or password",
+    "categoryCreated": "Category created successfully",
+    "categoryUpdated": "Category updated successfully",
+    "insufficientMoney": "Insufficient funds in account",
+    "login": "Log in to get started",
+    "logout": "You are logged out",
+    "recordCreated": "Record created successfully",
+    "unknownError": "Something went wrong...",
+    "welcome": "Welcome!"
+  },
+  "navbar": {
+    "logout": "Logout",
+    "profile": "Profile"
+  },
+  "newRecord": {
+    "error": {
+      "enterDescription": "Enter a description"
+    },
+    "title": "New record",
+    "type": "Type"
+  },
+  "planning": {
+    "excess": "Excess on",
+    "left": "Left",
+    "title": "Planning"
+  },
+  "profile": {
+    "error": {
+      "enterName": "Enter name"
+    },
+    "name": "Name",
+    "title": "Profile"
+  },
+  "register": {
+    "agree": "I agree to the transfer and processing of my data",
+    "hasAccount": "Already have an account?",
+    "title": "Sign up"
+  },
+  "shared": {
+    "addCategory": "Add new category",
+    "addRecord": "Add new record",
+    "amount": "Amount",
+    "category": "Category",
+    "create": "Create",
+    "date": "Date",
+    "description": "Description",
+    "email": "Email",
+    "error": {
+      "enterCorrectEmail": "Please enter a valid email",
+      "enterEmail": "Enter email",
+      "enterName": "Enter your name",
+      "enterPassword": "Enter password",
+      "minLength": "Minimum length",
+      "minValue": "Minimum value"
+    },
+    "income": "Income",
+    "incomes": "Income",
+    "limit": "Limit",
+    "loading": "Loading...",
+    "name": "Name",
+    "noCategories": "There are no categories yet.",
+    "noRecords": "No records yet.",
+    "of": "of",
+    "expense": "Expense",
+    "expenses": "Expense",
+    "paginate.next": "Next",
+    "paginate.prev": "Prev",
+    "password": "Password",
+    "selectCategory": "Select a category",
+    "selectLang": "Choose language",
+    "signin": "Log in",
+    "signup": "Register",
+    "transactions": "Transactions",
+    "type": "Type",
+    "update": "Update"
+  },
+  "sidebar": {
+    "bill": "Bill",
+    "categories": "Categories",
+    "history": "History",
+    "planning": "Planning",
+    "record": "New record"
+  },
+  "landing": {
+    "title": "Track Your Finances",
+    "hero": {
+      "title": "Your Money, Your Rules",
+      "subtitle": "Stop guessing about your spending. MiniCoin makes tracking expenses fun and actually useful"
+    }
+  }
 }

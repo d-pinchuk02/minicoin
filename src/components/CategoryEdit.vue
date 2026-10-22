@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h2>{{ localizeFilter('categoryedit.title') }}</h2>
+    <h2>{{ localizeFilter('categories.edit.title') }}</h2>
 
     <v-divider class="mb-4"></v-divider>
 
@@ -17,7 +17,7 @@
       ></v-select>
 
       <v-text-field
-        :label="localizeFilter('categoryedit.name')"
+        :label="localizeFilter('categories.edit.name')"
         :rules="titleRules"
         name="title"
         prepend-icon="mdi-format-letter-case"
@@ -60,10 +60,10 @@ const title = ref('')
 const limit = ref(1)
 const current = ref(props.categories[0]?.id)
 const titleRules = [
-  (v) => !!v || localizeFilter('categoryedit.error.enterTitle'),
+  (v) => !!v || localizeFilter('categories.edit.error.enterTitle'),
 ]
 const limitRules = [
-  (v) => (v && +v >= 1) || localizeFilter('shared.errors.minValue') + ': ' + 1,
+  (v) => (v && +v >= 1) || localizeFilter('shared.error.minValue') + ': ' + 1,
 ]
 
 watch(

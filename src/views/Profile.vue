@@ -51,10 +51,9 @@ const locale = ref(infoStore.info.locale)
 const isValid = ref(false)
 const langs = localesArray
 const nameRules = [
-  (v) => !!v || localizeFilter('shared.errors.enterName'),
+  (v) => !!v || localizeFilter('shared.error.enterName'),
   (v) =>
-    (v && v.length >= 2) ||
-    localizeFilter('shared.errors.minLength') + ': ' + 2,
+    (v && v.length >= 2) || localizeFilter('shared.error.minLength') + ': ' + 2,
 ]
 
 async function submitHandler() {

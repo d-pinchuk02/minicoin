@@ -1,6 +1,6 @@
 <template>
   <v-card color="blue" class="text-white">
-    <v-card-title>{{ localizeFilter('homebill.title') }}</v-card-title>
+    <v-card-title>{{ localizeFilter('home.billTitle') }}</v-card-title>
     <v-card-text>
       <div v-for="cur of currencies" :key="cur">
         <h2>{{ currencyFilter(getCurrency(cur), cur) }}</h2>

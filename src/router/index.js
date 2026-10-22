@@ -35,7 +35,7 @@ const routes = [
   {
     path: '/detail/:id',
     name: 'detail',
-    meta: { layout: 'main', auth: true, titleKey: 'detailrecord.title' },
+    meta: { layout: 'main', auth: true, titleKey: 'history.recordTitle' },
     component: () => import('../views/DetailRecord.vue'),
   },
   {
@@ -59,7 +59,7 @@ const routes = [
   {
     path: '/record',
     name: 'record',
-    meta: { layout: 'main', auth: true, titleKey: 'newrecord.title' },
+    meta: { layout: 'main', auth: true, titleKey: 'newRecord.title' },
     component: () => import('../views/Record.vue'),
   },
 ]

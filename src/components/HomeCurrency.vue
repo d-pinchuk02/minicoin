@@ -1,12 +1,12 @@
 <template>
   <v-card color="deep-orange" class="text-white">
-    <v-card-title>{{ localizeFilter('homecurrency.title') }}</v-card-title>
+    <v-card-title>{{ localizeFilter('home.currency.title') }}</v-card-title>
     <v-card-text>
       <v-table class="bg-deep-orange text-white">
         <thead>
           <tr>
-            <th>{{ localizeFilter('homecurrency.currency') }}</th>
-            <th>{{ localizeFilter('homecurrency.rate') }}</th>
+            <th>{{ localizeFilter('home.currency.currency') }}</th>
+            <th>{{ localizeFilter('home.currency.rate') }}</th>
             <th>{{ localizeFilter('shared.date') }}</th>
           </tr>
         </thead>

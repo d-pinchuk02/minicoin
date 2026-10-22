@@ -27,13 +27,13 @@
           icon
           color="primary"
           :to="`/detail/${item.id}`"
-          :title="localizeFilter('historytable.openRecord')"
+          :title="localizeFilter('history.table.openRecord')"
         >
           <v-icon> mdi-open-in-new </v-icon>
         </v-btn>
         <!--<v-btn
           icon
-          :title="localizeFilter('historytable.editRecord')"
+          :title="localizeFilter('history.table.editRecord')"
         >
           <v-icon>
             mdi-pencil
@@ -42,7 +42,7 @@
         <v-btn
           icon
           color="red"
-          :title="localizeFilter('historytable.deleteRecord')"
+          :title="localizeFilter('history.table.deleteRecord')"
         >
           <v-icon>
             mdi-delete
@@ -67,7 +67,7 @@ const headers = computed(() => [
   { title: localizeFilter('shared.type'), key: 'type' },
   { title: localizeFilter('shared.category'), key: 'categoryName' },
   { title: localizeFilter('shared.date'), key: 'date' },
-  { title: localizeFilter('historytable.actions'), key: 'actions' },
+  { title: localizeFilter('history.table.actions'), key: 'actions' },
 ])
 const items = computed(() =>
   props.records.map((item, index) => ({
