@@ -26,7 +26,7 @@
       ></v-text-field>
 
       <v-btn color="success" type="submit" :disabled="!isValid">
-        <v-icon left>mdi-plus</v-icon>
+        <v-icon start>mdi-plus</v-icon>
         {{ localizeFilter('shared.create') }}
       </v-btn>
     </v-form>
@@ -54,9 +54,9 @@ export default {
   methods: {
     localizeFilter,
     async submitHandler() {
-      this.$refs.form.validate();
+      const { valid } = await this.$refs.form.validate();
 
-      if (!this.isValid) {
+      if (!valid) {
         return;
       }
 

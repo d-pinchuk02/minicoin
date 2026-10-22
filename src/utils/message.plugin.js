@@ -1,6 +1,6 @@
-import Vue from 'vue';
+import { reactive } from 'vue';
 
-const messageState = Vue.observable({
+const messageState = reactive({
   show: false,
   text: '',
   color: 'info',
@@ -28,18 +28,18 @@ function showMessage(content, color, icon) {
 }
 
 export default {
-  install(Vue) {
-    Vue.prototype.$message = messageState;
+  install(app) {
+    app.config.globalProperties.$message = messageState;
 
-    Vue.prototype.$info = function(content) {
+    app.config.globalProperties.$info = function(content) {
       showMessage(content, 'info', 'mdi-information');
     };
 
-    Vue.prototype.$success = function(content) {
+    app.config.globalProperties.$success = function(content) {
       showMessage(content, 'success', 'mdi-check-circle');
     };
 
-    Vue.prototype.$error = function(content) {
+    app.config.globalProperties.$error = function(content) {
       showMessage(content, 'error', 'mdi-alert-circle');
     };
   }

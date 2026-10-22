@@ -1,8 +1,8 @@
 <template>
-  <v-card color="deep-orange" dark>
+  <v-card color="deep-orange" class="text-white">
     <v-card-title>{{ localizeFilter('homecurrency.title') }}</v-card-title>
     <v-card-text>
-      <v-simple-table dark class="deep-orange">
+      <v-table class="bg-deep-orange text-white">
         <thead>
           <tr>
             <th>{{ localizeFilter('homecurrency.currency') }}</th>
@@ -17,11 +17,11 @@
               <td>{{ dateFilter(date * 1000, 'date') }}</td>
             </tr>
         </tbody>
-      </v-simple-table>
+      </v-table>
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn icon @click.prevent="$parent.refresh">
+      <v-btn icon @click="$emit('refresh')" aria-label="Refresh exchange rates">
         <v-icon>mdi-refresh</v-icon>
       </v-btn>
     </v-card-actions>
@@ -34,6 +34,7 @@ import localizeFilter from '@/filters/localize.filter'
 
 export default {
   props: ['rates', 'date'],
+  emits: ['refresh'],
   data: () => ({
     currencies: ['UAH', 'USD', 'EUR']
   }),

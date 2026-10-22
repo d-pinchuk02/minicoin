@@ -7,19 +7,20 @@
     <Loader v-if="loading" />
     <v-alert v-else-if="!categories.length" type="info">
       {{ localizeFilter('shared.noCategories') }}
-      <router-link class="white--text" to="/categories">{{
+      <router-link class="text-white" to="/categories">{{
         localizeFilter('shared.addCategory')
       }}</router-link>
     </v-alert>
 
-    <v-col v-else cols="12" xs="12" sm="6">
+    <v-row v-else>
+    <v-col cols="12" sm="6">
       <v-form v-model="isValid" ref="form" @submit.prevent="submitHandler">
         <v-select
           :items="categories"
           :label="localizeFilter('shared.selectCategory')"
           name="category"
           prepend-icon="mdi-shape"
-          item-text="title"
+          item-title="title"
           item-value="id"
           v-model="category"
           required
@@ -29,7 +30,7 @@
           <v-icon>mdi-plus-minus-variant</v-icon>
           {{ localizeFilter('newrecord.type') }}
         </v-label>
-        <v-radio-group class="ml-8" name="type" v-model="type" column required>
+        <v-radio-group class="ml-8" name="type" v-model="type" required>
           <v-radio
             color="green"
             value="income"
@@ -63,11 +64,12 @@
         ></v-text-field>
 
         <v-btn color="success" type="submit" :disabled="!isValid">
-          <v-icon left>mdi-plus</v-icon>
+          <v-icon start>mdi-plus</v-icon>
           {{ localizeFilter('shared.create') }}
         </v-btn>
       </v-form>
     </v-col>
+    </v-row>
   </div>
 </template>
 
@@ -101,7 +103,8 @@ export default {
 
     if (this.categories.length) {
       this.category = this.categories[0].id;
-      this.$refs.form.validate();
+      await this.$nextTick();
+      await this.$refs.form.validate();
     }
   },
   computed: {
@@ -117,9 +120,9 @@ export default {
   methods: {
     localizeFilter,
     async submitHandler() {
-      this.$refs.form.validate();
+      const { valid } = await this.$refs.form.validate();
 
-      if (!this.isValid) {
+      if (!valid) {
         return;
       }
 
@@ -147,7 +150,8 @@ export default {
           this.category = this.categories[0].id;
           this.type = "expense";
 
-          this.$refs.form.validate();
+          await this.$nextTick();
+          await this.$refs.form.validate();
         } catch (e) {}
       } else {
         this.$error(

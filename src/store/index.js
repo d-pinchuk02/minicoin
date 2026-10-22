@@ -1,13 +1,10 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import { createStore } from 'vuex'
 import auth from './auth'
 import info from './info'
 import category from './category'
 import record from './record'
 
-Vue.use(Vuex)
-
-export default new Vuex.Store({
+export default createStore({
   state: {
     error: null
   },

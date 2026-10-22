@@ -5,22 +5,21 @@
     <Loader v-if="loading" />
     <v-alert v-else-if="!records.length" type="info">
       {{ localizeFilter('shared.noRecords') }}
-      <router-link class="white--text" to="/record">{{ localizeFilter('shared.addRecord') }}</router-link>
+      <router-link class="text-white" to="/record">{{ localizeFilter('shared.addRecord') }}</router-link>
     </v-alert>
     <section v-else>
       <v-row>
-		<v-col col="6">
+		<v-col cols="12" md="6">
 		  <h2>{{ localizeFilter('shared.expenses') }}</h2>
 		  <HistoryChart :categories="categories" :records="expensesRecords" />
 		</v-col>
-		<v-divider vertical></v-divider>
-		<v-col col="6">
+		<v-col cols="12" md="6">
 		  <h2>{{ localizeFilter('shared.incomes') }}</h2>
 		  <HistoryChart :categories="categories" :records="incomeRecords" />
 		</v-col>
       </v-row>
       <v-row>
-        <v-col col="12">
+        <v-col cols="12">
           <h2>{{ localizeFilter('shared.transactions') }}</h2>
           <HistoryTable
             class="mt-2"

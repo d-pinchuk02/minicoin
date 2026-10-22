@@ -10,7 +10,7 @@
         :label="localizeFilter('shared.selectCategory')"
         name="category"
         prepend-icon="mdi-shape"
-        item-text="title"
+        item-title="title"
         item-value="id"
         v-model="current"
         required
@@ -37,7 +37,7 @@
       ></v-text-field>
 
       <v-btn color="success" type="submit" :disabled="!isValid">
-        <v-icon left>mdi-pencil</v-icon>
+        <v-icon start>mdi-pencil</v-icon>
         {{ localizeFilter('shared.update') }}
       </v-btn>
     </v-form>
@@ -55,6 +55,7 @@ export default {
     }
   },
   data: () => ({
+    isValid: false,
     title: "",
     limit: 1,
     current: null,
@@ -65,7 +66,9 @@ export default {
   }),
   watch: {
     current(catId) {
-      const { title, limit } = this.categories.find(c => c.id === catId);
+      const category = this.categories.find(c => c.id === catId);
+      if (!category) return;
+      const { title, limit } = category;
       this.title = title;
       this.limit = limit;
     }
@@ -78,9 +81,9 @@ export default {
   methods: {
     localizeFilter,
     async submitHandler() {
-      this.$refs.form.validate();
+      const { valid } = await this.$refs.form.validate();
 
-      if (!this.isValid) {
+      if (!valid) {
         return;
       }
 

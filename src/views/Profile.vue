@@ -4,8 +4,9 @@
 
     <v-divider class="mb-4"></v-divider>
 
-    <v-col cols="12" xs="12" sm="6">
-      <v-form v-model="isValid" @submit.prevent="submitHandler">
+    <v-row>
+    <v-col cols="12" sm="6">
+      <v-form ref="form" v-model="isValid" @submit.prevent="submitHandler">
         <v-text-field
           :label="localizeFilter('profile.name')"
           :rules="nameRules"
@@ -21,7 +22,7 @@
           :label="localizeFilter('shared.selectLang')"
           name="locale"
           prepend-icon="mdi-translate"
-          item-text="name"
+          item-title="name"
           item-value="id"
           v-model="locale"
           required
@@ -31,11 +32,12 @@
           color="success"
           type="submit"
         >
-          <v-icon left>mdi-pencil</v-icon>
+          <v-icon start>mdi-pencil</v-icon>
           {{ localizeFilter('shared.update') }}
         </v-btn>
       </v-form>
     </v-col>
+    </v-row>
   </div>
 </template>
 
@@ -67,6 +69,8 @@ export default {
     localizeFilter,
     ...mapActions(['updateInfo']),
     async submitHandler() {
+      const { valid } = await this.$refs.form.validate();
+      if (!valid) return;
       if(!this.isValid) {
         return
       }

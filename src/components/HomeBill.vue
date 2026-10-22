@@ -1,5 +1,5 @@
 <template>
-  <v-card color="blue" dark>
+  <v-card color="blue" class="text-white">
     <v-card-title>{{ localizeFilter('homebill.title') }}</v-card-title>
     <v-card-text>
       <div
@@ -12,7 +12,7 @@
     </v-card-text>
     <v-card-actions>
       <v-spacer></v-spacer>
-      <v-btn icon @click.prevent="$parent.refresh">
+      <v-btn icon @click="$emit('refresh')" aria-label="Refresh balance">
         <v-icon>mdi-refresh</v-icon>
       </v-btn>
     </v-card-actions>
@@ -25,6 +25,7 @@ import localizeFilter from '@/filters/localize.filter'
 
 export default {
   props: ['rates'],
+  emits: ['refresh'],
   data: () => ({
     currencies: ['UAH', 'USD', 'EUR']
   }),

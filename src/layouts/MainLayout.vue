@@ -1,17 +1,17 @@
 <template>
-  <v-app id="app">
+  <v-app>
     <Navbar @click="sidebarOpen = !sidebarOpen" />
-    <Sidebar :value="sidebarOpen" :key="locale" />
+    <Sidebar v-model="sidebarOpen" :key="locale" />
     <Loader v-if="loading" />
     <v-main v-else>
-      <v-content class="pa-0">
+      <div class="pa-0">
         <v-container fluid class="pa-4">
           <router-view />
         </v-container>
-      </v-content>
+      </div>
     </v-main>
 
-    <v-btn fixed dark fab bottom right color="blue" to="record">
+    <v-btn position="fixed" icon class="record-fab" color="blue" to="/record" aria-label="New record">
       <v-icon>mdi-plus</v-icon>
     </v-btn>
 
@@ -28,11 +28,11 @@ import localizeFilter from "@/filters/localize.filter";
 export default {
   name: "main-layout",
   data: () => ({
-    sidebarOpen: true,
+    sidebarOpen: null,
     loading: true
   }),
   async mounted() {
-    if (!Object.keys(this.$store.getters.info).length) {
+    if (!this.$store.getters.info.name) {
       await this.$store.dispatch("fetchInfo");
     }
 

@@ -1,4 +1,4 @@
-import Vue from "vue";
+import { createApp } from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
@@ -10,12 +10,6 @@ import firebase from "firebase/compat/app";
 import "firebase/compat/auth";
 import "firebase/compat/database";
 import vuetify from "./plugins/vuetify";
-
-Vue.config.productionTip = false;
-
-Vue.use(messagePlugin);
-Vue.use(titlePlugin);
-Vue.component("Loader", Loader);
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIRE_API_KEY,
@@ -38,12 +32,14 @@ if (!import.meta.env.VITE_FIRE_API_KEY || !import.meta.env.VITE_FIRE_AUTH_DOMAIN
   
   firebase.auth().onAuthStateChanged((state) => {
     if (!app) {
-      app = new Vue({
-        router,
-        store,
-        vuetify,
-        render: h => h(App)
-      }).$mount("#app");
+      app = createApp(App);
+      app.use(store);
+      app.use(router);
+      app.use(vuetify);
+      app.use(messagePlugin);
+      app.use(titlePlugin);
+      app.component("Loader", Loader);
+      router.isReady().then(() => app.mount("#app"));
     }
   });
 }

@@ -1,14 +1,14 @@
 <template>
   <v-app class="bg-gradient">
-    <v-content class="bg-overlay">
-      <v-container fluid class="fill-height">
-        <v-row align="center" justify="center">
+    <v-main class="bg-overlay">
+      <v-container fluid class="fill-height d-flex align-center flex-wrap">
+        <v-row class="align-center justify-center">
           <v-col cols="12" lg="5" sm="12" md="6">
             <router-view />
           </v-col>
         </v-row>
       </v-container>
-    </v-content>
+    </v-main>
 
     <Snackbar />
   </v-app>

@@ -1,6 +1,6 @@
 # MiniCoin
 
-[![Vue.js V2](https://img.shields.io/badge/Vue.js-v2-%234FC08D%20?style=for-the-badge&logo=vue.js)](https://v2.vuejs.org)
+[![Vue.js V3](https://img.shields.io/badge/Vue.js-v3-%234FC08D%20?style=for-the-badge&logo=vue.js)](https://vuejs.org)
 [![LICENSE](https://img.shields.io/badge/License-MIT-%23F05032%20?style=for-the-badge&logo=git)](LICENSE)
 [![Vercel Demo](https://img.shields.io/badge/Vercel-Demo-%23000000%20?style=for-the-badge&logo=vercel)](https://minicoin.now.sh/login?locale=en-US)
 
@@ -26,7 +26,7 @@ cd minicoin
 
 ### Install app's dependencies
 ``` bash
-npm install
+pnpm install
 ```
 
 ### Rename ```.env.example``` file to ```.env.local``` and fill up variables
@@ -55,8 +55,15 @@ Go to Realtime Database/Rules page, paste below rules and press Publish.
 ```
 
 ### Run
+Requires Node.js 20.19+ (or 22.12+) and pnpm 12.
 ``` bash
-npm run serve
+pnpm dev
+```
+
+### Production build
+``` bash
+pnpm build
+pnpm serve
 ```
 
 ## Licensing
@@ -65,7 +72,7 @@ This project is licensed under the MIT license (see [LICENSE](LICENSE)).
 ## Credits
 Big thanks to the [Vue](https://vuejs.org) command for creating this awesome framework.
 
-Thanks to the [Vuetify](https://vuetifyjs.com), [Vuex](https://vuex.vuejs.org), [Vue Meta](https://vue-meta.nuxtjs.org), [Vue Router](https://router.vuejs.org), [Vue Chart.js](https://vue-chartjs.org) and [Chart.js](https://chartjs.org) creators.
+Thanks to the [Vuetify](https://vuetifyjs.com), [Vuex](https://vuex.vuejs.org), [Vue Router](https://router.vuejs.org), [Vue Chart.js](https://vue-chartjs.org) and [Chart.js](https://chartjs.org) creators.
 
 Also big thanks to the guys created [Firebase](https://firebase.google.com) - backend of this application.
 

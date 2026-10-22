@@ -1,9 +1,9 @@
 <template>
   <v-app>
     <v-main>
-      <v-content class="pa-0">
+      <div class="pa-0">
         <router-view />
-      </v-content>
+      </div>
     </v-main>
 
     <Snackbar />

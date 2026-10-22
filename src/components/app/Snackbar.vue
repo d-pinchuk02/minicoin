@@ -3,14 +3,13 @@
     v-model="message.show"
     :timeout="message.timeout"
     :color="message.color"
-    top
-    right
+    location="top right"
   >
-    <v-icon left v-if="message.icon">{{ message.icon }}</v-icon>
+    <v-icon start v-if="message.icon">{{ message.icon }}</v-icon>
     {{ message.text }}
 
-    <template v-slot:action>
-      <v-btn text color="white" @click="message.show = false">OK</v-btn>
+    <template v-slot:actions>
+      <v-btn variant="text" color="white" @click="message.show = false">OK</v-btn>
     </template>
   </v-snackbar>
 </template>

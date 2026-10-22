@@ -3,7 +3,7 @@
     <h1>
       <v-btn
         icon
-        large
+        size="large"
         color="primary"
         :to="'/history'"
       >
@@ -14,19 +14,20 @@
     <v-divider class="mb-4"></v-divider>
 
     <Loader v-if="loading" />
-    <v-col v-else-if="record" cols="12" xs="12" sm="6" md="6">
+    <v-row v-else-if="record">
+    <v-col cols="12" sm="6">
       <v-card
-        outlined
+        variant="outlined"
       >
         <v-card-title>
           {{ currencyFilter(record.amount) }}
           <v-chip
-            class="ml-4"
+            class="ml-4 text-white"
             :color="record.typeColor"
             label
-            text-color="white"
+            variant="flat"
           >
-            <v-icon left>{{record.typeIcon}}</v-icon>
+            <v-icon start>{{record.typeIcon}}</v-icon>
             {{record.typeText}}
           </v-chip>
         </v-card-title>
@@ -34,10 +35,11 @@
         <v-card-text>
           <v-chip
             color="primary"
+            variant="flat"
             label
-            text-color="white"
+            class="text-white"
           >
-            <v-icon left>mdi-shape</v-icon>
+            <v-icon start>mdi-shape</v-icon>
             {{record.categoryName}}
           </v-chip>
           <br/>
@@ -46,6 +48,7 @@
         </v-card-text>
       </v-card>
     </v-col>
+    </v-row>
     <v-alert v-else type="error">
       {{ localizeFilter('detailrecord.noRecord') }}
     </v-alert>

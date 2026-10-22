@@ -3,7 +3,7 @@
     <v-data-table
       v-model="selected"
       show-select
-      item-key="id"
+      item-value="id"
       :headers="headers"
       :items="items"
       :items-per-page="15"
@@ -13,7 +13,7 @@
       </template>
     
  	 <template v-slot:item.type="{ item }">
-        <v-chip :color="item.typeClass" text-color="white">
+        <v-chip :color="item.typeClass" class="text-white" variant="flat">
           {{ item.typeText }}
         </v-chip>
       </template>
@@ -71,15 +71,15 @@ export default {
     selected: [],
     headers: [
       {
-        text: '#',
+        title: '#',
         align: 'start',
-        value: 'index'
+        key: 'index'
       },
-      { text: localizeFilter('shared.amount'), value: 'amount' },
-      { text: localizeFilter('shared.type'), value: 'type' },
-      { text: localizeFilter('shared.category'), value: 'categoryName' },	
-      { text: localizeFilter('shared.date'), value: 'date' },
-      { text: localizeFilter('historytable.actions'), value: 'actions' },
+      { title: localizeFilter('shared.amount'), key: 'amount' },
+      { title: localizeFilter('shared.type'), key: 'type' },
+      { title: localizeFilter('shared.category'), key: 'categoryName' },
+      { title: localizeFilter('shared.date'), key: 'date' },
+      { title: localizeFilter('historytable.actions'), key: 'actions' },
     ],
   }),
   computed: {

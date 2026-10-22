@@ -3,30 +3,30 @@
     <!-- Hero Section -->
     <section class="hero-section">
       <v-container>
-        <v-row align="center" justify="center" >
+        <v-row class="align-center justify-center">
           <v-col cols="12" md="6" class="text-center text-md-left">
-            <h1 class="display-2 font-weight-bold mb-4 white--text">
+            <h1 class="hero-title font-weight-bold mb-4 text-white">
               {{ localizeFilter('landing.hero.title') }}
             </h1>
-            <p class="headline mb-6 white--text opacity-8">
+            <p class="hero-subtitle mb-6 text-white opacity-8">
               {{ localizeFilter('landing.hero.subtitle') }}
             </p>
             <div class="d-flex justify-center justify-md-start gap-3 flex-column flex-sm-row">
               <v-btn
-                large
-                outlined
-                color="light"
+                size="large"
+                variant="outlined"
+                color="white"
                 to="/register"
               >
-                <v-icon left>mdi-account-plus</v-icon>
+                <v-icon start>mdi-account-plus</v-icon>
                 {{ localizeFilter('shared.signup') }}
               </v-btn>
               <v-btn
-                large
-                dark
+                size="large"
+                color="grey-darken-4"
                 to="/login"
               >
-                <v-icon left>mdi-login</v-icon>
+                <v-icon start>mdi-login</v-icon>
                 {{ localizeFilter('shared.signin') }}
               </v-btn>
               <locale-select activator-class="ml-md-auto" />

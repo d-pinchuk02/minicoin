@@ -9,7 +9,7 @@
       />
     </v-toolbar>
     <v-card-text>
-      <v-form v-model="isValid" @submit.prevent="submitHandler">
+      <v-form ref="form" v-model="isValid" @submit.prevent="submitHandler">
         <v-text-field
           :label="localizeFilter('shared.email')"
           :rules="emailRules"
@@ -37,9 +37,9 @@
       <v-btn
         color="orange"
         to="register"
-        outlined
+        variant="outlined"
       >
-        <v-icon left>mdi-account-plus</v-icon>
+        <v-icon start>mdi-account-plus</v-icon>
         {{ localizeFilter('shared.signup') }}...
       </v-btn>
       <v-spacer></v-spacer>
@@ -48,7 +48,7 @@
         color="orange"
         :disabled="!isValid"
       >
-        <v-icon left>mdi-login</v-icon>
+        <v-icon start>mdi-login</v-icon>
         {{ localizeFilter('shared.signin') }}
       </v-btn>
     </v-card-actions>
@@ -64,7 +64,7 @@ export default {
   data: () => ({
     email: "",
     password: "",
-    isValid: true,
+    isValid: false,
     emailRules: [
       v => !!v || localizeFilter("shared.errors.enterEmail"),
       v =>
@@ -91,6 +91,8 @@ export default {
   methods: {
     localizeFilter,
     async submitHandler() {
+      const { valid } = await this.$refs.form.validate();
+      if (!valid) return;
       if (!this.isValid) {
         console.log("invalid");
         return;

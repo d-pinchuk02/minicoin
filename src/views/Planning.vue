@@ -9,22 +9,21 @@
 
     <Loader v-if="loading" />
     <v-alert v-else-if="!categories.length" type="info">
-      {{ localizeFilter('shared.noCategories') }} <router-link class="white--text" to="/categories">{{ localizeFilter('shared.addCategory') }}</router-link>
+      {{ localizeFilter('shared.noCategories') }} <router-link class="text-white" to="/categories">{{ localizeFilter('shared.addCategory') }}</router-link>
     </v-alert>
-    <v-col v-else cols="12" v-for="cat of categories" :key="cat">
+    <v-col v-else cols="12" v-for="cat of categories" :key="cat.id">
       <p>
         <strong>{{cat.title}}:</strong>
         {{ currencyFilter(cat.spent) }} {{ localizeFilter('shared.of') }} {{ currencyFilter(cat.limit) }}
       </p>
-      <v-tooltip top>
-        <template v-slot:activator="{ on, attrs }">
+      <v-tooltip location="top">
+        <template v-slot:activator="{ props }">
           <v-progress-linear
-            rounded="true"
+            rounded
             height="8"
-            v-bind="attrs"
-            v-on="on"
+            v-bind="props"
             :color="cat.progressColor"
-            :value="cat.progressPercent"
+            :model-value="cat.progressPercent"
           ></v-progress-linear>
         </template>
         <span>{{cat.tooltip}}</span>

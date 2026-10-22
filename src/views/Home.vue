@@ -8,10 +8,10 @@
 
     <v-row v-else>
       <v-col cols="12" md="4" xs="12" sm="12">
-        <HomeBill :rates="currency.conversion_rates" />
+        <HomeBill :rates="currency.conversion_rates" @refresh="refresh" />
       </v-col>
       <v-col cols="12" md="6" xs="12" sm="12">
-        <HomeCurrency :rates="currency.conversion_rates" :date="currency.time_last_update_unix" />
+        <HomeCurrency :rates="currency.conversion_rates" :date="currency.time_last_update_unix" @refresh="refresh" />
       </v-col>
       <v-col cols="12" md="2" xs="12" sm="12">
         <!-- Empty column -->

@@ -1,4 +1,5 @@
 import firebase from 'firebase/compat/app'
+import { defaultLocale } from '../locales'
 
 export default {
   actions: {
@@ -16,6 +17,7 @@ export default {
         const uid = await dispatch('getUid')
         await firebase.database().ref(`/users/${uid}/info`).set({
           bill: 0,
+          locale: defaultLocale,
           name
         })
       } catch (e) {

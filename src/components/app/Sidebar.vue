@@ -1,12 +1,11 @@
 <template>
   <v-navigation-drawer
-      app
-      clipped
-      color="grey lighten-4"
-      :value="value"
+      color="grey-lighten-4"
+      :model-value="modelValue"
+      @update:model-value="$emit('update:modelValue', $event)"
     >
     <v-list
-        dense
+        density="compact"
         nav
     >
       <v-list-item
@@ -16,13 +15,13 @@
         router
         exact
       >
-        <v-list-item-icon>
-          <v-icon right>{{ item.icon }}</v-icon>
-        </v-list-item-icon>
+        <template #prepend>
+          <v-icon end>{{ item.icon }}</v-icon>
+        </template>
 
-        <v-list-item-content>
+        <div>
           <v-list-item-title>{{ item.title }}</v-list-item-title>
-        </v-list-item-content>
+        </div>
       </v-list-item>
     </v-list>
   </v-navigation-drawer>
@@ -32,7 +31,8 @@
 import localizeFilter from '@/filters/localize.filter'
 
 export default {
-  props: ['value'],
+  props: ['modelValue'],
+  emits: ['update:modelValue'],
   data: () => ({
     links: [
       { 

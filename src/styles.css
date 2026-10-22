@@ -1,0 +1,12 @@
+@layer vuetify-core.reset {
+  body { margin: 0; }
+  h1, h2, h3, h4, h5, h6, p { margin: 0; }
+  h1 { font-size: 2em; }
+  h2 { font-size: 1.5em; }
+  p { margin-bottom: 16px; }
+}
+
+.record-fab { bottom: 16px; right: 16px; z-index: 1005; }
+.hero-title { font-size: 3rem; line-height: 1.17; }
+.hero-section > .v-container { max-width: 1200px; }
+.hero-subtitle { font-size: 1.5rem; line-height: 1.33; }

@@ -1,9 +1,5 @@
 <template>
-  <div id="app">
-    <component :is="layout">
-      <router-view />
-    </component>
-  </div>
+  <component :is="layout" />
 </template>
 
 <script>
@@ -14,7 +10,7 @@ import LandingLayout from "@/layouts/LandingLayout.vue";
 export default {
   computed: {
     layout() {
-      return (this.$route.meta.layout || "empty") + "-layout";
+      return { empty: EmptyLayout, main: MainLayout, landing: LandingLayout }[this.$route.meta.layout || "empty"];
     }
   },
   components: {

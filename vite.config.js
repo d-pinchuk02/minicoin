@@ -1,21 +1,20 @@
-import { defineConfig } from "vite"
-import { createVuePlugin as vue } from "vite-plugin-vue2"
-import { VuetifyResolver } from "unplugin-vue-components/resolvers"
-import Components from "unplugin-vue-components/vite"
-import path from "node:path"
+import { defineConfig } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import vuetify from 'vite-plugin-vuetify'
+import { fileURLToPath, URL } from 'node:url'
 
 export default defineConfig({
-  plugins: [
-    vue(),
-    Components({
-      resolvers: [
-        VuetifyResolver(),
-      ],
-    }),
-  ],
+  plugins: [vue(), vuetify({ autoImport: true })],
   resolve: {
-    alias: {
-      "@": path.resolve(__dirname, "./src"),
-    },
+    alias: { '@': fileURLToPath(new URL('./src', import.meta.url)) },
+  },
+  optimizeDeps: {
+    include: [
+      'vuetify/components/VOverlay',
+      'vuetify/components/VDialog',
+      'vuetify/components/VMenu',
+      'vuetify/components/VSelect',
+      'vuetify/components/VTooltip',
+    ],
   },
 })

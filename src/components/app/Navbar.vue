@@ -1,7 +1,5 @@
 <template>
   <v-app-bar
-    app
-    clipped-left
     color="orange"
     class="pl-2"
   >
@@ -11,34 +9,33 @@
 
     <v-spacer/>
 
-    <v-menu offset-y>
-      <template v-slot:activator="{ on }">
+    <v-menu location="bottom">
+      <template v-slot:activator="{ props }">
         <v-btn
-          large
-          text
-          v-on="on"
+          size="large"
+          variant="text"
+          v-bind="props"
         >
-          <span class="mr-2" v-show="!$vuetify.breakpoint.xs && !$vuetify.breakpoint.sm">{{name}}</span>
+          <span class="mr-2" v-show="!$vuetify.display.xs && !$vuetify.display.sm">{{name}}</span>
           <v-avatar
-            size="32px"
-            item
+            size="32"
           >
-            <v-icon large>mdi-account-circle</v-icon>
+            <v-icon size="large">mdi-account-circle</v-icon>
           </v-avatar>
         </v-btn>
       </template>
       <v-list>
         <v-list-item @click="toProfile">
-          <v-list-item-icon>
-            <v-icon right>mdi-account-circle</v-icon>
-          </v-list-item-icon>
+          <template #prepend>
+            <v-icon end>mdi-account-circle</v-icon>
+          </template>
           <v-list-item-title>{{ localizeFilter('navbar.profile') }}</v-list-item-title>
         </v-list-item>
 
         <v-list-item @click="logout">
-          <v-list-item-icon>
-            <v-icon right>mdi-logout</v-icon>
-          </v-list-item-icon>
+          <template #prepend>
+            <v-icon end>mdi-logout</v-icon>
+          </template>
           <v-list-item-title>{{ localizeFilter('navbar.logout') }}</v-list-item-title>
         </v-list-item>
       </v-list>
@@ -51,6 +48,7 @@ import dateFilter from '@/filters/date.filter'
 import localizeFilter from '@/filters/localize.filter'
 
 export default {
+  emits: ['click'],
   data: () => ({
     date: new Date(),
     interval: null,
@@ -83,7 +81,7 @@ export default {
       this.date = new Date()
     }, 1000)
   },
-  beforeDestroy() {
+  beforeUnmount() {
     clearInterval(this.interval)
   }
 }

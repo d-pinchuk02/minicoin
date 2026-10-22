@@ -1,17 +1,15 @@
 <template>
-  <v-menu offset-y :class="menuClass">
-    <template v-slot:activator="{ on, attrs }">
+  <v-menu location="bottom" :class="menuClass">
+    <template v-slot:activator="{ props }">
       <v-btn
-        :large="activatorLarge"
+        :size="activatorLarge ? 'large' : 'small'"
         :class="activatorClass"
-        :color="activatorColor"
-        :dark="activatorDark"
-        :outlined="activatorOutlined"
-        :small="!activatorLarge"
-        v-bind="attrs"
-        v-on="on"
+        :color="activatorColor || (activatorOutlined ? 'grey-darken-3' : 'grey-lighten-4')"
+        :theme="activatorDark ? 'dark' : undefined"
+        :variant="activatorOutlined ? 'outlined' : 'elevated'"
+        v-bind="props"
       >
-        <v-icon left>mdi-translate</v-icon>
+        <v-icon start>mdi-translate</v-icon>
         {{ languages.find(lang => lang.id === info.locale)?.name }}
       </v-btn>
     </template>
@@ -44,7 +42,7 @@ export default {
     },
     activatorColor: {
       type: String,
-      default: 'light'
+      default: undefined
     },
     activatorDark: {
       type: Boolean,
