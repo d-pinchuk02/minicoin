@@ -46,17 +46,17 @@
 <script setup>
 import { onMounted } from 'vue'
 import { useRoute } from 'vue-router'
-import { useStore } from 'vuex'
+import { useInfoStore } from '@/store/info'
 import localizeFilter from '@/filters/localize.filter'
 import LocaleSelect from '@/components/app/LocaleSelect.vue'
 
 const route = useRoute()
-const store = useStore()
+const infoStore = useInfoStore()
 
 onMounted(() => {
   if (route.query.locale) {
-    store.commit('setInfo', {
-      ...store.getters.info,
+    infoStore.setInfo({
+      ...infoStore.info,
       locale: route.query.locale,
     })
   }

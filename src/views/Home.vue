@@ -26,19 +26,19 @@
 
 <script setup>
 import { onMounted, ref } from 'vue'
-import { useStore } from 'vuex'
+import { useAppStore } from '@/store'
 import localizeFilter from '@/filters/localize.filter'
 import HomeBill from '@/components/HomeBill.vue'
 import HomeCurrency from '@/components/HomeCurrency.vue'
 import Loader from '@/components/app/Loader.vue'
 
-const store = useStore()
+const appStore = useAppStore()
 const loading = ref(true)
 const currency = ref(null)
 
 async function refresh() {
   loading.value = true
-  currency.value = await store.dispatch('fetchCurrency')
+  currency.value = await appStore.fetchCurrency()
   loading.value = false
 }
 

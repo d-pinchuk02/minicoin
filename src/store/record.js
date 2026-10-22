@@ -1,22 +1,25 @@
+import { defineStore } from 'pinia'
+import { useAppStore } from './index'
+import { useAuthStore } from './auth'
 import firebase from 'firebase/compat/app'
 
-export default {
+export const useRecordStore = defineStore('record', {
   actions: {
-    async createRecord({ dispatch, commit }, record) {
+    async createRecord(record) {
       try {
-        const uid = await dispatch('getUid')
+        const uid = useAuthStore().getUid()
         return await firebase
           .database()
           .ref(`/users/${uid}/records`)
           .push(record)
       } catch (e) {
-        commit('setError', e)
+        useAppStore().setError(e)
         throw e
       }
     },
-    async fetchRecords({ dispatch, commit }) {
+    async fetchRecords() {
       try {
-        const uid = await dispatch('getUid')
+        const uid = useAuthStore().getUid()
         const records =
           (
             await firebase.database().ref(`/users/${uid}/records`).once('value')
@@ -24,13 +27,13 @@ export default {
 
         return Object.keys(records).map((key) => ({ ...records[key], id: key }))
       } catch (e) {
-        commit('setError', e)
+        useAppStore().setError(e)
         throw e
       }
     },
-    async fetchRecordById({ dispatch, commit }, id) {
+    async fetchRecordById(id) {
       try {
-        const uid = await dispatch('getUid')
+        const uid = useAuthStore().getUid()
         const record =
           (
             await firebase
@@ -42,9 +45,9 @@ export default {
 
         return { ...record, id }
       } catch (e) {
-        commit('setError', e)
+        useAppStore().setError(e)
         throw e
       }
     },
   },
-}
+})

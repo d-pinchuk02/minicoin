@@ -33,13 +33,15 @@
 
 <script setup>
 import { computed, onMounted, ref } from 'vue'
-import { useStore } from 'vuex'
+import { useRecordStore } from '@/store/record'
+import { useCategoryStore } from '@/store/category'
 import localizeFilter from '@/filters/localize.filter'
 import HistoryTable from '@/components/HistoryTable.vue'
 import HistoryChart from '@/components/HistoryChart.vue'
 import Loader from '@/components/app/Loader.vue'
 
-const store = useStore()
+const recordStore = useRecordStore()
+const categoryStore = useCategoryStore()
 const loading = ref(true)
 const records = ref([])
 const categories = ref([])
@@ -66,8 +68,8 @@ const incomeRecords = computed(() =>
 )
 
 onMounted(async () => {
-  records.value = await store.dispatch('fetchRecords')
-  categories.value = await store.dispatch('fetchCategories')
+  records.value = await recordStore.fetchRecords()
+  categories.value = await categoryStore.fetchCategories()
   loading.value = false
 })
 </script>

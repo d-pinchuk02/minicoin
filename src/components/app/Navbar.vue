@@ -43,17 +43,19 @@
 <script setup>
 import { computed, onMounted, onUnmounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useStore } from 'vuex'
+import { useAuthStore } from '@/store/auth'
+import { useInfoStore } from '@/store/info'
 import { useDisplay } from 'vuetify'
 import dateFilter from '@/filters/date.filter'
 import localizeFilter from '@/filters/localize.filter'
 
 const emit = defineEmits(['click'])
 const router = useRouter()
-const store = useStore()
+const authStore = useAuthStore()
+const infoStore = useInfoStore()
 const { smAndDown } = useDisplay()
 const date = ref(new Date())
-const name = computed(() => store.getters.info.name)
+const name = computed(() => infoStore.info.name)
 let interval
 
 onMounted(() => {
@@ -64,8 +66,8 @@ onMounted(() => {
 onUnmounted(() => clearInterval(interval))
 
 async function logout() {
-  const locale = store.getters.info.locale
-  await store.dispatch('logout')
+  const locale = infoStore.info.locale
+  await authStore.logout()
   router.push({ name: 'login', query: { message: 'logout', locale } })
 }
 

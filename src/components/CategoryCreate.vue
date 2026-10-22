@@ -35,12 +35,12 @@
 
 <script setup>
 import { ref } from 'vue'
-import { useStore } from 'vuex'
+import { useCategoryStore } from '@/store/category'
 import localizeFilter from '@/filters/localize.filter'
 import { useMessage } from '@/composables/useMessage'
 
 const emit = defineEmits(['created'])
-const store = useStore()
+const categoryStore = useCategoryStore()
 const { success } = useMessage()
 const form = ref(null)
 const title = ref('')
@@ -61,7 +61,7 @@ async function submitHandler() {
   const { valid } = await form.value.validate()
   if (!valid) return
   try {
-    const category = await store.dispatch('createCategory', {
+    const category = await categoryStore.createCategory({
       title: title.value,
       limit: limit.value,
     })

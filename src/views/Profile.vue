@@ -40,14 +40,14 @@
 
 <script setup>
 import { ref } from 'vue'
-import { useStore } from 'vuex'
+import { useInfoStore } from '@/store/info'
 import localizeFilter from '@/filters/localize.filter'
 import { localesArray } from '@/locales'
 
-const store = useStore()
+const infoStore = useInfoStore()
 const form = ref(null)
-const name = ref(store.getters.info.name)
-const locale = ref(store.getters.info.locale)
+const name = ref(infoStore.info.name)
+const locale = ref(infoStore.info.locale)
 const isValid = ref(false)
 const langs = localesArray
 const nameRules = [
@@ -61,7 +61,7 @@ async function submitHandler() {
   const { valid } = await form.value.validate()
   if (!valid) return
   try {
-    await store.dispatch('updateInfo', {
+    await infoStore.updateInfo({
       name: name.value,
       locale: locale.value,
     })

@@ -28,7 +28,8 @@
 
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue'
-import { useStore } from 'vuex'
+import { useInfoStore } from '@/store/info'
+import { useAppStore } from '@/store'
 import Navbar from '@/components/app/Navbar.vue'
 import Sidebar from '@/components/app/Sidebar.vue'
 import Snackbar from '@/components/app/Snackbar.vue'
@@ -36,21 +37,22 @@ import Loader from '@/components/app/Loader.vue'
 import localizeFilter from '@/filters/localize.filter'
 import { useMessage } from '@/composables/useMessage'
 
-const store = useStore()
+const infoStore = useInfoStore()
+const appStore = useAppStore()
 const { error: showError } = useMessage()
 const sidebarOpen = ref(null)
 const loading = ref(true)
-const locale = computed(() => store.getters.info.locale)
+const locale = computed(() => infoStore.info.locale)
 
 onMounted(async () => {
-  if (!store.getters.info.name) {
-    await store.dispatch('fetchInfo')
+  if (!infoStore.info.name) {
+    await infoStore.fetchInfo()
   }
   loading.value = false
 })
 
 watch(
-  () => store.getters.error,
+  () => appStore.error,
   (fbError) => {
     if (!fbError) return
     showError(

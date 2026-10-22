@@ -38,19 +38,23 @@
 
 <script setup>
 import { computed, onMounted, ref } from 'vue'
-import { useStore } from 'vuex'
+import { useRecordStore } from '@/store/record'
+import { useCategoryStore } from '@/store/category'
+import { useInfoStore } from '@/store/info'
 import currencyFilter from '@/filters/currency.filter'
 import localizeFilter from '@/filters/localize.filter'
 import Loader from '@/components/app/Loader.vue'
 
-const store = useStore()
+const recordStore = useRecordStore()
+const categoryStore = useCategoryStore()
+const infoStore = useInfoStore()
 const loading = ref(true)
 const categories = ref([])
-const info = computed(() => store.getters.info)
+const info = computed(() => infoStore.info)
 
 onMounted(async () => {
-  const records = await store.dispatch('fetchRecords')
-  const fetchedCategories = await store.dispatch('fetchCategories')
+  const records = await recordStore.fetchRecords()
+  const fetchedCategories = await categoryStore.fetchCategories()
 
   categories.value = fetchedCategories.map((cat) => {
     const spent = records

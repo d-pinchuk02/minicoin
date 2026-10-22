@@ -1,4 +1,4 @@
-import store from '../store'
+import { useInfoStore } from '../store/info'
 import { defaultLocale } from '../locales'
 
 export default function dateFilter(value, format = 'date') {
@@ -16,6 +16,6 @@ export default function dateFilter(value, format = 'date') {
     options.second = '2-digit'
   }
 
-  const locale = store.getters.info.locale || defaultLocale
+  const locale = useInfoStore().info.locale || defaultLocale
   return new Intl.DateTimeFormat(locale, options).format(new Date(value))
 }

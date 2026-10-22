@@ -16,16 +16,16 @@
 
 <script setup>
 import { watch } from 'vue'
-import { useStore } from 'vuex'
+import { useAppStore } from '@/store'
 import Snackbar from '@/components/app/Snackbar.vue'
 import localizeFilter from '@/filters/localize.filter'
 import { useMessage } from '@/composables/useMessage'
 
-const store = useStore()
+const appStore = useAppStore()
 const { error: showError } = useMessage()
 
 watch(
-  () => store.getters.error,
+  () => appStore.error,
   (fbError) => {
     if (!fbError) return
     showError(

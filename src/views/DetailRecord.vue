@@ -48,21 +48,22 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
-import { useStore } from 'vuex'
+import { useRecordStore } from '@/store/record'
+import { useCategoryStore } from '@/store/category'
 import currencyFilter from '@/filters/currency.filter'
 import dateFilter from '@/filters/date.filter'
 import localizeFilter from '@/filters/localize.filter'
 import Loader from '@/components/app/Loader.vue'
 
 const route = useRoute()
-const store = useStore()
+const recordStore = useRecordStore()
+const categoryStore = useCategoryStore()
 const record = ref(null)
 const loading = ref(true)
 
 onMounted(async () => {
-  const fetchedRecord = await store.dispatch('fetchRecordById', route.params.id)
-  const category = await store.dispatch(
-    'fetchCategoryById',
+  const fetchedRecord = await recordStore.fetchRecordById(route.params.id)
+  const category = await categoryStore.fetchCategoryById(
     fetchedRecord.categoryId,
   )
   const isIncome = fetchedRecord.type === 'income'

@@ -1,49 +1,44 @@
+import { defineStore } from 'pinia'
+import { useAppStore } from './index'
+import { useAuthStore } from './auth'
 import firebase from 'firebase/compat/app'
 import { defaultLocale } from '../locales'
 
-export default {
-  state: {
+export const useInfoStore = defineStore('info', {
+  state: () => ({
     info: {
       locale: defaultLocale,
     },
-  },
-  mutations: {
-    setInfo(state, info) {
-      state.info = info
-    },
-    clearInfo(state) {
-      state.info = { locale: state.info.locale }
-    },
-  },
+  }),
   actions: {
-    async updateInfo({ dispatch, commit, getters }, toUpdate) {
+    setInfo(info) {
+      this.info = info
+    },
+    clearInfo() {
+      this.info = { locale: this.info.locale }
+    },
+    async updateInfo(toUpdate) {
       try {
-        const uid = await dispatch('getUid')
-        const updateData = { ...getters.info, ...toUpdate }
-        const info = await firebase
-          .database()
-          .ref(`/users/${uid}/info`)
-          .update(updateData)
-        commit('setInfo', updateData)
+        const uid = useAuthStore().getUid()
+        const updateData = { ...this.info, ...toUpdate }
+        await firebase.database().ref(`/users/${uid}/info`).update(updateData)
+        this.setInfo(updateData)
       } catch (e) {
-        commit('setError', e)
+        useAppStore().setError(e)
         throw e
       }
     },
-    async fetchInfo({ dispatch, commit }) {
+    async fetchInfo() {
       try {
-        const uid = await dispatch('getUid')
+        const uid = useAuthStore().getUid()
         const info = (
           await firebase.database().ref(`/users/${uid}/info`).once('value')
         ).val()
-        commit('setInfo', info)
+        this.setInfo(info)
       } catch (e) {
-        commit('setError', e)
+        useAppStore().setError(e)
         throw e
       }
     },
   },
-  getters: {
-    info: (s) => s.info,
-  },
-}
+})

@@ -18,16 +18,16 @@
 
 <script setup>
 import { computed } from 'vue'
-import { useStore } from 'vuex'
+import { useInfoStore } from '@/store/info'
 import currencyFilter from '@/filters/currency.filter'
 import localizeFilter from '@/filters/localize.filter'
 
 const props = defineProps(['rates'])
 const emit = defineEmits(['refresh'])
-const store = useStore()
+const infoStore = useInfoStore()
 const currencies = ['UAH', 'USD', 'EUR']
 const base = computed(
-  () => store.getters.info.bill / (props.rates.UAH / props.rates.EUR),
+  () => infoStore.info.bill / (props.rates.UAH / props.rates.EUR),
 )
 
 function getCurrency(currency) {

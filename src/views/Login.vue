@@ -50,7 +50,8 @@
 <script setup>
 import { onMounted, ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useStore } from 'vuex'
+import { useAuthStore } from '@/store/auth'
+import { useInfoStore } from '@/store/info'
 import localizeFilter from '@/filters/localize.filter'
 import LocaleSelect from '@/components/app/LocaleSelect.vue'
 import title from '@/utils/title'
@@ -58,7 +59,8 @@ import { useMessage } from '@/composables/useMessage'
 
 const route = useRoute()
 const router = useRouter()
-const store = useStore()
+const authStore = useAuthStore()
+const infoStore = useInfoStore()
 const { info: showInfo } = useMessage()
 const form = ref(null)
 const email = ref('')
@@ -80,7 +82,7 @@ const passwordRules = [
 
 onMounted(() => {
   if (route.query.locale) {
-    store.commit('setInfo', { locale: route.query.locale })
+    infoStore.setInfo({ locale: route.query.locale })
   }
   if (route.query.message) {
     showInfo(localizeFilter('msg.' + route.query.message))
@@ -91,11 +93,11 @@ async function submitHandler() {
   const { valid } = await form.value.validate()
   if (!valid) return
   try {
-    await store.dispatch('login', {
+    await authStore.login({
       email: email.value,
       password: password.value,
     })
-    await store.dispatch('fetchInfo')
+    await infoStore.fetchInfo()
     router.push('/dashboard')
   } catch {}
 }

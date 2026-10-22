@@ -75,12 +75,16 @@
 
 <script setup>
 import { computed, nextTick, onMounted, ref } from 'vue'
-import { useStore } from 'vuex'
+import { useCategoryStore } from '@/store/category'
+import { useRecordStore } from '@/store/record'
+import { useInfoStore } from '@/store/info'
 import localizeFilter from '@/filters/localize.filter'
 import Loader from '@/components/app/Loader.vue'
 import { useMessage } from '@/composables/useMessage'
 
-const store = useStore()
+const categoryStore = useCategoryStore()
+const recordStore = useRecordStore()
+const infoStore = useInfoStore()
 const { success, error } = useMessage()
 const form = ref(null)
 const categories = ref([])
@@ -90,7 +94,7 @@ const category = ref(null)
 const type = ref('expense')
 const amount = ref(1)
 const description = ref('')
-const info = computed(() => store.getters.info)
+const info = computed(() => infoStore.info)
 const canCreateRecord = computed(
   () => type.value === 'income' || info.value.bill >= amount.value,
 )
@@ -106,7 +110,7 @@ const descriptionRules = [
 ]
 
 onMounted(async () => {
-  categories.value = await store.dispatch('fetchCategories')
+  categories.value = await categoryStore.fetchCategories()
   loading.value = false
   if (categories.value.length) {
     category.value = categories.value[0].id
@@ -125,7 +129,7 @@ async function submitHandler() {
     return
   }
   try {
-    await store.dispatch('createRecord', {
+    await recordStore.createRecord({
       categoryId: category.value,
       amount: amount.value,
       description: description.value,
@@ -136,7 +140,7 @@ async function submitHandler() {
       type.value === 'income'
         ? +info.value.bill + +amount.value
         : +info.value.bill - +amount.value
-    await store.dispatch('updateInfo', { bill })
+    await infoStore.updateInfo({ bill })
     success(localizeFilter('msg.recordCreated'))
     form.value.reset()
     amount.value = 1

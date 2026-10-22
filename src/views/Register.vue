@@ -71,13 +71,13 @@
 <script setup>
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { useStore } from 'vuex'
+import { useAuthStore } from '@/store/auth'
 import localizeFilter from '@/filters/localize.filter'
 import LocaleSelect from '@/components/app/LocaleSelect.vue'
 import title from '@/utils/title'
 
 const router = useRouter()
-const store = useStore()
+const authStore = useAuthStore()
 const form = ref(null)
 const email = ref('')
 const password = ref('')
@@ -109,7 +109,7 @@ async function submitHandler() {
   const { valid } = await form.value.validate()
   if (!valid || !agree.value) return
   try {
-    await store.dispatch('register', {
+    await authStore.register({
       email: email.value,
       password: password.value,
       name: name.value,

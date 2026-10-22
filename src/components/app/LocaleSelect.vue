@@ -30,7 +30,7 @@
 
 <script setup>
 import { computed } from 'vue'
-import { useStore } from 'vuex'
+import { useInfoStore } from '@/store/info'
 import { localesArray } from '@/locales'
 
 defineProps({
@@ -63,11 +63,11 @@ defineProps({
     default: '',
   },
 })
-const store = useStore()
+const infoStore = useInfoStore()
 const languages = localesArray
-const info = computed(() => store.getters.info)
+const info = computed(() => infoStore.info)
 
 function setLanguage(code) {
-  store.commit('setInfo', { ...info.value, locale: code })
+  infoStore.setInfo({ ...info.value, locale: code })
 }
 </script>

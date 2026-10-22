@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
+import { createPinia } from 'pinia'
 import App from './App.vue'
 import router from './router'
-import store from './store'
 
 import firebase from 'firebase/compat/app'
 import 'firebase/compat/auth'
@@ -36,12 +36,13 @@ if (
 } else {
   firebase.initializeApp(firebaseConfig)
 
-  let app
+  let app, pinia
 
   firebase.auth().onAuthStateChanged((state) => {
     if (!app) {
+      pinia = createPinia()
       app = createApp(App)
-      app.use(store)
+      app.use(pinia)
       app.use(router)
       app.use(vuetify)
       router.isReady().then(() => app.mount('#app'))

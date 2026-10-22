@@ -1,27 +1,30 @@
+import { defineStore } from 'pinia'
+import { useAppStore } from './index'
+import { useInfoStore } from './info'
 import firebase from 'firebase/compat/app'
 import { defaultLocale } from '../locales'
 
-export default {
+export const useAuthStore = defineStore('auth', {
   actions: {
-    async login({ dispatch, commit }, { email, password }) {
+    async login({ email, password }) {
       try {
         await firebase.auth().signInWithEmailAndPassword(email, password)
       } catch (e) {
-        commit('setError', e)
+        useAppStore().setError(e)
         throw e
       }
     },
-    async register({ dispatch, commit }, { email, password, name }) {
+    async register({ email, password, name }) {
       try {
         await firebase.auth().createUserWithEmailAndPassword(email, password)
-        const uid = await dispatch('getUid')
+        const uid = this.getUid()
         await firebase.database().ref(`/users/${uid}/info`).set({
           bill: 0,
           locale: defaultLocale,
           name,
         })
       } catch (e) {
-        commit('setError', e)
+        useAppStore().setError(e)
         throw e
       }
     },
@@ -29,9 +32,9 @@ export default {
       const user = firebase.auth().currentUser
       return user ? user.uid : null
     },
-    async logout({ commit }) {
+    async logout() {
       await firebase.auth().signOut()
-      commit('clearInfo')
+      useInfoStore().clearInfo()
     },
   },
-}
+})

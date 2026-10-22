@@ -1,25 +1,16 @@
-import { createStore } from 'vuex'
-import auth from './auth'
-import info from './info'
-import category from './category'
-import record from './record'
+import { defineStore } from 'pinia'
 
-export default createStore({
-  state: {
+export const useAppStore = defineStore('app', {
+  state: () => ({
     error: null,
-  },
-  mutations: {
-    setError(state, error) {
-      state.error = error
-    },
-    clearError(state) {
-      state.error = null
-    },
-  },
-  getters: {
-    error: (s) => s.error,
-  },
+  }),
   actions: {
+    setError(error) {
+      this.error = error
+    },
+    clearError() {
+      this.error = null
+    },
     async fetchCurrency() {
       const key = import.meta.env.VITE_EXCHANGERATE_API_KEY
       const res = await fetch(
@@ -27,11 +18,5 @@ export default createStore({
       )
       return await res.json()
     },
-  },
-  modules: {
-    auth,
-    info,
-    category,
-    record,
   },
 })

@@ -46,13 +46,13 @@
 
 <script setup>
 import { ref, watch } from 'vue'
-import { useStore } from 'vuex'
+import { useCategoryStore } from '@/store/category'
 import localizeFilter from '@/filters/localize.filter'
 import { useMessage } from '@/composables/useMessage'
 
 const props = defineProps({ categories: { type: Array, required: true } })
 const emit = defineEmits(['updated'])
-const store = useStore()
+const categoryStore = useCategoryStore()
 const { success } = useMessage()
 const form = ref(null)
 const isValid = ref(false)
@@ -86,7 +86,7 @@ async function submitHandler() {
       title: title.value,
       limit: limit.value,
     }
-    await store.dispatch('updateCategory', categoryData)
+    await categoryStore.updateCategory(categoryData)
     success(localizeFilter('msg.categoryUpdated'))
     emit('updated', categoryData)
   } catch {}

@@ -26,19 +26,19 @@
 
 <script setup>
 import { onMounted, ref } from 'vue'
-import { useStore } from 'vuex'
+import { useCategoryStore } from '@/store/category'
 import localizeFilter from '@/filters/localize.filter'
 import CategoryCreate from '@/components/CategoryCreate.vue'
 import CategoryEdit from '@/components/CategoryEdit.vue'
 import Loader from '@/components/app/Loader.vue'
 
-const store = useStore()
+const categoryStore = useCategoryStore()
 const categories = ref([])
 const loading = ref(true)
 const updateCount = ref(0)
 
 onMounted(async () => {
-  categories.value = await store.dispatch('fetchCategories')
+  categories.value = await categoryStore.fetchCategories()
   loading.value = false
 })
 
