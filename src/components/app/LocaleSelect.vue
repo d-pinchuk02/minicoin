@@ -4,13 +4,16 @@
       <v-btn
         :size="activatorLarge ? 'large' : 'small'"
         :class="activatorClass"
-        :color="activatorColor || (activatorOutlined ? 'grey-darken-3' : 'grey-lighten-4')"
+        :color="
+          activatorColor ||
+          (activatorOutlined ? 'grey-darken-3' : 'grey-lighten-4')
+        "
         :theme="activatorDark ? 'dark' : undefined"
         :variant="activatorOutlined ? 'outlined' : 'elevated'"
         v-bind="props"
       >
         <v-icon start>mdi-translate</v-icon>
-        {{ languages.find(lang => lang.id === info.locale)?.name }}
+        {{ languages.find((lang) => lang.id === info.locale)?.name }}
       </v-btn>
     </template>
     <v-list :class="listClass">
@@ -34,32 +37,32 @@ export default {
   props: {
     menuClass: {
       type: String,
-      default: ''
+      default: '',
     },
     activatorClass: {
       type: String,
-      default: ''
+      default: '',
     },
     activatorColor: {
       type: String,
-      default: undefined
+      default: undefined,
     },
     activatorDark: {
       type: Boolean,
-      default: false
+      default: false,
     },
     activatorOutlined: {
       type: Boolean,
-      default: false
+      default: false,
     },
     activatorLarge: {
       type: Boolean,
-      default: true
+      default: true,
     },
     listClass: {
       type: String,
-      default: ''
-    }
+      default: '',
+    },
   },
   data: () => ({
     languages: localesArray,
@@ -69,8 +72,8 @@ export default {
   },
   methods: {
     setLanguage(code) {
-      this.$store.commit("setInfo", { ...this.info, locale: code })
-    }
-  }
+      this.$store.commit('setInfo', { ...this.info, locale: code })
+    },
+  },
 }
 </script>

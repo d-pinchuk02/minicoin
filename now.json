@@ -1,21 +1,21 @@
 {
-	"name": "minicoin-public",
-	"version": 2,
-	"builds": [
-		{
-			"src": "package.json",
-			"use": "@now/static-build"
-		}
-	],
-	"routes": [
-		{
-			"src": "/(assets|img)/.*",
-			"headers": { "cache-control": "max-age=31536000, immutable" }
-		},
-		{ "handle": "filesystem" },
-		{ "src": ".*", "dest": "/" }
-	],
-	"github": {
-		"silent": true
-	}
+  "name": "minicoin-public",
+  "version": 2,
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@now/static-build"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(assets|img)/.*",
+      "headers": { "cache-control": "max-age=31536000, immutable" }
+    },
+    { "handle": "filesystem" },
+    { "src": ".*", "dest": "/" }
+  ],
+  "github": {
+    "silent": true
+  }
 }

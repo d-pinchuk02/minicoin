@@ -15,15 +15,11 @@ const locales = {
   'uk-UA': {
     name: 'Українська',
     t: uk_UA,
-  }
+  },
 }
-const localesArray = Object.entries(locales).map(([id, { name }]) => ({ id, name }))
+const localesArray = Object.entries(locales).map(([id, { name }]) => ({
+  id,
+  name,
+}))
 
-export {
-  defaultLocale,
-  locales,
-  localesArray,
-  en_US,
-  ru_RU,
-  uk_UA,
-}
+export { defaultLocale, locales, localesArray, en_US, ru_RU, uk_UA }

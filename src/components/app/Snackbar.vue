@@ -9,18 +9,20 @@
     {{ message.text }}
 
     <template v-slot:actions>
-      <v-btn variant="text" color="white" @click="message.show = false">OK</v-btn>
+      <v-btn variant="text" color="white" @click="message.show = false"
+        >OK</v-btn
+      >
     </template>
   </v-snackbar>
 </template>
 
 <script>
 export default {
-  name: "app-snackbar",
+  name: 'app-snackbar',
   computed: {
     message() {
-      return this.$message;
-    }
-  }
-};
+      return this.$message
+    },
+  },
+}
 </script>

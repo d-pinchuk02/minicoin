@@ -16,7 +16,9 @@
           :key="categories.length + updateCount"
           @updated="updateCategories"
         />
-        <v-alert v-else type="info">{{ localizeFilter('shared.noCategories') }}</v-alert>
+        <v-alert v-else type="info">{{
+          localizeFilter('shared.noCategories')
+        }}</v-alert>
       </v-col>
     </v-row>
   </div>
@@ -32,14 +34,15 @@ export default {
   data: () => ({
     categories: [],
     loading: true,
-    updateCount: 0
+    updateCount: 0,
   }),
   async mounted() {
     this.categories = await this.$store.dispatch('fetchCategories')
     this.loading = false
   },
   components: {
-    CategoryCreate, CategoryEdit
+    CategoryCreate,
+    CategoryEdit,
   },
   methods: {
     localizeFilter,
@@ -47,11 +50,11 @@ export default {
       this.categories.push(category)
     },
     updateCategories(category) {
-      const idx = this.categories.findIndex(c => c.id === category.id)
+      const idx = this.categories.findIndex((c) => c.id === category.id)
       this.categories[idx].title = category.title
       this.categories[idx].limit = category.limit
       this.updateCount++
-    }
-  }
+    },
+  },
 }
 </script>

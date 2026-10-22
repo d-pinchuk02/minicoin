@@ -13,153 +13,155 @@
     </v-alert>
 
     <v-row v-else>
-    <v-col cols="12" sm="6">
-      <v-form v-model="isValid" ref="form" @submit.prevent="submitHandler">
-        <v-select
-          :items="categories"
-          :label="localizeFilter('shared.selectCategory')"
-          name="category"
-          prepend-icon="mdi-shape"
-          item-title="title"
-          item-value="id"
-          v-model="category"
-          required
-        ></v-select>
+      <v-col cols="12" sm="6">
+        <v-form v-model="isValid" ref="form" @submit.prevent="submitHandler">
+          <v-select
+            :items="categories"
+            :label="localizeFilter('shared.selectCategory')"
+            name="category"
+            prepend-icon="mdi-shape"
+            item-title="title"
+            item-value="id"
+            v-model="category"
+            required
+          ></v-select>
 
-        <v-label for="type">
-          <v-icon>mdi-plus-minus-variant</v-icon>
-          {{ localizeFilter('newrecord.type') }}
-        </v-label>
-        <v-radio-group class="ml-8" name="type" v-model="type" required>
-          <v-radio
-            color="green"
-            value="income"
-            :label="localizeFilter('shared.income')"
-          ></v-radio>
-          <v-radio
-            color="red"
-            value="expense"
-            :label="localizeFilter('shared.expense')"
-          ></v-radio>
-        </v-radio-group>
+          <v-label for="type">
+            <v-icon>mdi-plus-minus-variant</v-icon>
+            {{ localizeFilter('newrecord.type') }}
+          </v-label>
+          <v-radio-group class="ml-8" name="type" v-model="type" required>
+            <v-radio
+              color="green"
+              value="income"
+              :label="localizeFilter('shared.income')"
+            ></v-radio>
+            <v-radio
+              color="red"
+              value="expense"
+              :label="localizeFilter('shared.expense')"
+            ></v-radio>
+          </v-radio-group>
 
-        <v-text-field
-          :label="localizeFilter('shared.amount')"
-          :rules="amountRules"
-          name="amount"
-          prepend-icon="mdi-cash-multiple"
-          type="number"
-          v-model.number="amount"
-          required
-        ></v-text-field>
+          <v-text-field
+            :label="localizeFilter('shared.amount')"
+            :rules="amountRules"
+            name="amount"
+            prepend-icon="mdi-cash-multiple"
+            type="number"
+            v-model.number="amount"
+            required
+          ></v-text-field>
 
-        <v-text-field
-          :label="localizeFilter('shared.description')"
-          :rules="descriptionRules"
-          name="description"
-          prepend-icon="mdi-text"
-          type="name"
-          v-model.trim="description"
-          required
-        ></v-text-field>
+          <v-text-field
+            :label="localizeFilter('shared.description')"
+            :rules="descriptionRules"
+            name="description"
+            prepend-icon="mdi-text"
+            type="name"
+            v-model.trim="description"
+            required
+          ></v-text-field>
 
-        <v-btn color="success" type="submit" :disabled="!isValid">
-          <v-icon start>mdi-plus</v-icon>
-          {{ localizeFilter('shared.create') }}
-        </v-btn>
-      </v-form>
-    </v-col>
+          <v-btn color="success" type="submit" :disabled="!isValid">
+            <v-icon start>mdi-plus</v-icon>
+            {{ localizeFilter('shared.create') }}
+          </v-btn>
+        </v-form>
+      </v-col>
     </v-row>
   </div>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import localizeFilter from "@/filters/localize.filter";
+import { mapGetters } from 'vuex'
+import localizeFilter from '@/filters/localize.filter'
 
 export default {
-  name: "newrecord",
+  name: 'newrecord',
   data: () => ({
     categories: [],
     loading: true,
     isValid: false,
     category: null,
-    type: "expense",
+    type: 'expense',
     amount: 1,
-    description: "",
+    description: '',
     amountRules: [
-      v => (v && +v >= 1) || localizeFilter("shared.errors.minValue") + ": " + 1
+      (v) =>
+        (v && +v >= 1) || localizeFilter('shared.errors.minValue') + ': ' + 1,
     ],
     descriptionRules: [
-      v => !!v || localizeFilter("newrecord.error.enterDescription"),
-      v =>
+      (v) => !!v || localizeFilter('newrecord.error.enterDescription'),
+      (v) =>
         (v && v.length >= 2) ||
-        localizeFilter("shared.errors.minLength") + ": " + 2
-    ]
+        localizeFilter('shared.errors.minLength') + ': ' + 2,
+    ],
   }),
   async mounted() {
-    this.categories = await this.$store.dispatch("fetchCategories");
-    this.loading = false;
+    this.categories = await this.$store.dispatch('fetchCategories')
+    this.loading = false
 
     if (this.categories.length) {
-      this.category = this.categories[0].id;
-      await this.$nextTick();
-      await this.$refs.form.validate();
+      this.category = this.categories[0].id
+      await this.$nextTick()
+      await this.$refs.form.validate()
     }
   },
   computed: {
-    ...mapGetters(["info"]),
+    ...mapGetters(['info']),
     canCreateRecord() {
-      if (this.type === "income") {
-        return true;
+      if (this.type === 'income') {
+        return true
       }
 
-      return this.info.bill >= this.amount;
-    }
+      return this.info.bill >= this.amount
+    },
   },
   methods: {
     localizeFilter,
     async submitHandler() {
-      const { valid } = await this.$refs.form.validate();
+      const { valid } = await this.$refs.form.validate()
 
       if (!valid) {
-        return;
+        return
       }
 
       if (this.canCreateRecord) {
         try {
-          await this.$store.dispatch("createRecord", {
+          await this.$store.dispatch('createRecord', {
             categoryId: this.category,
             amount: this.amount,
             description: this.description,
             type: this.type,
-            date: new Date().toJSON()
-          });
+            date: new Date().toJSON(),
+          })
 
           const bill =
-            this.type === "income"
+            this.type === 'income'
               ? +this.info.bill + +this.amount
-              : +this.info.bill - +this.amount;
+              : +this.info.bill - +this.amount
 
-          await this.$store.dispatch("updateInfo", { bill });
-          this.$success(localizeFilter("msg.recordCreated"));
-          this.$refs.form.reset();
+          await this.$store.dispatch('updateInfo', { bill })
+          this.$success(localizeFilter('msg.recordCreated'))
+          this.$refs.form.reset()
 
-          this.amount = 1;
-          this.description = "";
-          this.category = this.categories[0].id;
-          this.type = "expense";
+          this.amount = 1
+          this.description = ''
+          this.category = this.categories[0].id
+          this.type = 'expense'
 
-          await this.$nextTick();
-          await this.$refs.form.validate();
+          await this.$nextTick()
+          await this.$refs.form.validate()
         } catch (e) {}
       } else {
         this.$error(
-          `${localizeFilter("msg.insufficientMoney")} (${this.amount -
-            this.info.bill})`
-        );
+          `${localizeFilter('msg.insufficientMoney')} (${
+            this.amount - this.info.bill
+          })`,
+        )
       }
-    }
-  }
-};
+    },
+  },
+}
 </script>

@@ -1,25 +1,22 @@
 <template>
-  <v-app-bar
-    color="orange"
-    class="pl-2"
-  >
+  <v-app-bar color="orange" class="pl-2">
     <v-app-bar-nav-icon @click.prevent="$emit('click')"></v-app-bar-nav-icon>
 
-    <span class="title font-weight-light">{{ dateFilter(date, 'datetime') }}</span>
+    <span class="title font-weight-light">{{
+      dateFilter(date, 'datetime')
+    }}</span>
 
-    <v-spacer/>
+    <v-spacer />
 
     <v-menu location="bottom">
       <template v-slot:activator="{ props }">
-        <v-btn
-          size="large"
-          variant="text"
-          v-bind="props"
-        >
-          <span class="mr-2" v-show="!$vuetify.display.xs && !$vuetify.display.sm">{{name}}</span>
-          <v-avatar
-            size="32"
+        <v-btn size="large" variant="text" v-bind="props">
+          <span
+            class="mr-2"
+            v-show="!$vuetify.display.xs && !$vuetify.display.sm"
+            >{{ name }}</span
           >
+          <v-avatar size="32">
             <v-icon size="large">mdi-account-circle</v-icon>
           </v-avatar>
         </v-btn>
@@ -29,14 +26,18 @@
           <template #prepend>
             <v-icon end>mdi-account-circle</v-icon>
           </template>
-          <v-list-item-title>{{ localizeFilter('navbar.profile') }}</v-list-item-title>
+          <v-list-item-title>{{
+            localizeFilter('navbar.profile')
+          }}</v-list-item-title>
         </v-list-item>
 
         <v-list-item @click="logout">
           <template #prepend>
             <v-icon end>mdi-logout</v-icon>
           </template>
-          <v-list-item-title>{{ localizeFilter('navbar.logout') }}</v-list-item-title>
+          <v-list-item-title>{{
+            localizeFilter('navbar.logout')
+          }}</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-menu>
@@ -63,18 +64,18 @@ export default {
         name: 'login',
         query: {
           message: 'logout',
-          locale: locale
-        }
+          locale: locale,
+        },
       })
     },
     toProfile() {
       this.$router.push('/profile')
-    }
+    },
   },
   computed: {
     name() {
       return this.$store.getters.info.name
-    }
+    },
   },
   mounted() {
     this.interval = setInterval(() => {
@@ -83,6 +84,6 @@ export default {
   },
   beforeUnmount() {
     clearInterval(this.interval)
-  }
+  },
 }
 </script>

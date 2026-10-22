@@ -34,45 +34,46 @@
 </template>
 
 <script>
-import localizeFilter from "@/filters/localize.filter";
+import localizeFilter from '@/filters/localize.filter'
 
 export default {
   data: () => ({
-    title: "",
+    title: '',
     limit: 1,
     isValid: false,
     titleRules: [
-      v => !!v || localizeFilter("categorycreate.error.enterTitle"),
-      v =>
+      (v) => !!v || localizeFilter('categorycreate.error.enterTitle'),
+      (v) =>
         (v && v.length >= 2) ||
-        localizeFilter("shared.errors.minLength") + ": " + 2
+        localizeFilter('shared.errors.minLength') + ': ' + 2,
     ],
     limitRules: [
-      v => (v && +v >= 1) || localizeFilter("shared.errors.minValue") + ": " + 1
-    ]
+      (v) =>
+        (v && +v >= 1) || localizeFilter('shared.errors.minValue') + ': ' + 1,
+    ],
   }),
   methods: {
     localizeFilter,
     async submitHandler() {
-      const { valid } = await this.$refs.form.validate();
+      const { valid } = await this.$refs.form.validate()
 
       if (!valid) {
-        return;
+        return
       }
 
       try {
-        const category = await this.$store.dispatch("createCategory", {
+        const category = await this.$store.dispatch('createCategory', {
           title: this.title,
-          limit: this.limit
-        });
-        this.$refs.form.reset();
-        this.title = "";
-        this.limit = 1;
-        this.$success(localizeFilter("msg.categoryCreated"));
+          limit: this.limit,
+        })
+        this.$refs.form.reset()
+        this.title = ''
+        this.limit = 1
+        this.$success(localizeFilter('msg.categoryCreated'))
 
-        this.$emit("created", category);
+        this.$emit('created', category)
       } catch (e) {}
-    }
-  }
-};
+    },
+  },
+}
 </script>

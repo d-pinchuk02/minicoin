@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import Snackbar from "@/components/app/Snackbar.vue";
+import Snackbar from '@/components/app/Snackbar.vue'
 
 export default {
   name: 'landing-layout',
@@ -20,7 +20,7 @@ export default {
   },
   data: () => ({
     appTitle: import.meta.env.VITE_TITLE,
-  })
+  }),
 }
 </script>
 

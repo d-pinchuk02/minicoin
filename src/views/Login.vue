@@ -1,7 +1,7 @@
 <template>
   <v-card class="elevation-3">
     <v-toolbar flat>
-      <v-toolbar-title>{{ this.$title("login.title") }}</v-toolbar-title>
+      <v-toolbar-title>{{ this.$title('login.title') }}</v-toolbar-title>
       <locale-select
         activator-class="ml-auto"
         activator-outlined
@@ -34,20 +34,12 @@
       </v-form>
     </v-card-text>
     <v-card-actions class="pa-4">
-      <v-btn
-        color="orange"
-        to="register"
-        variant="outlined"
-      >
+      <v-btn color="orange" to="register" variant="outlined">
         <v-icon start>mdi-account-plus</v-icon>
         {{ localizeFilter('shared.signup') }}...
       </v-btn>
       <v-spacer></v-spacer>
-      <v-btn
-        @click.prevent="submitHandler"
-        color="orange"
-        :disabled="!isValid"
-      >
+      <v-btn @click.prevent="submitHandler" color="orange" :disabled="!isValid">
         <v-icon start>mdi-login</v-icon>
         {{ localizeFilter('shared.signin') }}
       </v-btn>
@@ -56,62 +48,62 @@
 </template>
 
 <script>
-import localizeFilter from "@/filters/localize.filter";
-import LocaleSelect from "../components/app/LocaleSelect.vue";
+import localizeFilter from '@/filters/localize.filter'
+import LocaleSelect from '../components/app/LocaleSelect.vue'
 
 export default {
-  name: "login",
+  name: 'login',
   data: () => ({
-    email: "",
-    password: "",
+    email: '',
+    password: '',
     isValid: false,
     emailRules: [
-      v => !!v || localizeFilter("shared.errors.enterEmail"),
-      v =>
+      (v) => !!v || localizeFilter('shared.errors.enterEmail'),
+      (v) =>
         /^\S+@\S+\.\S+$/.test(v) ||
-        localizeFilter("shared.errors.enterCorrectEmail")
+        localizeFilter('shared.errors.enterCorrectEmail'),
     ],
     passwordRules: [
-      v => !!v || localizeFilter("shared.errors.enterPassword"),
-      v =>
+      (v) => !!v || localizeFilter('shared.errors.enterPassword'),
+      (v) =>
         (v && v.length >= 8) ||
-        localizeFilter("shared.errors.minLength") + ": " + 8
-    ]
+        localizeFilter('shared.errors.minLength') + ': ' + 8,
+    ],
   }),
   mounted() {
     if (this.$route.query.locale) {
-      let info = { locale: this.$route.query.locale };
-      this.$store.commit("setInfo", info);
+      let info = { locale: this.$route.query.locale }
+      this.$store.commit('setInfo', info)
     }
 
     if (this.$route.query.message) {
-      this.$info(localizeFilter("msg." + this.$route.query.message));
+      this.$info(localizeFilter('msg.' + this.$route.query.message))
     }
   },
   methods: {
     localizeFilter,
     async submitHandler() {
-      const { valid } = await this.$refs.form.validate();
-      if (!valid) return;
+      const { valid } = await this.$refs.form.validate()
+      if (!valid) return
       if (!this.isValid) {
-        console.log("invalid");
-        return;
+        console.log('invalid')
+        return
       }
 
       const formData = {
         email: this.email,
-        password: this.password
-      };
+        password: this.password,
+      }
 
       try {
-        await this.$store.dispatch("login", formData);
-        await this.$store.dispatch("fetchInfo");
-        this.$router.push("/dashboard");
+        await this.$store.dispatch('login', formData)
+        await this.$store.dispatch('fetchInfo')
+        this.$router.push('/dashboard')
       } catch (e) {}
-    }
+    },
   },
   components: {
     LocaleSelect,
-  }
-};
+  },
+}
 </script>

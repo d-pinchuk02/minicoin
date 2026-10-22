@@ -1,12 +1,7 @@
 <template>
   <div>
     <h1>
-      <v-btn
-        icon
-        size="large"
-        color="primary"
-        :to="'/history'"
-      >
+      <v-btn icon size="large" color="primary" :to="'/history'">
         <v-icon>mdi-arrow-left</v-icon>
       </v-btn>
       {{ localizeFilter('detailrecord.title') }}
@@ -15,39 +10,34 @@
 
     <Loader v-if="loading" />
     <v-row v-else-if="record">
-    <v-col cols="12" sm="6">
-      <v-card
-        variant="outlined"
-      >
-        <v-card-title>
-          {{ currencyFilter(record.amount) }}
-          <v-chip
-            class="ml-4 text-white"
-            :color="record.typeColor"
-            label
-            variant="flat"
-          >
-            <v-icon start>{{record.typeIcon}}</v-icon>
-            {{record.typeText}}
-          </v-chip>
-        </v-card-title>
-        <v-card-subtitle>{{ dateFilter(record.date, 'datetime')}}</v-card-subtitle>
-        <v-card-text>
-          <v-chip
-            color="primary"
-            variant="flat"
-            label
-            class="text-white"
-          >
-            <v-icon start>mdi-shape</v-icon>
-            {{record.categoryName}}
-          </v-chip>
-          <br/>
-          <br/>
-          {{record.description}}
-        </v-card-text>
-      </v-card>
-    </v-col>
+      <v-col cols="12" sm="6">
+        <v-card variant="outlined">
+          <v-card-title>
+            {{ currencyFilter(record.amount) }}
+            <v-chip
+              class="ml-4 text-white"
+              :color="record.typeColor"
+              label
+              variant="flat"
+            >
+              <v-icon start>{{ record.typeIcon }}</v-icon>
+              {{ record.typeText }}
+            </v-chip>
+          </v-card-title>
+          <v-card-subtitle>{{
+            dateFilter(record.date, 'datetime')
+          }}</v-card-subtitle>
+          <v-card-text>
+            <v-chip color="primary" variant="flat" label class="text-white">
+              <v-icon start>mdi-shape</v-icon>
+              {{ record.categoryName }}
+            </v-chip>
+            <br />
+            <br />
+            {{ record.description }}
+          </v-card-text>
+        </v-card>
+      </v-col>
     </v-row>
     <v-alert v-else type="error">
       {{ localizeFilter('detailrecord.noRecord') }}
@@ -63,30 +53,30 @@ import localizeFilter from '@/filters/localize.filter'
 export default {
   name: 'detailrecord',
   data: () => ({
-    record: null, 
-    loading: true
+    record: null,
+    loading: true,
   }),
   async mounted() {
     const id = this.$route.params.id
     const record = await this.$store.dispatch('fetchRecordById', id)
-    const category = await this.$store.dispatch('fetchCategoryById', record.categoryId)
+    const category = await this.$store.dispatch(
+      'fetchCategoryById',
+      record.categoryId,
+    )
 
-    let typeText = record.type === 'income'
-              ? localizeFilter('shared.income')
-              : localizeFilter('shared.expense')
-    let typeIcon = record.type === 'income'
-              ? 'mdi-plus'
-              : 'mdi-minus'
-    let typeColor = record.type === 'income'
-              ? 'green'
-              : 'red'
+    let typeText =
+      record.type === 'income'
+        ? localizeFilter('shared.income')
+        : localizeFilter('shared.expense')
+    let typeIcon = record.type === 'income' ? 'mdi-plus' : 'mdi-minus'
+    let typeColor = record.type === 'income' ? 'green' : 'red'
 
     this.record = {
       ...record,
       categoryName: category.title,
       typeText,
       typeIcon,
-      typeColor
+      typeColor,
     }
 
     this.loading = false
@@ -95,6 +85,6 @@ export default {
     currencyFilter,
     dateFilter,
     localizeFilter,
-  }
+  },
 }
 </script>

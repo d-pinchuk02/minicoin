@@ -11,17 +11,17 @@
       <template v-slot:item.amount="{ item }">
         {{ currencyFilter(item.amount) }}
       </template>
-    
- 	 <template v-slot:item.type="{ item }">
+
+      <template v-slot:item.type="{ item }">
         <v-chip :color="item.typeClass" class="text-white" variant="flat">
           {{ item.typeText }}
         </v-chip>
       </template>
-    
+
       <template v-slot:item.date="{ item }">
         {{ dateFilter(item.date, 'datetime') }}
       </template>
-    
+
       <template v-slot:item.actions="{ item }">
         <v-btn
           icon
@@ -29,9 +29,7 @@
           :to="`/detail/${item.id}`"
           :title="localizeFilter('historytable.openRecord')"
         >
-          <v-icon>
-            mdi-open-in-new
-          </v-icon>
+          <v-icon> mdi-open-in-new </v-icon>
         </v-btn>
         <!--<v-btn
           icon
@@ -64,7 +62,7 @@ export default {
   props: {
     records: {
       required: true,
-      type: Array
+      type: Array,
     },
   },
   data: () => ({
@@ -73,7 +71,7 @@ export default {
       {
         title: '#',
         align: 'start',
-        key: 'index'
+        key: 'index',
       },
       { title: localizeFilter('shared.amount'), key: 'amount' },
       { title: localizeFilter('shared.type'), key: 'type' },
@@ -84,19 +82,18 @@ export default {
   }),
   computed: {
     items() {
-      return this.records.map(
-        (items, index) => ({
-          ...items,
-          index: index + 1
-        }))
-    }
+      return this.records.map((items, index) => ({
+        ...items,
+        index: index + 1,
+      }))
+    },
   },
   methods: {
     currencyFilter,
     dateFilter,
     localizeFilter(key) {
       return localizeFilter(key)
-    }
-  }
+    },
+  },
 }
 </script>

@@ -45,59 +45,60 @@
 </template>
 
 <script>
-import localizeFilter from "@/filters/localize.filter";
+import localizeFilter from '@/filters/localize.filter'
 
 export default {
   props: {
     categories: {
       type: Array,
-      required: true
-    }
+      required: true,
+    },
   },
   data: () => ({
     isValid: false,
-    title: "",
+    title: '',
     limit: 1,
     current: null,
-    titleRules: [v => !!v || localizeFilter("categoryedit.error.enterTitle")],
+    titleRules: [(v) => !!v || localizeFilter('categoryedit.error.enterTitle')],
     limitRules: [
-      v => (v && +v >= 1) || localizeFilter("shared.errors.minValue") + ": " + 1
-    ]
+      (v) =>
+        (v && +v >= 1) || localizeFilter('shared.errors.minValue') + ': ' + 1,
+    ],
   }),
   watch: {
     current(catId) {
-      const category = this.categories.find(c => c.id === catId);
-      if (!category) return;
-      const { title, limit } = category;
-      this.title = title;
-      this.limit = limit;
-    }
+      const category = this.categories.find((c) => c.id === catId)
+      if (!category) return
+      const { title, limit } = category
+      this.title = title
+      this.limit = limit
+    },
   },
   created() {
-    const { id, title, limit } = this.categories[0];
-    (this.current = id), (this.title = title);
-    this.limit = limit;
+    const { id, title, limit } = this.categories[0]
+    ;((this.current = id), (this.title = title))
+    this.limit = limit
   },
   methods: {
     localizeFilter,
     async submitHandler() {
-      const { valid } = await this.$refs.form.validate();
+      const { valid } = await this.$refs.form.validate()
 
       if (!valid) {
-        return;
+        return
       }
 
       try {
         const categoryData = {
           id: this.current,
           title: this.title,
-          limit: this.limit
-        };
-        await this.$store.dispatch("updateCategory", categoryData);
-        this.$success(localizeFilter("msg.categoryUpdated"));
-        this.$emit("updated", categoryData);
+          limit: this.limit,
+        }
+        await this.$store.dispatch('updateCategory', categoryData)
+        this.$success(localizeFilter('msg.categoryUpdated'))
+        this.$emit('updated', categoryData)
       } catch (e) {}
-    }
-  }
-};
+    },
+  },
+}
 </script>

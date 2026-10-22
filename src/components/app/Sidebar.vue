@@ -1,13 +1,10 @@
 <template>
   <v-navigation-drawer
-      color="grey-lighten-4"
-      :model-value="modelValue"
-      @update:model-value="$emit('update:modelValue', $event)"
-    >
-    <v-list
-        density="compact"
-        nav
-    >
+    color="grey-lighten-4"
+    :model-value="modelValue"
+    @update:model-value="$emit('update:modelValue', $event)"
+  >
+    <v-list density="compact" nav>
       <v-list-item
         v-for="item in links"
         :key="item.title"
@@ -35,32 +32,32 @@ export default {
   emits: ['update:modelValue'],
   data: () => ({
     links: [
-      { 
-        title: localizeFilter('sidebar.bill'), 
+      {
+        title: localizeFilter('sidebar.bill'),
         icon: 'mdi-currency-usd',
-        to: '/dashboard' 
+        to: '/dashboard',
       },
-      { 
-        title: localizeFilter('sidebar.history'), 
+      {
+        title: localizeFilter('sidebar.history'),
         icon: 'mdi-history',
-        to: '/history'
+        to: '/history',
       },
-      { 
-        title: localizeFilter('sidebar.planning'), 
+      {
+        title: localizeFilter('sidebar.planning'),
         icon: 'mdi-trending-up',
-        to: '/planning'
+        to: '/planning',
       },
-      { 
-        title: localizeFilter('sidebar.record'), 
+      {
+        title: localizeFilter('sidebar.record'),
         icon: 'mdi-plus',
-        to: '/record'
+        to: '/record',
       },
-      { 
-        title: localizeFilter('sidebar.categories'), 
+      {
+        title: localizeFilter('sidebar.categories'),
         icon: 'mdi-shape',
-        to: '/categories'
-      }
-    ]
-  })
+        to: '/categories',
+      },
+    ],
+  }),
 }
 </script>

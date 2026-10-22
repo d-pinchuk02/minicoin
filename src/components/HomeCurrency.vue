@@ -11,11 +11,11 @@
           </tr>
         </thead>
         <tbody>
-            <tr v-for="cur of currencies" :key="cur">
-              <td>{{cur}}</td>
-              <td>{{rates[cur].toFixed(2)}}</td>
-              <td>{{ dateFilter(date * 1000, 'date') }}</td>
-            </tr>
+          <tr v-for="cur of currencies" :key="cur">
+            <td>{{ cur }}</td>
+            <td>{{ rates[cur].toFixed(2) }}</td>
+            <td>{{ dateFilter(date * 1000, 'date') }}</td>
+          </tr>
         </tbody>
       </v-table>
     </v-card-text>
@@ -36,7 +36,7 @@ export default {
   props: ['rates', 'date'],
   emits: ['refresh'],
   data: () => ({
-    currencies: ['UAH', 'USD', 'EUR']
+    currencies: ['UAH', 'USD', 'EUR'],
   }),
   methods: {
     dateFilter,
@@ -46,7 +46,11 @@ export default {
 </script>
 
 <style scoped>
-.theme--dark.v-data-table tbody tr:hover:not(.v-data-table__expanded__content):not(.v-data-table__empty-wrapper) {
+.theme--dark.v-data-table
+  tbody
+  tr:hover:not(.v-data-table__expanded__content):not(
+    .v-data-table__empty-wrapper
+  ) {
   background: inherit;
 }
 </style>

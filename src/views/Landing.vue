@@ -11,7 +11,9 @@
             <p class="hero-subtitle mb-6 text-white opacity-8">
               {{ localizeFilter('landing.hero.subtitle') }}
             </p>
-            <div class="d-flex justify-center justify-md-start gap-3 flex-column flex-sm-row">
+            <div
+              class="d-flex justify-center justify-md-start gap-3 flex-column flex-sm-row"
+            >
               <v-btn
                 size="large"
                 variant="outlined"
@@ -21,11 +23,7 @@
                 <v-icon start>mdi-account-plus</v-icon>
                 {{ localizeFilter('shared.signup') }}
               </v-btn>
-              <v-btn
-                size="large"
-                color="grey-darken-4"
-                to="/login"
-              >
+              <v-btn size="large" color="grey-darken-4" to="/login">
                 <v-icon start>mdi-login</v-icon>
                 {{ localizeFilter('shared.signin') }}
               </v-btn>
@@ -53,7 +51,7 @@ import LocaleSelect from '@/components/app/LocaleSelect.vue'
 export default {
   name: 'landing',
   components: {
-    LocaleSelect
+    LocaleSelect,
   },
   computed: {
     ...mapGetters(['info']),
@@ -61,7 +59,7 @@ export default {
   mounted() {
     if (this.$route.query.locale) {
       let info = { ...this.info, locale: this.$route.query.locale }
-      this.$store.commit("setInfo", info)
+      this.$store.commit('setInfo', info)
     }
   },
   methods: {
@@ -72,7 +70,7 @@ export default {
 
 <style scoped>
 .hero-section {
-  background: linear-gradient(135deg, #FF8C00 0%, #FF6F00 100%);
+  background: linear-gradient(135deg, #ff8c00 0%, #ff6f00 100%);
   color: white;
   min-height: 100vh;
   display: flex;

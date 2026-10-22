@@ -51,11 +51,7 @@
       </v-form>
     </v-card-text>
     <v-card-actions class="pa-4">
-      <v-btn
-        color="orange"
-        to="login"
-        variant="outlined"
-      >
+      <v-btn color="orange" to="login" variant="outlined">
         <v-icon start>mdi-login</v-icon>
         {{ localizeFilter('shared.signin') }}...
       </v-btn>
@@ -74,7 +70,7 @@
 
 <script>
 import localizeFilter from '@/filters/localize.filter'
-import LocaleSelect from "../components/app/LocaleSelect.vue"
+import LocaleSelect from '../components/app/LocaleSelect.vue'
 
 export default {
   name: 'register',
@@ -84,25 +80,31 @@ export default {
     name: '',
     agree: false,
     isValid: false,
-    emailRules: [ 
-      v => !!v || localizeFilter('shared.errors.enterEmail'),
-      v => /^\S+@\S+\.\S+$/.test(v) || localizeFilter('shared.errors.enterCorrectEmail')
+    emailRules: [
+      (v) => !!v || localizeFilter('shared.errors.enterEmail'),
+      (v) =>
+        /^\S+@\S+\.\S+$/.test(v) ||
+        localizeFilter('shared.errors.enterCorrectEmail'),
     ],
-    passwordRules: [ 
-      v => !!v || localizeFilter('shared.errors.enterPassword'),
-      v => (v && v.length >= 8) || localizeFilter('shared.errors.minLength') + ': ' + 8
+    passwordRules: [
+      (v) => !!v || localizeFilter('shared.errors.enterPassword'),
+      (v) =>
+        (v && v.length >= 8) ||
+        localizeFilter('shared.errors.minLength') + ': ' + 8,
     ],
     nameRules: [
-      v => !!v || localizeFilter('shared.errors.enterName'),
-      v => (v && v.length >= 2) || localizeFilter('shared.errors.minLength') + ': ' + 2
-    ]
+      (v) => !!v || localizeFilter('shared.errors.enterName'),
+      (v) =>
+        (v && v.length >= 2) ||
+        localizeFilter('shared.errors.minLength') + ': ' + 2,
+    ],
   }),
   methods: {
     localizeFilter,
     async submitHandler() {
-      const { valid } = await this.$refs.form.validate();
-      if (!valid) return;
-      if(!this.isValid || !this.agree) {
+      const { valid } = await this.$refs.form.validate()
+      if (!valid) return
+      if (!this.isValid || !this.agree) {
         console.log('invalid')
         return
       }
@@ -110,17 +112,17 @@ export default {
       const formData = {
         email: this.email,
         password: this.password,
-        name: this.name
+        name: this.name,
       }
 
       try {
         await this.$store.dispatch('register', formData)
         this.$router.push('/dashboard')
       } catch (e) {}
-    }
+    },
   },
   components: {
     LocaleSelect,
-  }
+  },
 }
 </script>

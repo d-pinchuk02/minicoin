@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import Snackbar from "@/components/app/Snackbar.vue";
+import Snackbar from '@/components/app/Snackbar.vue'
 import localizeFilter from '@/filters/localize.filter'
 
 export default {
@@ -25,19 +25,22 @@ export default {
   computed: {
     error() {
       return this.$store.getters.error
-    }
+    },
   },
   watch: {
-    error (fbError) {
-      this.$error(localizeFilter('msg.' + fbError.code) || localizeFilter('msg.unknownError'))
-    }
-  }
+    error(fbError) {
+      this.$error(
+        localizeFilter('msg.' + fbError.code) ||
+          localizeFilter('msg.unknownError'),
+      )
+    },
+  },
 }
 </script>
 
 <style scoped>
 .bg-gradient {
-  background: linear-gradient(135deg, #FF8C00 0%, #FF6F00 100%);
+  background: linear-gradient(135deg, #ff8c00 0%, #ff6f00 100%);
 }
 
 .bg-overlay {
