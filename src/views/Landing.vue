@@ -5,7 +5,7 @@
       <v-container>
         <v-row class="align-center justify-center">
           <v-col cols="12" md="6" class="text-center text-md-left">
-            <h1 class="hero-title font-weight-bold mb-4 text-white">
+            <h1 class="hero-title mb-4 text-white">
               {{ localizeFilter('landing.hero.title') }}
             </h1>
             <p class="hero-subtitle mb-6 text-white opacity-8">

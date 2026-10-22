@@ -2,9 +2,7 @@
   <v-app-bar color="orange" class="pl-2">
     <v-app-bar-nav-icon @click.prevent="emit('click')"></v-app-bar-nav-icon>
 
-    <span class="title font-weight-light">{{
-      dateFilter(date, 'datetime')
-    }}</span>
+    <span>{{ dateFilter(date, 'datetime') }}</span>
 
     <v-spacer />
 
